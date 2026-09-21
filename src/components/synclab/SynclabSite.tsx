@@ -178,10 +178,23 @@ function StatusBadge({ status }: { status: Availability }) {
   return <span className={cn("status-badge", `status-${tone}`)}>{statusLabel(status)}</span>;
 }
 
+const logoPlacementClass = {
+  header: "synclab-logo-header",
+  hero: "synclab-logo-hero",
+  card: "synclab-logo-card",
+} as const;
+
 function LogoAsset({ placement = "header" }: { placement?: "header" | "hero" | "card" }) {
   const logo = synclabConfig.brandAssets.logoDark ?? synclabConfig.brandAssets.logoLight;
   if (logo) {
-    return <img src={logo.url} alt={logo.alt} className={cn("synclab-logo-img", `synclab-logo-${placement}`)} />;
+    return (
+      <img
+        src={logo.url}
+        alt={logo.alt}
+        loading="lazy"
+        className={cn("synclab-logo-img", logoPlacementClass[placement])}
+      />
+    );
   }
   return (
     <span className={cn("brand-emblem", placement === "hero" && "brand-emblem-hero")} aria-hidden="true">
