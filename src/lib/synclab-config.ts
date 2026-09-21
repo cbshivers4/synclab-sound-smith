@@ -127,6 +127,12 @@ export const synclabConfig = {
       checksum: "",
       description:
         "Portable macOS desktop package for Apple Silicon Macs (M1, M2, M3, M4 and later). Extract the ZIP and open the included SYNCLAB app — no installer is included.",
+      installationSteps: [
+        "Download the ZIP and double-click it to extract the SYNCLAB app.",
+        "Because this is an unsigned preview build, macOS may say \"SYNCLAB cannot be opened because the developer cannot be verified.\" Click Cancel — do not move the app to Trash.",
+        "Right-click (or Control-click) the SYNCLAB app and choose Open, then click Open in the dialog. It only needs to be approved once.",
+        "Alternative: open Apple menu → System Settings → Privacy & Security and click \"Open Anyway\" next to the SYNCLAB message.",
+      ],
       buttonText: "DOWNLOAD ZIP",
       minimumRequirement: "macOS version will be confirmed with the production release.",
       containsInstaller: false,
@@ -147,6 +153,12 @@ export const synclabConfig = {
       checksum: "",
       description:
         "Portable macOS desktop package for Intel-based Macs. Extract the ZIP and open the included SYNCLAB app — no installer is included.",
+      installationSteps: [
+        "Download the ZIP and double-click it to extract the SYNCLAB app.",
+        "Because this is an unsigned preview build, macOS may say \"SYNCLAB cannot be opened because the developer cannot be verified.\" Click Cancel — do not move the app to Trash.",
+        "Right-click (or Control-click) the SYNCLAB app and choose Open, then click Open in the dialog. It only needs to be approved once.",
+        "Alternative: open Apple menu → System Settings → Privacy & Security and click \"Open Anyway\" next to the SYNCLAB message.",
+      ],
       buttonText: "DOWNLOAD ZIP",
       minimumRequirement: "macOS version will be confirmed with the production release.",
       containsInstaller: false,
