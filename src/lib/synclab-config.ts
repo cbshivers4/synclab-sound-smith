@@ -1,5 +1,59 @@
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
+export type DownloadPlatform = "macOS" | "Windows" | "Web" | "Universal" | "Source/Website Package";
+export type DownloadAvailability = "available" | "coming-soon" | "in-development" | "unavailable";
+
+export type DownloadAsset = {
+  id: string;
+  fileName: string;
+  displayName: string;
+  platform: DownloadPlatform;
+  version: string;
+  fileType: string;
+  fileSize: string;
+  releaseDate: string;
+  downloadUrl: string;
+  availability: DownloadAvailability;
+  checksum?: string;
+  description: string;
+  buttonText: string;
+  minimumRequirement: string;
+  containsInstaller: boolean;
+  current: boolean;
+  publicRelease: boolean;
+};
+
+export type ReleaseNote = {
+  version: string;
+  releaseDate: string;
+  new: string[];
+  improved: string[];
+  fixed: string[];
+  knownIssues: string[];
+};
+
+export type SystemRequirement = {
+  platform: "macOS" | "Windows" | "Web";
+  supportedVersion: string;
+  ram: string;
+  storage: string;
+  audio: string;
+  midi: string;
+  browsers?: string;
+  internet?: string;
+};
+
+export type ProductImage = {
+  title: string;
+  description: string;
+  imageUrl: string;
+};
+
+export type BrandAsset = {
+  url: string;
+  alt: string;
+};
+
 export type PricingPlan = {
   name: string;
   price: string;
@@ -18,6 +72,13 @@ export const synclabConfig = {
   tagline: "Create. Record. Produce. Finish.",
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
   productVersion: "Version pending",
+  latestVersion: "Version pending",
+  brandAssets: {
+    logoDark: null as BrandAsset | null,
+    logoLight: null as BrandAsset | null,
+    appIcon: null as BrandAsset | null,
+    favicon: "",
+  },
   urls: {
     productionDomain: "",
     webApp: "",
@@ -30,6 +91,130 @@ export const synclabConfig = {
     youtube: "",
     community: "",
   },
+  downloads: [
+    {
+      id: "macos-current",
+      fileName: "",
+      displayName: "SYNCLAB Vocal Forge for macOS",
+      platform: "macOS",
+      version: "Version pending",
+      fileType: "ZIP PACKAGE",
+      fileSize: "",
+      releaseDate: "",
+      downloadUrl: "",
+      availability: "unavailable",
+      checksum: "",
+      description: "Downloadable desktop package for macOS.",
+      buttonText: "DOWNLOAD ZIP",
+      minimumRequirement: "System requirements will be published with the production release.",
+      containsInstaller: false,
+      current: true,
+      publicRelease: true,
+    },
+    {
+      id: "windows-current",
+      fileName: "",
+      displayName: "SYNCLAB Vocal Forge for Windows",
+      platform: "Windows",
+      version: "Version pending",
+      fileType: "ZIP PACKAGE",
+      fileSize: "",
+      releaseDate: "",
+      downloadUrl: "",
+      availability: "unavailable",
+      checksum: "",
+      description: "Downloadable desktop package for Windows.",
+      buttonText: "DOWNLOAD ZIP",
+      minimumRequirement: "System requirements will be published with the production release.",
+      containsInstaller: false,
+      current: true,
+      publicRelease: true,
+    },
+    {
+      id: "web-current",
+      fileName: "",
+      displayName: "SYNCLAB Vocal Forge Web",
+      platform: "Web",
+      version: "Version pending",
+      fileType: "WEB APP",
+      fileSize: "",
+      releaseDate: "",
+      downloadUrl: "",
+      availability: "unavailable",
+      description: "Browser-based SYNCLAB Vocal Forge access.",
+      buttonText: "OPEN VOCAL FORGE",
+      minimumRequirement: "System requirements will be published with the production release.",
+      containsInstaller: false,
+      current: true,
+      publicRelease: true,
+    },
+    {
+      id: "website-package",
+      fileName: "",
+      displayName: "SYNCLAB Website Package",
+      platform: "Source/Website Package",
+      version: "Version pending",
+      fileType: "ZIP PACKAGE",
+      fileSize: "",
+      releaseDate: "",
+      downloadUrl: "",
+      availability: "unavailable",
+      description: "Administrative website source/package download, separate from the Vocal Forge application.",
+      buttonText: "DOWNLOAD WEBSITE PACKAGE",
+      minimumRequirement: "",
+      containsInstaller: false,
+      current: true,
+      publicRelease: false,
+    },
+  ] satisfies DownloadAsset[],
+  releaseNotes: [
+    {
+      version: "Version pending",
+      releaseDate: "",
+      new: [],
+      improved: [],
+      fixed: [],
+      knownIssues: ["Production release notes will be published with the official downloadable files."],
+    },
+  ] satisfies ReleaseNote[],
+  systemRequirements: [
+    {
+      platform: "macOS",
+      supportedVersion: "System requirements will be published with the production release.",
+      ram: "System requirements will be published with the production release.",
+      storage: "System requirements will be published with the production release.",
+      audio: "System requirements will be published with the production release.",
+      midi: "System requirements will be published with the production release.",
+    },
+    {
+      platform: "Windows",
+      supportedVersion: "System requirements will be published with the production release.",
+      ram: "System requirements will be published with the production release.",
+      storage: "System requirements will be published with the production release.",
+      audio: "System requirements will be published with the production release.",
+      midi: "System requirements will be published with the production release.",
+    },
+    {
+      platform: "Web",
+      supportedVersion: "System requirements will be published with the production release.",
+      ram: "System requirements will be published with the production release.",
+      storage: "System requirements will be published with the production release.",
+      audio: "System requirements will be published with the production release.",
+      midi: "System requirements will be published with the production release.",
+      browsers: "System requirements will be published with the production release.",
+      internet: "System requirements will be published with the production release.",
+    },
+  ] satisfies SystemRequirement[],
+  productImages: [
+    { title: "Main DAW", description: "The primary timeline, mixer and production workspace.", imageUrl: "" },
+    { title: "AI Vocal Forge", description: "Vocal creation and shaping tools for guided production.", imageUrl: "" },
+    { title: "Drum Machine", description: "Pattern creation, velocity control and beat programming.", imageUrl: "" },
+    { title: "Synth", description: "Sound design controls for SYNCLAB instruments.", imageUrl: "" },
+    { title: "Sampler", description: "Sample editing, mapping and resampling workflows.", imageUrl: "" },
+    { title: "Mixer", description: "Channel strips, routing, effects and mastering controls.", imageUrl: "" },
+    { title: "Hum-to-Beat", description: "Rhythm capture from humming, tapping and beatboxing ideas.", imageUrl: "" },
+    { title: "AI Co-Producer", description: "Arrangement and production assistance inside the SYNCLAB workflow.", imageUrl: "" },
+  ] satisfies ProductImage[],
   availability: {
     web: "in-development" as Availability,
     macInstaller: "coming-soon" as Availability,
@@ -94,6 +279,7 @@ export const supportCategories = [
   "Plugins",
   "Export",
   "Desktop App",
+  "Downloads & Installation",
   "Mobile App",
   "Bug Report",
   "Feature Request",
@@ -102,6 +288,17 @@ export const supportCategories = [
 
 export const helpCenterCategories = [
   "Getting Started",
+  "Downloads & Installation",
+  "Download SYNCLAB",
+  "Installing the macOS version",
+  "Installing the Windows version",
+  "Extracting a ZIP package",
+  "Updating SYNCLAB",
+  "Previous versions",
+  "System requirements",
+  "Troubleshooting downloads",
+  "Missing files",
+  "Installation problems",
   "Recording",
   "MIDI",
   "Synth",
