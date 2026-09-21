@@ -192,14 +192,17 @@ export const synclabConfig = {
   ] satisfies DownloadAsset[],
   releaseNotes: [
     {
-      version: "Windows preview build (2026-09-21)",
+      version: "Preview builds (2026-09-21)",
       releaseDate: "September 21, 2026",
-      new: ["Portable SYNCLAB Vocal Forge desktop package for 64-bit Windows."],
+      new: [
+        "Portable SYNCLAB Vocal Forge desktop package for 64-bit Windows.",
+        "Portable SYNCLAB Vocal Forge desktop package for macOS (Intel/Apple Silicon x64).",
+      ],
       improved: [],
       fixed: [],
       knownIssues: [
-        "This package is portable: extract the ZIP and run SYNCLAB.exe. No Windows installer is included yet.",
-        "macOS and Web releases are not available yet.",
+        "These packages are portable: extract the ZIP and run the included SYNCLAB app/SYNCLAB.exe. No native installers are included yet.",
+        "Web release is not available yet.",
         "Full release notes will be published with the production release.",
       ],
     },
