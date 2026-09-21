@@ -170,3 +170,836 @@
     color: var(--color-foreground);
   }
 }
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    text-rendering: geometricPrecision;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--signal) 38%, transparent);
+    color: var(--foreground);
+  }
+}
+
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 4px;
+  }
+}
+
+@utility section-shell {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding: 5rem 1.25rem;
+
+  @media (min-width: 1024px) {
+    padding: 7rem 2rem;
+  }
+}
+
+@utility bg-panel {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--background)),
+    repeating-linear-gradient(90deg, transparent 0 3rem, color-mix(in oklab, var(--foreground) 4%, transparent) 3rem calc(3rem + 1px));
+}
+
+@utility bg-hero-grid {
+  background:
+    radial-gradient(circle at 22% 18%, color-mix(in oklab, var(--signal) 11%, transparent), transparent 24rem),
+    linear-gradient(180deg, color-mix(in oklab, var(--panel) 74%, transparent), var(--background)),
+    repeating-linear-gradient(0deg, transparent 0 3.75rem, color-mix(in oklab, var(--foreground) 4%, transparent) 3.75rem calc(3.75rem + 1px)),
+    repeating-linear-gradient(90deg, transparent 0 3.75rem, color-mix(in oklab, var(--foreground) 4%, transparent) 3.75rem calc(3.75rem + 1px));
+}
+
+@utility brand-emblem {
+  position: relative;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, color-mix(in oklab, var(--signal) 22%, transparent), color-mix(in oklab, var(--secondary) 82%, transparent));
+  box-shadow: inset 0 0 1.5rem color-mix(in oklab, var(--signal) 12%, transparent);
+
+  &::before,
+  &::after,
+  & span {
+    content: "";
+    position: absolute;
+    background: var(--foreground);
+    opacity: 0.86;
+  }
+
+  &::before {
+    width: 1.25rem;
+    height: 0.13rem;
+  }
+
+  &::after {
+    width: 0.13rem;
+    height: 1.25rem;
+  }
+
+  & span {
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid var(--signal);
+    border-radius: 50%;
+    background: transparent;
+    opacity: 0.58;
+  }
+}
+
+@utility nav-link {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted-foreground);
+  transition: color 180ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--foreground);
+  }
+}
+
+@utility nav-link-active {
+  color: var(--foreground);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -0.72rem;
+    height: 2px;
+    background: var(--signal);
+  }
+}
+
+@utility mobile-nav-link {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  background: color-mix(in oklab, var(--card) 82%, transparent);
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--signal);
+}
+
+@utility headline-finish {
+  color: var(--signal);
+  text-shadow: 0 0 2rem color-mix(in oklab, var(--signal) 30%, transparent);
+}
+
+@utility daw-shell {
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--border) 88%, var(--signal));
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, color-mix(in oklab, var(--card) 86%, transparent), color-mix(in oklab, var(--background) 96%, transparent));
+  box-shadow:
+    0 2rem 5rem color-mix(in oklab, var(--background) 78%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 11%, transparent);
+}
+
+@utility daw-topbar {
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 1rem;
+  background: color-mix(in oklab, var(--panel) 70%, transparent);
+}
+
+@utility transport {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+@utility transport-button {
+  display: grid;
+  width: 2.1rem;
+  height: 2.1rem;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  background: var(--secondary);
+
+  & svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+}
+
+@utility transport-record {
+  display: grid;
+  width: 2.1rem;
+  height: 2.1rem;
+  place-items: center;
+  border: 1px solid color-mix(in oklab, var(--destructive) 70%, var(--border));
+  border-radius: var(--radius-sm);
+  color: var(--destructive);
+  background: color-mix(in oklab, var(--destructive) 14%, var(--secondary));
+
+  & svg {
+    width: 0.82rem;
+    height: 0.82rem;
+    fill: currentColor;
+  }
+}
+
+@utility readout {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--foreground);
+  background: var(--input);
+}
+
+@utility daw-grid {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.75rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: minmax(0, 1fr) 12rem;
+  }
+}
+
+@utility timeline-panel {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--background) 68%, transparent);
+}
+
+@utility timeline-ruler {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(2rem, 1fr));
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+
+  & span {
+    border-right: 1px solid var(--border);
+    padding: 0.45rem;
+  }
+}
+
+@utility track-stack {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.5rem;
+}
+
+@utility track-row {
+  display: grid;
+  min-height: 3.2rem;
+  grid-template-columns: 4.2rem minmax(0, 1fr);
+  gap: 0.4rem;
+}
+
+@utility track-label {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  background: var(--secondary);
+}
+
+@utility tiny-meter {
+  display: block;
+  width: 70%;
+  height: 0.18rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--meter-cool), var(--meter-hot));
+}
+
+@utility clip-lane {
+  display: flex;
+  min-width: 0;
+  align-items: stretch;
+  gap: 0.35rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 2.9rem, color-mix(in oklab, var(--foreground) 6%, transparent) 2.9rem calc(2.9rem + 1px)),
+    var(--background);
+}
+
+@utility clip {
+  min-width: 2.8rem;
+  border: 1px solid color-mix(in oklab, var(--foreground) 18%, transparent);
+  border-radius: calc(var(--radius-sm) - 1px);
+  opacity: 0.82;
+}
+
+@utility clip-alt { opacity: 0.58; }
+@utility clip-percussion { background: color-mix(in oklab, var(--meter-hot) 42%, var(--card)); }
+@utility clip-bass { background: color-mix(in oklab, var(--signal) 34%, var(--card)); }
+@utility clip-synth { background: color-mix(in oklab, var(--meter-cool) 38%, var(--card)); }
+@utility clip-vocal { background: color-mix(in oklab, var(--foreground) 26%, var(--card)); }
+
+@utility mixer-panel {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(2rem, 1fr));
+  gap: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem;
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(2rem, 1fr));
+  }
+}
+
+@utility mixer-strip {
+  display: grid;
+  min-height: 10rem;
+  place-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem;
+  background: var(--secondary);
+}
+
+@utility knob {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--signal);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--foreground) 0 10%, transparent 12%);
+}
+
+@utility meter {
+  display: flex;
+  width: 0.65rem;
+  height: 5.25rem;
+  align-items: end;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--input);
+
+  & span {
+    width: 100%;
+    border-radius: inherit;
+    background: linear-gradient(0deg, var(--signal), var(--meter-hot));
+  }
+}
+
+@utility fader {
+  width: 1.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--foreground);
+}
+
+@utility master-strip {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid color-mix(in oklab, var(--signal) 36%, var(--border));
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--signal) 10%, var(--secondary));
+}
+
+@utility master-meter {
+  width: 58%;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--signal), var(--meter-hot), var(--destructive));
+}
+
+@utility feature-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, transparent), color-mix(in oklab, var(--background) 96%, transparent));
+  transition: transform 180ms ease, border-color 180ms ease;
+
+  &:hover {
+    border-color: color-mix(in oklab, var(--signal) 42%, var(--border));
+    transform: translateY(-2px);
+  }
+}
+
+@utility icon-tile {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid color-mix(in oklab, var(--signal) 34%, var(--border));
+  border-radius: var(--radius-md);
+  color: var(--signal);
+  background: color-mix(in oklab, var(--signal) 10%, var(--secondary));
+
+  & svg { width: 1.35rem; height: 1.35rem; }
+}
+
+@utility status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.58rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@utility status-ready { color: var(--signal); background: color-mix(in oklab, var(--signal) 12%, transparent); }
+@utility status-soon { color: var(--muted-foreground); background: color-mix(in oklab, var(--muted) 58%, transparent); }
+@utility status-development { color: var(--meter-hot); background: color-mix(in oklab, var(--meter-hot) 11%, transparent); }
+@utility status-desktop { color: var(--meter-cool); background: color-mix(in oklab, var(--meter-cool) 11%, transparent); }
+
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.42rem 0.65rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: color-mix(in oklab, var(--secondary) 76%, transparent);
+}
+
+@utility ai-card {
+  min-height: 16rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--signal) 8%, transparent), transparent 48%),
+    var(--card);
+}
+
+@utility number-mark {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--signal);
+}
+
+@utility studio-board {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+@utility studio-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem;
+
+  & span {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.75rem;
+    color: var(--muted-foreground);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    background: var(--secondary);
+  }
+}
+
+@utility studio-composition {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@utility arrangement-view {
+  display: grid;
+  gap: 0.55rem;
+}
+
+@utility arrangement-row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+@utility arrangement-line {
+  height: 1.4rem;
+  border: 1px solid color-mix(in oklab, var(--signal) 25%, var(--border));
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklab, var(--signal) 12%, var(--secondary));
+}
+
+@utility piano-roll {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-auto-rows: 1.4rem;
+  gap: 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.65rem;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 1.65rem, color-mix(in oklab, var(--foreground) 6%, transparent) 1.65rem calc(1.65rem + 1px)),
+    var(--background);
+}
+
+@utility note-short { grid-column: span 1; border-radius: var(--radius-sm); background: var(--meter-cool); opacity: 0.74; }
+@utility note-long { grid-column: span 2; border-radius: var(--radius-sm); background: var(--signal); opacity: 0.84; }
+@utility note-muted { opacity: 0.42; }
+
+@utility xy-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background: var(--card);
+}
+
+@utility xy-pad {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--signal) 26%, var(--border));
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(90deg, transparent 49.5%, color-mix(in oklab, var(--foreground) 10%, transparent) 49.5% 50.5%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, color-mix(in oklab, var(--foreground) 10%, transparent) 49.5% 50.5%, transparent 50.5%),
+    radial-gradient(circle at 67% 32%, color-mix(in oklab, var(--signal) 26%, transparent), transparent 8rem),
+    var(--background);
+}
+
+@utility xy-crosshair {
+  position: absolute;
+  left: 64%;
+  top: 31%;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--signal);
+  border-radius: 50%;
+  box-shadow: 0 0 1.5rem color-mix(in oklab, var(--signal) 55%, transparent);
+}
+
+@utility platform-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background: var(--card);
+}
+
+@utility availability-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  background: color-mix(in oklab, var(--card) 82%, transparent);
+}
+
+@utility download-cta {
+  border: 1px solid color-mix(in oklab, var(--signal) 22%, var(--border));
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--signal) 10%, transparent), transparent 45%),
+    var(--card);
+
+  @media (min-width: 768px) { padding: 2rem; }
+}
+
+@utility download-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  background: color-mix(in oklab, var(--background) 62%, transparent);
+}
+
+@utility price-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  background: var(--card);
+}
+
+@utility trial-pill {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.6rem;
+  color: var(--signal);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@utility product-screen {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 0.8rem;
+  background: var(--card);
+}
+
+@utility screen-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.65rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+}
+
+@utility screen-body {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 0.6rem;
+  min-height: 10.5rem;
+  padding-top: 0.8rem;
+}
+
+@utility screen-sidebar {
+  display: grid;
+  gap: 0.35rem;
+
+  & span {
+    border-radius: var(--radius-sm);
+    background: var(--secondary);
+  }
+}
+
+@utility screen-workspace {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+}
+
+@utility screen-block {
+  display: block;
+  height: 1.05rem;
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklab, var(--foreground) 18%, var(--secondary));
+}
+
+@utility screen-block-accent { background: color-mix(in oklab, var(--signal) 34%, var(--secondary)); }
+
+@utility demo-frame {
+  min-height: 24rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  background: var(--background);
+}
+
+@utility demo-preview {
+  max-width: 58rem;
+  margin-inline: auto;
+}
+
+@utility demo-link {
+  display: grid;
+  min-height: 18rem;
+  place-items: center;
+  color: var(--signal);
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+@utility assistant-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  background: var(--card);
+}
+
+@utility support-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background: var(--card);
+}
+
+@utility help-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background: var(--card);
+}
+
+@utility search-shell {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  color: var(--muted-foreground);
+  background: var(--input);
+
+  & input {
+    width: 100%;
+    background: transparent;
+    color: var(--foreground);
+    outline: none;
+  }
+}
+
+@utility support-form {
+  display: grid;
+  gap: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background: var(--card);
+}
+
+@utility form-grid {
+  display: grid;
+  gap: 1rem;
+
+  @media (min-width: 1024px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@utility field-label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  & input,
+  & select,
+  & textarea {
+    width: 100%;
+    min-height: 2.85rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    color: var(--foreground);
+    background: var(--input);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    outline: none;
+  }
+
+  & input:focus-visible,
+  & select:focus-visible,
+  & textarea:focus-visible {
+    border-color: var(--signal);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal) 16%, transparent);
+  }
+}
+
+@utility config-field {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  background: var(--card);
+}
+
+@utility config-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  background: var(--card);
+}
+
+@utility final-cta {
+  max-width: 66rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+@utility footer-link {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--foreground);
+  }
+}
+
+@utility legal-panel {
+  max-width: 48rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  background: var(--card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
