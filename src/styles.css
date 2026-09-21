@@ -1435,8 +1435,6 @@
   }
 }
 
-@utility download-links-marker { @apply hidden; }
-
 @utility download-links {
   @apply mt-5 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4 text-xs font-medium text-muted-foreground;
 }
