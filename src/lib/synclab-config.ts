@@ -54,6 +54,7 @@ export type ReleaseNote = {
 export type SystemRequirement = {
   platform: "macOS" | "Windows" | "Web";
   supportedVersion: string;
+  processor: string;
   ram: string;
   storage: string;
   audio: string;
@@ -92,6 +93,8 @@ export const synclabConfig = {
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
   productVersion: "Windows preview build (2026-09-21)",
   latestVersion: "Windows preview build (2026-09-21)",
+  websiteVersion: "",
+  downloadAnnouncement: "",
   brandAssets: {
     logoDark: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
     logoLight: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
@@ -205,6 +208,7 @@ export const synclabConfig = {
     {
       platform: "macOS",
       supportedVersion: "System requirements will be published with the production release.",
+      processor: "System requirements will be published with the production release.",
       ram: "System requirements will be published with the production release.",
       storage: "System requirements will be published with the production release.",
       audio: "System requirements will be published with the production release.",
@@ -213,6 +217,7 @@ export const synclabConfig = {
     {
       platform: "Windows",
       supportedVersion: "Windows 10 or later, 64-bit.",
+      processor: "System requirements will be published with the production release.",
       ram: "System requirements will be published with the production release.",
       storage: "Approximately 500 MB free space after extracting the ZIP package.",
       audio: "System requirements will be published with the production release.",
@@ -221,6 +226,7 @@ export const synclabConfig = {
     {
       platform: "Web",
       supportedVersion: "System requirements will be published with the production release.",
+      processor: "System requirements will be published with the production release.",
       ram: "System requirements will be published with the production release.",
       storage: "System requirements will be published with the production release.",
       audio: "System requirements will be published with the production release.",
