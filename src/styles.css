@@ -198,7 +198,7 @@
   width: 100%;
   max-width: 80rem;
   margin-inline: auto;
-  padding: 5rem 1.25rem;
+  padding: 4rem 1.25rem;
 
   @media (min-width: 1024px) {
     padding: 7rem 2rem;
@@ -289,14 +289,15 @@
 }
 
 @utility mobile-nav-link {
+  display: block;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 1rem;
   color: var(--foreground);
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  background: color-mix(in oklab, var(--card) 82%, transparent);
+  background: var(--card);
 }
 
 @utility eyebrow {

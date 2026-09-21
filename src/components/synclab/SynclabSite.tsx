@@ -185,21 +185,21 @@ function SiteHeader() {
         </Button>
       </div>
       {open ? (
-        <div className="fixed inset-0 z-50 bg-background/98 px-5 py-4 lg:hidden">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-background px-5 py-4 lg:hidden">
           <div className="flex items-center justify-between">
             <BrandMark compact />
             <Button variant="ghost" size="icon" aria-label="Close navigation menu" onClick={() => setOpen(false)}>
               <X />
             </Button>
           </div>
-          <nav className="mt-10 grid gap-3" aria-label="Mobile navigation">
+          <nav className="mt-10 grid gap-3" aria-label="Mobile navigation" onClick={() => setOpen(false)}>
             {navItems.map((item) => (
               <Link key={item.to} to={item.to} className="mobile-nav-link" onClick={() => setOpen(false)}>
                 {item.label}
               </Link>
             ))}
           </nav>
-          <div className="mt-8">
+          <div className="mt-8 pb-8">
             <DownloadButton label="Download SYNCLAB" fullWidth />
           </div>
         </div>
