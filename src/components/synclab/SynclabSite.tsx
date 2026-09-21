@@ -1,12 +1,14 @@
 import { Link, type LinkProps } from "@tanstack/react-router";
 import {
   Activity,
+  AlertTriangle,
   AudioLines,
-  ChevronRight,
+  CalendarDays,
   Circle,
   Disc3,
   Download,
   Drum,
+  ExternalLink,
   Headphones,
   KeyboardMusic,
   Menu,
@@ -14,6 +16,7 @@ import {
   MonitorDown,
   Music2,
   Play,
+  RefreshCw,
   Search,
   Send,
   SlidersHorizontal,
@@ -24,32 +27,37 @@ import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { helpCenterCategories, supportCategories, synclabConfig, type Availability } from "@/lib/synclab-config";
+import {
+  helpCenterCategories,
+  supportCategories,
+  synclabConfig,
+  type Availability,
+  type DownloadAsset,
+  type DownloadAvailability,
+} from "@/lib/synclab-config";
 
 type PageMode = "home" | "features" | "ai" | "studio" | "desktop" | "pricing" | "support" | "help" | "config" | "privacy" | "terms" | "contact";
 
 type StatusTone = "ready" | "soon" | "development" | "desktop";
+type SiteLink = { label: string; to?: LinkProps["to"]; href?: string };
 
 
-const footerLinks = [
-  { label: "Features", to: "/features" },
-  { label: "AI Tools", to: "/ai-tools" },
-  { label: "Desktop", to: "/desktop" },
-  { label: "Pricing", to: "/pricing" },
-  { label: "Support", to: "/support" },
+const footerLinks: ReadonlyArray<SiteLink> = [
+  { label: "Download", href: "/#download" },
+  { label: "What's New", href: "/#whats-new" },
+  { label: "System Requirements", href: "/#system-requirements" },
   { label: "Help Center", to: "/help-center" },
+  { label: "Support", to: "/support" },
   { label: "Privacy", to: "/privacy" },
   { label: "Terms", to: "/terms" },
-  { label: "Contact", to: "/contact" },
-  { label: "Config", to: "/config" },
-] as const satisfies ReadonlyArray<{ label: string; to: LinkProps["to"] }>;
+] as const;
 
-const navItems = [
+const navItems: ReadonlyArray<SiteLink> = [
   { label: "Features", to: "/features" },
   { label: "AI Tools", to: "/ai-tools" },
   { label: "Studio", to: "/studio" },
   { label: "Desktop", to: "/desktop" },
-  { label: "Pricing", to: "/pricing" },
+  { label: "Download", href: "/#download" },
   { label: "Support", to: "/support" },
 ] as const;
 
@@ -120,22 +128,42 @@ const firstRunActions = [
   "Learn SYNCLAB",
 ];
 
-const screenshotNames = [
-  "Main DAW",
-  "AI Vocal Forge",
-  "Drum Machine",
-  "Synth",
-  "Sampler",
-  "Mixer",
-  "Hum-to-Beat",
-  "AI Co-Producer",
-] as const;
+const currentDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => download.current && download.publicRelease);
+const previousDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => !download.current && download.publicRelease && download.downloadUrl);
+const developerDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => !download.publicRelease);
 
 function statusLabel(status: Availability) {
-  if (status === "available") return "Available Now";
-  if (status === "desktop-version") return "Desktop Version";
-  if (status === "in-development") return "In Development";
-  return "Coming Soon";
+  if (status === "available") return "AVAILABLE NOW";
+  if (status === "desktop-version") return "DESKTOP VERSION";
+  if (status === "in-development") return "IN DEVELOPMENT";
+  return "COMING SOON";
+}
+
+function downloadStatusLabel(status: DownloadAvailability) {
+  if (status === "available") return "AVAILABLE NOW";
+  if (status === "in-development") return "IN DEVELOPMENT";
+  if (status === "coming-soon") return "COMING SOON";
+  return "DOWNLOAD CURRENTLY UNAVAILABLE";
+}
+
+function formatValue(value: string, fallback = "Not configured") {
+  return value.trim().length > 0 ? value : fallback;
+}
+
+function hasDownload(download: DownloadAsset) {
+  return download.availability === "available" && download.downloadUrl.trim().length > 0;
+}
+
+function isZip(download: DownloadAsset) {
+  return download.fileType.toLowerCase().includes("zip");
+}
+
+function platformAvailability(platform: DownloadAsset["platform"]): Availability {
+  const download = currentDownloads.find((item) => item.platform === platform);
+  if (!download) return "coming-soon";
+  if (download.availability === "available") return "available";
+  if (download.availability === "in-development") return "in-development";
+  return "coming-soon";
 }
 
 function statusTone(status: Availability): StatusTone {
@@ -150,12 +178,22 @@ function StatusBadge({ status }: { status: Availability }) {
   return <span className={cn("status-badge", `status-${tone}`)}>{statusLabel(status)}</span>;
 }
 
+function LogoAsset({ placement = "header" }: { placement?: "header" | "hero" | "card" }) {
+  const logo = synclabConfig.brandAssets.logoDark ?? synclabConfig.brandAssets.logoLight;
+  if (logo) {
+    return <img src={logo.url} alt={logo.alt} className={cn("synclab-logo-img", `synclab-logo-${placement}`)} />;
+  }
+  return (
+    <span className={cn("brand-emblem", placement === "hero" && "brand-emblem-hero")} aria-hidden="true">
+      <span />
+    </span>
+  );
+}
+
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <Link to="/" className="group inline-flex items-center gap-3 focus-ring rounded-md" aria-label="SYNCLAB Vocal Forge home">
-      <span className="brand-emblem" aria-hidden="true">
-        <span />
-      </span>
+      <LogoAsset />
       <span className="leading-none">
         <span className={cn("block font-display font-bold tracking-normal text-foreground", compact ? "text-lg" : "text-xl")}>SYNCLAB</span>
         <span className="mt-1 block font-mono text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground">VOCAL FORGE</span>
@@ -172,9 +210,15 @@ function SiteHeader() {
         <BrandMark />
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
           {navItems.map((item) => (
-            <Link key={item.to} to={item.to} className="nav-link" activeProps={{ className: "nav-link nav-link-active" }}>
-              {item.label}
-            </Link>
+            item.to ? (
+              <Link key={item.label} to={item.to} className="nav-link" activeProps={{ className: "nav-link nav-link-active" }}>
+                {item.label}
+              </Link>
+            ) : (
+              <a key={item.label} href={item.href} className="nav-link">
+                {item.label}
+              </a>
+            )
           ))}
         </nav>
         <div className="hidden lg:block">
@@ -194,9 +238,15 @@ function SiteHeader() {
           </div>
           <nav className="mt-10 grid gap-3" aria-label="Mobile navigation" onClick={() => setOpen(false)}>
             {navItems.map((item) => (
-              <Link key={item.to} to={item.to} className="mobile-nav-link" onClick={() => setOpen(false)}>
-                {item.label}
-              </Link>
+              item.to ? (
+                <Link key={item.label} to={item.to} className="mobile-nav-link" onClick={() => setOpen(false)}>
+                  {item.label}
+                </Link>
+              ) : (
+                <a key={item.label} href={item.href} className="mobile-nav-link" onClick={() => setOpen(false)}>
+                  {item.label}
+                </a>
+              )
             ))}
           </nav>
           <div className="mt-8 pb-8">
@@ -209,20 +259,30 @@ function SiteHeader() {
 }
 
 function DownloadButton({ label, fullWidth = false }: { label: string; fullWidth?: boolean }) {
-  const hasMac = synclabConfig.urls.macDownload.length > 0;
-  if (!hasMac) {
-    return (
-      <Button variant="signal" size="lg" disabled className={cn(fullWidth && "w-full")} aria-label="Desktop download coming soon">
+  return (
+    <Button asChild variant="signal" size="lg" className={cn(fullWidth && "w-full")}>
+      <a href="#download">
         <Download />
-        Coming Soon
+        {label}
+      </a>
+    </Button>
+  );
+}
+
+function OpenVocalForgeButton({ fullWidth = false }: { fullWidth?: boolean }) {
+  if (!synclabConfig.urls.webApp) {
+    return (
+      <Button disabled variant="outline" size="lg" className={cn(fullWidth && "w-full", "sm:w-auto")}>
+        <ExternalLink />
+        OPEN CURRENTLY UNAVAILABLE
       </Button>
     );
   }
   return (
-    <Button asChild variant="signal" size="lg" className={cn(fullWidth && "w-full")}>
-      <a href={synclabConfig.urls.macDownload}>
-        <Download />
-        {label}
+    <Button asChild variant="outline" size="lg" className={cn(fullWidth && "w-full", "sm:w-auto")}>
+      <a href={synclabConfig.urls.webApp} target="_blank" rel="noreferrer">
+        <ExternalLink />
+        OPEN VOCAL FORGE
       </a>
     </Button>
   );
@@ -233,7 +293,13 @@ function HeroSection() {
     <section className="relative overflow-hidden border-b border-border bg-hero-grid">
       <div className="mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl items-center gap-10 px-5 py-14 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:py-20">
         <div className="relative z-10">
-          <p className="eyebrow">SYNCLAB MUSIC TECHNOLOGY</p>
+          <div className="hero-brand-lockup">
+            <LogoAsset placement="hero" />
+            <div>
+              <p className="eyebrow">SYNCLAB MUSIC TECHNOLOGY</p>
+              <p className="mt-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-muted-foreground">VOCAL FORGE</p>
+            </div>
+          </div>
           <h1 className="mt-5 font-display text-6xl font-bold leading-[0.86] tracking-normal text-foreground sm:text-7xl lg:text-8xl">
             <span className="block">Create.</span>
             <span className="block">Record.</span>
@@ -245,14 +311,13 @@ function HeroSection() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <DownloadButton label="Download SYNCLAB" fullWidth />
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
-              <Link to="/features">
-                Explore Features
-                <ChevronRight />
-              </Link>
-            </Button>
+            <OpenVocalForgeButton fullWidth />
           </div>
-          <p className="mt-5 font-mono text-sm uppercase tracking-[0.18em] text-muted-foreground">macOS • Windows • Web • Mobile-ready</p>
+          <div className="product-info-strip" aria-label="Product information">
+            <span>SYNCLAB Vocal Forge</span>
+            <span>Latest Version: {formatValue(synclabConfig.latestVersion, "Pending")}</span>
+            <span>Available Platforms: macOS • Windows • Web</span>
+          </div>
         </div>
         <div className="relative z-10">
           <DawMockup />
@@ -273,9 +338,12 @@ function DawMockup() {
   return (
     <div className="daw-shell" aria-label="SYNCLAB Vocal Forge digital audio workstation preview">
       <div className="daw-topbar">
-        <div>
-          <p className="font-display text-sm font-bold text-foreground">SYNCLAB</p>
-          <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em] text-muted-foreground">VOCAL FORGE</p>
+        <div className="flex items-center gap-3">
+          <LogoAsset placement="card" />
+          <div>
+            <p className="font-display text-sm font-bold text-foreground">SYNCLAB</p>
+            <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em] text-muted-foreground">VOCAL FORGE</p>
+          </div>
         </div>
         <div className="transport" aria-label="Transport controls">
           <span className="transport-button"><Play /></span>
@@ -449,9 +517,9 @@ function StudioSection() {
 
 function DesktopSection() {
   const platforms = [
-    ["macOS", "Native desktop workflow.", synclabConfig.availability.macInstaller],
-    ["Windows", "Professional desktop production.", synclabConfig.availability.windowsInstaller],
-    ["Web", "Access SYNCLAB Vocal Forge from the browser.", synclabConfig.availability.web],
+    ["macOS", "Downloadable desktop version.", platformAvailability("macOS")],
+    ["Windows", "Downloadable desktop version.", platformAvailability("Windows")],
+    ["Web", "Browser-based SYNCLAB Vocal Forge.", platformAvailability("Web")],
   ] as const;
   const architecture = ["Native audio engine", "Native MIDI", "Local project files", "Local sample libraries", "Plugin architecture", "Project recovery", "Autosave", "Low-latency audio", "Local rendering/export"];
   return (
@@ -475,7 +543,7 @@ function DesktopSection() {
       <div className="mt-8 grid gap-5 lg:grid-cols-[0.7fr_1.3fr]">
         <div className="availability-panel">
           <h3 className="font-display text-2xl font-bold text-foreground">Available Now</h3>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">The current website prepares the product launch, download flow, support structure and official SYNCLAB presentation.</p>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">Current platform availability is driven by the centralized SYNCLAB release configuration. ZIP packages are labeled as ZIP packages until a finished installer is configured.</p>
         </div>
         <div className="availability-panel">
           <h3 className="font-display text-2xl font-bold text-foreground">Coming to Desktop</h3>
@@ -489,32 +557,100 @@ function DesktopSection() {
 }
 
 function DownloadSection() {
-  const downloads = [
-    { title: "macOS", label: "Download SYNCLAB for macOS", url: synclabConfig.urls.macDownload, status: synclabConfig.availability.macInstaller },
-    { title: "Windows", label: "Download SYNCLAB for Windows", url: synclabConfig.urls.windowsDownload, status: synclabConfig.availability.windowsInstaller },
-    { title: "Web", label: "Open SYNCLAB Vocal Forge", url: synclabConfig.urls.webApp, status: synclabConfig.availability.web },
-  ];
   return (
-    <section className="section-shell bg-background" aria-labelledby="download-heading">
+    <section id="download" className="section-shell scroll-mt-24 bg-background" aria-labelledby="download-heading">
       <div className="download-cta">
-        <p className="eyebrow">Download</p>
-        <h2 id="download-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-none tracking-normal text-foreground sm:text-6xl">Your studio.<br />Your system.</h2>
+        <div className="download-heading-row">
+          <div>
+            <p className="eyebrow">Download</p>
+            <h2 id="download-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-none tracking-normal text-foreground sm:text-6xl">DOWNLOAD SYNCLAB VOCAL FORGE</h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">Choose your platform and download the version of SYNCLAB Vocal Forge available for your system.</p>
+          </div>
+          <div className="download-logo-panel">
+            <LogoAsset placement="card" />
+            <span>SYNCLAB</span>
+            <small>VOCAL FORGE</small>
+          </div>
+        </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {downloads.map((download) => (
-            <article key={download.title} className="download-card">
-              <h3 className="font-display text-2xl font-bold text-foreground">{download.title}</h3>
-              <div className="mt-3"><StatusBadge status={download.status} /></div>
-              {download.url ? (
-                <Button asChild variant="signal" className="mt-7 w-full">
-                  <a href={download.url}>{download.label}</a>
-                </Button>
-              ) : (
-                <Button disabled variant="secondary" className="mt-7 w-full">Coming Soon</Button>
-              )}
-            </article>
+          {currentDownloads.map((download) => (
+            <DownloadCard key={download.id} download={download} />
           ))}
         </div>
+        <PreviousVersions />
       </div>
+    </section>
+  );
+}
+
+function DownloadCard({ download }: { download: DownloadAsset }) {
+  const ready = hasDownload(download);
+  return (
+    <article className="download-card">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-signal">{download.platform}</p>
+          <h3 className="mt-3 font-display text-2xl font-bold text-foreground">{download.displayName}</h3>
+        </div>
+        <LogoAsset placement="card" />
+      </div>
+      <div className="mt-5 flex flex-wrap gap-2">
+        <span className={cn("download-status", ready ? "download-status-ready" : "download-status-muted")}>{downloadStatusLabel(download.availability)}</span>
+        {isZip(download) ? <span className="download-status">ZIP PACKAGE</span> : null}
+      </div>
+      <dl className="download-meta">
+        <div><dt>Version</dt><dd>{formatValue(download.version, "Pending")}</dd></div>
+        <div><dt>File type</dt><dd>{formatValue(download.fileType, "Not configured")}</dd></div>
+        <div><dt>File size</dt><dd>{formatValue(download.fileSize)}</dd></div>
+        <div><dt>Updated</dt><dd>{formatValue(download.releaseDate)}</dd></div>
+      </dl>
+      <p className="mt-5 text-sm leading-6 text-muted-foreground">{download.description}</p>
+      {ready ? (
+        <Button asChild variant="signal" className="mt-7 w-full">
+          <a href={download.downloadUrl} download={download.fileName || undefined}>
+            {download.platform === "Web" ? <ExternalLink /> : <Download />}
+            {download.buttonText}
+          </a>
+        </Button>
+      ) : (
+        <div className="mt-7 download-unavailable">
+          <AlertTriangle className="size-4" />
+          <div>
+            <strong>Download currently unavailable</strong>
+            <span>Check back soon or contact SYNCLAB Support.</span>
+          </div>
+        </div>
+      )}
+      {ready ? <p className="mt-3 text-xs text-muted-foreground">File size: {formatValue(download.fileSize)} • Version: {formatValue(download.version, "Pending")} • Updated: {formatValue(download.releaseDate)}</p> : null}
+      {ready && isZip(download) && download.containsInstaller ? (
+        <p className="mt-3 text-xs leading-5 text-muted-foreground">Download the ZIP package, extract it, then run the included installer/application.</p>
+      ) : null}
+      {download.checksum ? <p className="mt-3 break-all font-mono text-xs text-muted-foreground">Checksum: {download.checksum}</p> : null}
+    </article>
+  );
+}
+
+function PreviousVersions() {
+  return (
+    <section className="previous-versions" aria-labelledby="previous-versions-heading">
+      <h3 id="previous-versions-heading" className="font-display text-2xl font-bold uppercase text-foreground">Previous Versions</h3>
+      {previousDownloads.length > 0 ? (
+        <div className="mt-5 grid gap-3">
+          {previousDownloads.map((download) => (
+            <div key={download.id} className="version-row">
+              <div>
+                <strong>{download.displayName} {download.version}</strong>
+                <span>{download.platform} • {download.fileType} • {download.fileSize}</span>
+              </div>
+              <Button asChild variant="outline">
+                <a href={download.downloadUrl} download={download.fileName || undefined}>Download</a>
+              </Button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-4 text-sm text-muted-foreground">Previous versions will appear here after earlier public releases are configured.</p>
+      )}
     </section>
   );
 }
@@ -547,27 +683,34 @@ function PricingSection() {
 function ProductScreenshotsSection() {
   return (
     <section className="section-shell bg-background" aria-labelledby="screenshots-heading">
-      <SectionIntro eyebrow="Product previews" title="SYNCLAB interface studies" id="screenshots-heading" text="Original mock interfaces for the production environment, AI tools and sound-design modules." />
+      <SectionIntro eyebrow="Product previews" title="SYNCLAB product gallery" id="screenshots-heading" text="Official SYNCLAB screenshots can replace the interface previews from the centralized product image configuration." />
       <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {screenshotNames.map((name, index) => <ProductScreen key={name} name={name} index={index} />)}
+        {synclabConfig.productImages.map((image, index) => <ProductScreen key={image.title} image={image} index={index} />)}
       </div>
     </section>
   );
 }
 
-function ProductScreen({ name, index }: { name: string; index: number }) {
+function ProductScreen({ image, index }: { image: { title: string; description: string; imageUrl: string }; index: number }) {
   return (
     <article className="product-screen">
-      <div className="screen-header"><span>SYNCLAB</span><span>{name}</span></div>
-      <div className="screen-body">
-        <div className="screen-sidebar">{Array.from({ length: 5 }).map((_, item) => <span key={item} />)}</div>
-        <div className="screen-workspace">
-          {Array.from({ length: 8 }).map((_, item) => (
-            <span key={item} className={cn("screen-block", (item + index) % 3 === 0 && "screen-block-accent", item % 2 === 0 ? "w-3/4" : "w-1/2")} />
-          ))}
-        </div>
-      </div>
-      <h3 className="mt-5 font-display text-lg font-bold text-foreground">{name}</h3>
+      {image.imageUrl ? (
+        <img src={image.imageUrl} alt={`${image.title} in SYNCLAB Vocal Forge`} className="product-image" />
+      ) : (
+        <>
+          <div className="screen-header"><span>SYNCLAB</span><span>{image.title}</span></div>
+          <div className="screen-body">
+            <div className="screen-sidebar">{Array.from({ length: 5 }).map((_, item) => <span key={item} />)}</div>
+            <div className="screen-workspace">
+              {Array.from({ length: 8 }).map((_, item) => (
+                <span key={item} className={cn("screen-block", (item + index) % 3 === 0 && "screen-block-accent", item % 2 === 0 ? "w-3/4" : "w-1/2")} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      <h3 className="mt-5 font-display text-lg font-bold text-foreground">{image.title}</h3>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">{image.description}</p>
     </article>
   );
 }
@@ -631,7 +774,24 @@ function SupportSection() {
         <HelpCenterPanel />
         <SupportForm />
       </div>
+      <DownloadErrorHelp />
     </section>
+  );
+}
+
+function DownloadErrorHelp() {
+  return (
+    <article className="download-help-panel">
+      <AlertTriangle className="size-6 text-signal" />
+      <div>
+        <h3 className="font-display text-xl font-bold text-foreground">SYNCLAB couldn't start this download.</h3>
+        <p className="mt-2 text-sm text-muted-foreground">If a configured file is unavailable, try again or contact SYNCLAB Support.</p>
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+          <Button variant="outline"><RefreshCw />Try Again</Button>
+          <Button asChild variant="signal"><Link to="/support">Contact Support</Link></Button>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -689,8 +849,8 @@ function ConfigSection() {
   const fields = [
     ["Production domain", synclabConfig.urls.productionDomain],
     ["Web app URL", synclabConfig.urls.webApp],
-    ["macOS download URL", synclabConfig.urls.macDownload],
-    ["Windows download URL", synclabConfig.urls.windowsDownload],
+    ["macOS legacy download URL", synclabConfig.urls.macDownload],
+    ["Windows legacy download URL", synclabConfig.urls.windowsDownload],
     ["Support email", synclabConfig.urls.supportEmail],
     ["Help Center URL", synclabConfig.urls.helpCenter],
     ["Privacy URL", synclabConfig.urls.privacy],
@@ -698,18 +858,143 @@ function ConfigSection() {
     ["YouTube URL", synclabConfig.urls.youtube],
     ["Community URL", synclabConfig.urls.community],
     ["Product version", synclabConfig.productVersion],
+    ["Latest version", synclabConfig.latestVersion],
   ];
   return (
     <section className="section-shell bg-background" aria-labelledby="config-heading">
-      <SectionIntro eyebrow="Admin configuration" title="Launch settings" id="config-heading" text="Installer links, support routing, pricing, trials, product version and availability statuses are centralized for later updates." />
+      <SectionIntro eyebrow="Admin configuration" title="Launch settings" id="config-heading" text="Product version, platform files, web URL, ZIP details, release notes, system requirements and availability are centralized for future SYNCLAB releases." />
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {fields.map(([label, value]) => (
           <label key={label} className="field-label config-field">{label}<input readOnly value={value || "Not configured"} /></label>
         ))}
       </div>
       <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {synclabConfig.downloads.map((download) => (
+          <article key={download.id} className="config-download">
+            <h3>{download.displayName}</h3>
+            <dl>
+              <div><dt>File</dt><dd>{formatValue(download.fileName)}</dd></div>
+              <div><dt>Platform</dt><dd>{download.platform}</dd></div>
+              <div><dt>Version</dt><dd>{formatValue(download.version, "Pending")}</dd></div>
+              <div><dt>Type</dt><dd>{formatValue(download.fileType)}</dd></div>
+              <div><dt>Size</dt><dd>{formatValue(download.fileSize)}</dd></div>
+              <div><dt>Release date</dt><dd>{formatValue(download.releaseDate)}</dd></div>
+              <div><dt>Minimum OS</dt><dd>{formatValue(download.minimumRequirement)}</dd></div>
+              <div><dt>Button</dt><dd>{download.buttonText}</dd></div>
+              <div><dt>URL/path</dt><dd>{formatValue(download.downloadUrl)}</dd></div>
+              <div><dt>Status</dt><dd>{downloadStatusLabel(download.availability)}</dd></div>
+            </dl>
+          </article>
+        ))}
+      </div>
+      <ReleaseNotesSection />
+      <SystemRequirementsSection />
+      <DeveloperDownloadSection />
+      <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {Object.entries(synclabConfig.availability).map(([feature, status]) => (
           <div key={feature} className="config-status"><span>{feature.replace(/([A-Z])/g, " $1")}</span><StatusBadge status={status} /></div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ReleaseNotesSection() {
+  return (
+    <section id="whats-new" className="section-shell scroll-mt-24 border-y border-border bg-panel" aria-labelledby="release-heading">
+      <SectionIntro eyebrow="Release notes" title="What's New" id="release-heading" text="Latest SYNCLAB Vocal Forge release information, managed from one configuration source." />
+      <div className="mt-10 grid gap-4">
+        {synclabConfig.releaseNotes.map((release) => (
+          <article key={`${release.version}-${release.releaseDate}`} className="release-card">
+            <div className="flex flex-col justify-between gap-3 sm:flex-row">
+              <h3 className="font-display text-2xl font-bold text-foreground">SYNCLAB Vocal Forge {formatValue(release.version, "Version pending")}</h3>
+              <span className="release-date"><CalendarDays className="size-4" />{formatValue(release.releaseDate)}</span>
+            </div>
+            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <ReleaseList title="New" items={release.new} />
+              <ReleaseList title="Improved" items={release.improved} />
+              <ReleaseList title="Fixed" items={release.fixed} />
+              <ReleaseList title="Known Issues" items={release.knownIssues} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ReleaseList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="release-list">
+      <h4>{title}</h4>
+      {items.length > 0 ? (
+        <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
+      ) : (
+        <p>Updates will be published with the production release.</p>
+      )}
+    </div>
+  );
+}
+
+function InstallHelpSection() {
+  const installable = currentDownloads.filter((download) => download.platform === "macOS" || download.platform === "Windows");
+  return (
+    <section className="section-shell bg-background" aria-labelledby="install-heading">
+      <SectionIntro eyebrow="Install SYNCLAB" title="Install SYNCLAB" id="install-heading" text="Platform-specific installation guidance appears only when it matches the configured package type." />
+      <div className="mt-10 grid gap-4 md:grid-cols-2">
+        {installable.map((download) => (
+          <article key={`install-${download.id}`} className="install-card">
+            <h3>{download.platform}</h3>
+            {hasDownload(download) && isZip(download) ? (
+              <ol>
+                <li>Download the ZIP.</li>
+                <li>Extract the ZIP.</li>
+                {download.containsInstaller ? <li>Open the included application/installer.</li> : null}
+                <li>Follow the installation instructions included with the package.</li>
+              </ol>
+            ) : (
+              <p>Installation instructions will be published when the {download.platform} package is configured.</p>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SystemRequirementsSection() {
+  return (
+    <section id="system-requirements" className="section-shell scroll-mt-24 bg-background" aria-labelledby="requirements-heading">
+      <SectionIntro eyebrow="Compatibility" title="System Requirements" id="requirements-heading" text="Supported operating systems, storage, audio, MIDI and browser requirements are centralized for release updates." />
+      <div className="mt-10 grid gap-4 lg:grid-cols-3">
+        {synclabConfig.systemRequirements.map((requirement) => (
+          <article key={requirement.platform} className="requirements-card">
+            <h3>{requirement.platform}</h3>
+            <dl>
+              <div><dt>Supported version</dt><dd>{requirement.supportedVersion}</dd></div>
+              <div><dt>RAM</dt><dd>{requirement.ram}</dd></div>
+              <div><dt>Storage</dt><dd>{requirement.storage}</dd></div>
+              <div><dt>Audio</dt><dd>{requirement.audio}</dd></div>
+              <div><dt>MIDI</dt><dd>{requirement.midi}</dd></div>
+              {requirement.browsers ? <div><dt>Browsers</dt><dd>{requirement.browsers}</dd></div> : null}
+              {requirement.internet ? <div><dt>Internet</dt><dd>{requirement.internet}</dd></div> : null}
+            </dl>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function DeveloperDownloadSection() {
+  if (developerDownloads.length === 0) return null;
+  return (
+    <section className="developer-downloads" aria-labelledby="developer-downloads-heading">
+      <h3 id="developer-downloads-heading">SYNCLAB Website Package</h3>
+      <p>This administrative/developer download area is separate from SYNCLAB Vocal Forge application downloads.</p>
+      <div className="mt-5 grid gap-3">
+        {developerDownloads.map((download) => (
+          <DownloadCard key={download.id} download={download} />
         ))}
       </div>
     </section>
@@ -725,7 +1010,7 @@ function FinalCta() {
         <p className="mt-5 text-lg text-muted-foreground">Start creating with SYNCLAB Vocal Forge.</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <DownloadButton label="Download SYNCLAB" fullWidth />
-          <Button variant="outline" size="lg" disabled className="w-full sm:w-auto">Open Vocal Forge</Button>
+          <OpenVocalForgeButton fullWidth />
         </div>
       </div>
     </section>
@@ -741,7 +1026,11 @@ function Footer() {
           <p className="mt-5 max-w-sm text-sm leading-6 text-muted-foreground">© SYNCLAB Vocal Forge</p>
         </div>
         <nav className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5" aria-label="Footer navigation">
-          {footerLinks.map((item) => <Link key={item.to} to={item.to} className="footer-link">{item.label}</Link>)}
+          {footerLinks.map((item) => item.to ? (
+            <Link key={item.label} to={item.to} className="footer-link">{item.label}</Link>
+          ) : (
+            <a key={item.label} href={item.href} className="footer-link">{item.label}</a>
+          ))}
         </nav>
       </div>
     </footer>
@@ -796,6 +1085,9 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <StudioSection />
             <DesktopSection />
             <DownloadSection />
+            <ReleaseNotesSection />
+            <InstallHelpSection />
+            <SystemRequirementsSection />
             <PricingSection />
             <FirstTimeAssistantSection />
             <ProductScreenshotsSection />
@@ -807,10 +1099,10 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
         {mode === "features" ? <><PageHero eyebrow="Features" title="Everything connected." text="A professional connected workflow for vocals, beats, synths, sampling, mixing and finishing." /><FeaturesSection /></> : null}
         {mode === "ai" ? <><PageHero eyebrow="AI Tools" title="Assisted creation. Creator control." text="Traditional music production and AI assistance work together without replacing your decisions." /><AIToolsSection /><FirstTimeAssistantSection /></> : null}
         {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll, mixer and performance controls stay tied to the same session." /><StudioSection /><ProductScreenshotsSection /></> : null}
-        {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="The browser experience is designed to grow into native desktop production for macOS and Windows." /><DesktopSection /><DownloadSection /></> : null}
+        {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="macOS and Windows packages stay accurately labeled by their configured release status." /><DesktopSection /><DownloadSection /><InstallHelpSection /><SystemRequirementsSection /></> : null}
         {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="Plans for every stage." text="Final pricing is configurable so SYNCLAB can launch with the right plan structure." /><PricingSection /></> : null}
         {mode === "support" ? <><PageHero eyebrow="Support" title="SYNCLAB Support." text="Help, tutorials, problem reporting and product support belong to SYNCLAB." /><SupportSection /></> : null}
-        {mode === "help" ? <><PageHero eyebrow="Help Center" title="How can we help?" text="Search SYNCLAB guides by recording, MIDI, instruments, mixing, exporting and platform topics." /><section className="section-shell bg-background"><HelpCenterPanel /></section></> : null}
+        {mode === "help" ? <><PageHero eyebrow="Help Center" title="How can we help?" text="Search SYNCLAB guides by downloads, installation, recording, MIDI, instruments, mixing, exporting and platform topics." /><section className="section-shell bg-background"><HelpCenterPanel /><DownloadErrorHelp /></section></> : null}
         {mode === "config" ? <><PageHero eyebrow="Configuration" title="SYNCLAB launch settings." text="Centralized fields keep downloads, support, pricing, video, version and availability honest." /><ConfigSection /></> : null}
         {mode === "privacy" ? <LegalPlaceholder title="Privacy" text="The official SYNCLAB Vocal Forge privacy policy can be connected here when the policy URL is ready." /> : null}
         {mode === "terms" ? <LegalPlaceholder title="Terms" text="The official SYNCLAB Vocal Forge terms can be connected here when the terms URL is ready." /> : null}
