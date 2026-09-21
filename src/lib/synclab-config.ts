@@ -1,5 +1,4 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
-import synclabWindowsZip from "@/assets/synclab-win32-x64.zip.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
@@ -105,7 +104,7 @@ export const synclabConfig = {
     productionDomain: "",
     webApp: "",
     macDownload: "",
-    windowsDownload: "",
+    windowsDownload: "https://www.dropbox.com/scl/fi/ldajrcn0babk8xpjxhkdy/SYNCLAB-win32-x64.zip?rlkey=cwc6kd8f1t0cwyqtm6ihz972o&st=5ml9w02j&dl=1",
     supportEmail: "",
     helpCenter: "",
     privacy: "",
@@ -142,7 +141,7 @@ export const synclabConfig = {
       fileType: "ZIP PACKAGE",
       fileSize: "151 MB",
       releaseDate: "September 21, 2026",
-      downloadUrl: synclabWindowsZip.url,
+      downloadUrl: "https://www.dropbox.com/scl/fi/ldajrcn0babk8xpjxhkdy/SYNCLAB-win32-x64.zip?rlkey=cwc6kd8f1t0cwyqtm6ihz972o&st=5ml9w02j&dl=1",
       availability: "available",
       checksum: "",
       description:
