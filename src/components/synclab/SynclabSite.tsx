@@ -36,16 +36,16 @@ import {
   type DownloadAvailability,
 } from "@/lib/synclab-config";
 
-type PageMode = "home" | "features" | "ai" | "studio" | "desktop" | "pricing" | "support" | "help" | "config" | "privacy" | "terms" | "contact";
+type PageMode = "home" | "download" | "features" | "ai" | "studio" | "desktop" | "pricing" | "support" | "help" | "config" | "privacy" | "terms" | "contact";
 
 type StatusTone = "ready" | "soon" | "development" | "desktop";
 type SiteLink = { label: string; to?: LinkProps["to"]; href?: string };
 
 
 const footerLinks: ReadonlyArray<SiteLink> = [
-  { label: "Download", href: "/#download" },
-  { label: "What's New", href: "/#whats-new" },
-  { label: "System Requirements", href: "/#system-requirements" },
+  { label: "Download", to: "/download" },
+  { label: "What's New", href: "/download#whats-new" },
+  { label: "System Requirements", href: "/download#system-requirements" },
   { label: "Help Center", to: "/help-center" },
   { label: "Support", to: "/support" },
   { label: "Privacy", to: "/privacy" },
@@ -57,7 +57,7 @@ const navItems: ReadonlyArray<SiteLink> = [
   { label: "AI Tools", to: "/ai-tools" },
   { label: "Studio", to: "/studio" },
   { label: "Desktop", to: "/desktop" },
-  { label: "Download", href: "/#download" },
+  { label: "Download", to: "/download" },
   { label: "Support", to: "/support" },
 ] as const;
 
@@ -152,6 +152,10 @@ function formatValue(value: string, fallback = "Not configured") {
 
 function hasDownload(download: DownloadAsset) {
   return download.availability === "available" && download.downloadUrl.trim().length > 0;
+}
+
+function isExternalUrl(url: string) {
+  return /^https?:\/\//i.test(url.trim());
 }
 
 function isZip(download: DownloadAsset) {
@@ -616,14 +620,22 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
         <div><dt>File type</dt><dd>{formatValue(download.fileType, "Not configured")}</dd></div>
         <div><dt>File size</dt><dd>{formatValue(download.fileSize)}</dd></div>
         <div><dt>Updated</dt><dd>{formatValue(download.releaseDate)}</dd></div>
+        <div><dt>Minimum OS</dt><dd>{formatValue(download.minimumRequirement, "Not configured")}</dd></div>
       </dl>
       <p className="mt-5 text-sm leading-6 text-muted-foreground">{download.description}</p>
       {ready ? (
         <Button asChild variant="signal" className="mt-7 w-full">
-          <a href={download.downloadUrl} download={download.fileName || undefined}>
-            {download.platform === "Web" ? <ExternalLink /> : <Download />}
-            {download.buttonText}
-          </a>
+          {isExternalUrl(download.downloadUrl) ? (
+            <a href={download.downloadUrl} target="_blank" rel="noreferrer noopener">
+              {download.platform === "Web" ? <ExternalLink /> : <Download />}
+              {download.buttonText}
+            </a>
+          ) : (
+            <a href={download.downloadUrl} download={download.fileName || undefined}>
+              {download.platform === "Web" ? <ExternalLink /> : <Download />}
+              {download.buttonText}
+            </a>
+          )}
         </Button>
       ) : (
         <div className="mt-7 download-unavailable">
@@ -638,14 +650,24 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
       {ready && isZip(download) && download.containsInstaller ? (
         <p className="mt-3 text-xs leading-5 text-muted-foreground">Download the ZIP package, extract it, then run the included installer/application.</p>
       ) : null}
-      {download.checksum ? <p className="mt-3 break-all font-mono text-xs text-muted-foreground">Checksum: {download.checksum}</p> : null}
+      {download.checksum ? (
+        <p className="mt-3 break-all font-mono text-xs text-muted-foreground">SHA-256: {download.checksum}</p>
+      ) : null}
+      {download.platform !== "Source/Website Package" ? (
+        <nav className="download-links" aria-label={`${download.platform} download resources`}>
+          <a href="#install">Installation Instructions</a>
+          <a href="#system-requirements">System Requirements</a>
+          <a href="#whats-new">Release Notes</a>
+          <a href="#previous-versions">Previous Versions</a>
+        </nav>
+      ) : null}
     </article>
   );
 }
 
 function PreviousVersions() {
   return (
-    <section className="previous-versions" aria-labelledby="previous-versions-heading">
+    <section id="previous-versions" className="previous-versions scroll-mt-24" aria-labelledby="previous-versions-heading">
       <h3 id="previous-versions-heading" className="font-display text-2xl font-bold uppercase text-foreground">Previous Versions</h3>
       {previousDownloads.length > 0 ? (
         <div className="mt-5 grid gap-3">
@@ -952,13 +974,15 @@ function ReleaseList({ title, items }: { title: string; items: string[] }) {
 function InstallHelpSection() {
   const installable = currentDownloads.filter((download) => download.platform === "macOS" || download.platform === "Windows");
   return (
-    <section className="section-shell bg-background" aria-labelledby="install-heading">
+    <section id="install" className="section-shell scroll-mt-24 bg-background" aria-labelledby="install-heading">
       <SectionIntro eyebrow="Install SYNCLAB" title="Install SYNCLAB" id="install-heading" text="Platform-specific installation guidance appears only when it matches the configured package type." />
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {installable.map((download) => (
           <article key={`install-${download.id}`} className="install-card">
             <h3>{download.platform}</h3>
-            {hasDownload(download) && isZip(download) ? (
+            {download.installationSteps && download.installationSteps.length > 0 ? (
+              <ol>{download.installationSteps.map((step) => <li key={step}>{step}</li>)}</ol>
+            ) : hasDownload(download) && isZip(download) ? (
               <ol>
                 <li>Download the ZIP.</li>
                 <li>Extract the ZIP.</li>
@@ -985,6 +1009,7 @@ function SystemRequirementsSection() {
             <h3>{requirement.platform}</h3>
             <dl>
               <div><dt>Supported version</dt><dd>{requirement.supportedVersion}</dd></div>
+              <div><dt>Processor</dt><dd>{requirement.processor}</dd></div>
               <div><dt>RAM</dt><dd>{requirement.ram}</dd></div>
               <div><dt>Storage</dt><dd>{requirement.storage}</dd></div>
               <div><dt>Audio</dt><dd>{requirement.audio}</dd></div>
