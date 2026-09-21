@@ -1,3 +1,6 @@
+import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
+import synclabWindowsZip from "@/assets/synclab-win32-x64.zip.asset.json";
+
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
 export type DownloadPlatform = "macOS" | "Windows" | "Web" | "Universal" | "Source/Website Package";
@@ -71,13 +74,13 @@ export const synclabConfig = {
   brandSubline: "VOCAL FORGE",
   tagline: "Create. Record. Produce. Finish.",
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
-  productVersion: "Version pending",
-  latestVersion: "Version pending",
+  productVersion: "Windows preview build (2026-09-21)",
+  latestVersion: "Windows preview build (2026-09-21)",
   brandAssets: {
-    logoDark: null as BrandAsset | null,
-    logoLight: null as BrandAsset | null,
-    appIcon: null as BrandAsset | null,
-    favicon: "",
+    logoDark: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
+    logoLight: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
+    appIcon: { url: synclabLogo.url, alt: "SYNCLAB app icon" } as BrandAsset | null,
+    favicon: "/favicon.png",
   },
   urls: {
     productionDomain: "",
