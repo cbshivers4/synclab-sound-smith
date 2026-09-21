@@ -39,9 +39,10 @@ import {
 type PageMode = "home" | "features" | "ai" | "studio" | "desktop" | "pricing" | "support" | "help" | "config" | "privacy" | "terms" | "contact";
 
 type StatusTone = "ready" | "soon" | "development" | "desktop";
+type SiteLink = { label: string; to?: LinkProps["to"]; href?: string };
 
 
-const footerLinks = [
+const footerLinks: ReadonlyArray<SiteLink> = [
   { label: "Download", href: "/#download" },
   { label: "What's New", href: "/#whats-new" },
   { label: "System Requirements", href: "/#system-requirements" },
@@ -49,16 +50,16 @@ const footerLinks = [
   { label: "Support", to: "/support" },
   { label: "Privacy", to: "/privacy" },
   { label: "Terms", to: "/terms" },
-] as const satisfies ReadonlyArray<{ label: string; to?: LinkProps["to"]; href?: string }>;
+] as const;
 
-const navItems = [
+const navItems: ReadonlyArray<SiteLink> = [
   { label: "Features", to: "/features" },
   { label: "AI Tools", to: "/ai-tools" },
   { label: "Studio", to: "/studio" },
   { label: "Desktop", to: "/desktop" },
   { label: "Download", href: "/#download" },
   { label: "Support", to: "/support" },
-] as const satisfies ReadonlyArray<{ label: string; to?: LinkProps["to"]; href?: string }>;
+] as const;
 
 const featureCards = [
   {
@@ -127,9 +128,9 @@ const firstRunActions = [
   "Learn SYNCLAB",
 ];
 
-const currentDownloads = synclabConfig.downloads.filter((download) => download.current && download.publicRelease);
-const previousDownloads = synclabConfig.downloads.filter((download) => !download.current && download.publicRelease && download.downloadUrl);
-const developerDownloads = synclabConfig.downloads.filter((download) => !download.publicRelease);
+const currentDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => download.current && download.publicRelease);
+const previousDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => !download.current && download.publicRelease && download.downloadUrl);
+const developerDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => !download.publicRelease);
 
 function statusLabel(status: Availability) {
   if (status === "available") return "AVAILABLE NOW";
