@@ -167,14 +167,14 @@ export const synclabConfig = {
     },
     {
       id: "windows-current",
-      fileName: "SYNCLAB-win32-x64.zip",
+      fileName: "SYNCLAB-Vocal-Forge-1.0.0-win32-x64.zip",
       displayName: "SYNCLAB Vocal Forge for Windows",
       platform: "Windows",
-      version: "Windows preview build (2026-09-21)",
+      version: "1.0.0",
       fileType: "ZIP PACKAGE",
       fileSize: "151 MB",
       releaseDate: "September 21, 2026",
-      downloadUrl: "https://www.dropbox.com/scl/fi/ldajrcn0babk8xpjxhkdy/SYNCLAB-win32-x64.zip?rlkey=cwc6kd8f1t0cwyqtm6ihz972o&st=5ml9w02j&dl=1",
+      downloadUrl: "https://www.dropbox.com/scl/fi/2q7x2hhdz23k2nbz5fjkb/SYNCLAB-Vocal-Forge-1.0.0-win32-x64.zip?rlkey=sa8nxq6mkyws8qtfpg87lklur&st=3mbtow85&dl=1",
       availability: "available",
       checksum: "",
       description:
