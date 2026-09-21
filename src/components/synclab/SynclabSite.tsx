@@ -287,7 +287,7 @@ function OpenVocalForgeButton({ fullWidth = false }: { fullWidth?: boolean }) {
     return (
       <Button disabled variant="outline" size="lg" className={cn(fullWidth && "w-full", "sm:w-auto")}>
         <ExternalLink />
-        OPEN CURRENTLY UNAVAILABLE
+        VOCAL FORGE WEB COMING SOON
       </Button>
     );
   }
