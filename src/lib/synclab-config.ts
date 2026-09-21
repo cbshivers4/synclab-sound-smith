@@ -1,5 +1,4 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
-import synclabWindowsZip from "@/assets/synclab-win32-x64.zip.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
