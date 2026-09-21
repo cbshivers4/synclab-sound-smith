@@ -2,20 +2,14 @@ import { Link, type LinkProps } from "@tanstack/react-router";
 import {
   Activity,
   AlertTriangle,
-  Archive,
   AudioLines,
   CalendarDays,
-  CheckCircle2,
-  ChevronRight,
   Circle,
   Disc3,
   Download,
   Drum,
   ExternalLink,
-  FileArchive,
-  HardDrive,
   Headphones,
-  Info,
   KeyboardMusic,
   Menu,
   Mic2,
@@ -25,7 +19,6 @@ import {
   RefreshCw,
   Search,
   Send,
-  ShieldCheck,
   SlidersHorizontal,
   Square,
   X,
@@ -216,7 +209,7 @@ function SiteHeader() {
         <BrandMark />
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
           {navItems.map((item) => (
-            {item.to ? (
+            item.to ? (
               <Link key={item.label} to={item.to} className="nav-link" activeProps={{ className: "nav-link nav-link-active" }}>
                 {item.label}
               </Link>
@@ -224,7 +217,7 @@ function SiteHeader() {
               <a key={item.label} href={item.href} className="nav-link">
                 {item.label}
               </a>
-            )}
+            )
           ))}
         </nav>
         <div className="hidden lg:block">
@@ -244,7 +237,7 @@ function SiteHeader() {
           </div>
           <nav className="mt-10 grid gap-3" aria-label="Mobile navigation" onClick={() => setOpen(false)}>
             {navItems.map((item) => (
-              {item.to ? (
+              item.to ? (
                 <Link key={item.label} to={item.to} className="mobile-nav-link" onClick={() => setOpen(false)}>
                   {item.label}
                 </Link>
@@ -252,7 +245,7 @@ function SiteHeader() {
                 <a key={item.label} href={item.href} className="mobile-nav-link" onClick={() => setOpen(false)}>
                   {item.label}
                 </a>
-              )}
+              )
             ))}
           </nav>
           <div className="mt-8 pb-8">
