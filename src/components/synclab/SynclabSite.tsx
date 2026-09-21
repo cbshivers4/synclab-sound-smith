@@ -143,7 +143,7 @@ function downloadStatusLabel(status: DownloadAvailability) {
   if (status === "available") return "AVAILABLE NOW";
   if (status === "in-development") return "IN DEVELOPMENT";
   if (status === "coming-soon") return "COMING SOON";
-  return "DOWNLOAD CURRENTLY UNAVAILABLE";
+  return "COMING SOON";
 }
 
 function formatValue(value: string, fallback = "Not configured") {
@@ -641,8 +641,8 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
         <div className="mt-7 download-unavailable">
           <AlertTriangle className="size-4" />
           <div>
-            <strong>Download currently unavailable</strong>
-            <span>Check back soon or contact SYNCLAB Support.</span>
+            <strong>{download.availability === "in-development" ? "In development" : "Coming soon"}</strong>
+            <span>This platform activates automatically once SYNCLAB configures its download link. Check back soon or contact SYNCLAB Support.</span>
           </div>
         </div>
       )}
