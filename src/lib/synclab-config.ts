@@ -15,8 +15,15 @@ export type DownloadAsset = {
   fileType: string;
   fileSize: string;
   releaseDate: string;
+  /**
+   * Download location. May be an external URL on any storage provider
+   * (GitHub Releases, Cloudflare R2, S3, Dropbox, Google Drive, a SYNCLAB CDN…).
+   * Large application packages are never stored inside this website project.
+   * Leave empty to keep the platform marked COMING SOON.
+   */
   downloadUrl: string;
   availability: DownloadAvailability;
+  /** SHA-256 checksum, shown for download verification when configured. */
   checksum?: string;
   description: string;
   buttonText: string;
@@ -24,6 +31,15 @@ export type DownloadAsset = {
   containsInstaller: boolean;
   current: boolean;
   publicRelease: boolean;
+  /** Optional platform-specific installation steps. */
+  installationSteps?: string[];
+  /** Optional code-signing / notarization information. */
+  signing?: {
+    developerIdentity?: string;
+    signatureInfo?: string;
+    notarizationStatus?: string;
+    codeSigningStatus?: string;
+  };
 };
 
 export type ReleaseNote = {
