@@ -922,6 +922,7 @@ function ConfigSection() {
           </article>
         ))}
       </div>
+      <DownloadManagementPanel />
       <ReleaseNotesSection />
       <SystemRequirementsSection />
       <DeveloperDownloadSection />
@@ -1039,6 +1040,161 @@ function DeveloperDownloadSection() {
   );
 }
 
+function UpdateNotice() {
+  const current = synclabConfig.productVersion.trim();
+  const latest = synclabConfig.latestVersion.trim();
+  if (!latest || latest === current) return null;
+  return (
+    <div className="update-notice" role="status">
+      <RefreshCw className="size-5 text-signal" />
+      <div>
+        <strong>A new version of SYNCLAB Vocal Forge is available.</strong>
+        <span>Current version: {formatValue(current, "Pending")} • New version: {latest}</span>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <Button asChild variant="signal"><a href="#download"><Download />Download Update</a></Button>
+          <Button asChild variant="outline"><a href="#whats-new">What's New</a></Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DownloadAnnouncement() {
+  const announcement = synclabConfig.downloadAnnouncement.trim();
+  if (!announcement) return null;
+  return <p className="download-announcement">{announcement}</p>;
+}
+
+function VerifyDownloadSection() {
+  const checksums = currentDownloads.filter((download) => (download.checksum ?? "").trim().length > 0);
+  return (
+    <section className="section-shell border-y border-border bg-panel" aria-labelledby="verify-heading">
+      <SectionIntro
+        eyebrow="Download security"
+        title="Verify your download"
+        id="verify-heading"
+        text="SYNCLAB publishes a SHA-256 checksum for each release package so you can confirm your download is the official file."
+      />
+      <div className="mt-10 grid gap-4 lg:grid-cols-2">
+        <article className="verify-card">
+          <h3>macOS</h3>
+          <p>Open Terminal and run:</p>
+          <code>shasum -a 256 /path/to/SYNCLAB-download-file</code>
+          <p>Compare the result with the SHA-256 value shown on the download card.</p>
+        </article>
+        <article className="verify-card">
+          <h3>Windows</h3>
+          <p>Open PowerShell and run:</p>
+          <code>Get-FileHash .\SYNCLAB-download-file -Algorithm SHA256</code>
+          <p>Compare the result with the SHA-256 value shown on the download card.</p>
+        </article>
+      </div>
+      <div className="mt-6 grid gap-3">
+        {checksums.length > 0 ? (
+          checksums.map((download) => (
+            <p key={`sum-${download.id}`} className="verify-sum">
+              <strong>{download.platform}</strong>
+              <span>{download.checksum}</span>
+            </p>
+          ))
+        ) : (
+          <p className="text-sm text-muted-foreground">Checksums appear here once they are configured for a release package.</p>
+        )}
+        {currentDownloads.some((download) => download.signing) ? (
+          <div className="grid gap-3">
+            {currentDownloads.filter((download) => download.signing).map((download) => (
+              <div key={`sign-${download.id}`} className="verify-sum">
+                <strong>{download.platform} signing</strong>
+                <span>
+                  {[
+                    download.signing?.developerIdentity,
+                    download.signing?.signatureInfo,
+                    download.signing?.notarizationStatus,
+                    download.signing?.codeSigningStatus,
+                  ].filter(Boolean).join(" • ")}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">Signing and notarization details will be published when signed SYNCLAB installers are released.</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function DownloadManagementPanel() {
+  const platformIds = ["macos-current", "windows-current", "web-current"] as const;
+  const [selected, setSelected] = useState<string>(platformIds[0]);
+  const record = synclabConfig.downloads.find((download) => download.id === selected) ?? synclabConfig.downloads[0]!;
+  const [draft, setDraft] = useState<Record<string, string>>({});
+  const value = (field: string, fallback: string) => draft[`${selected}-${field}`] ?? fallback;
+  const update = (field: string, next: string) => setDraft((previous) => ({ ...previous, [`${selected}-${field}`]: next }));
+  const snippet = JSON.stringify(
+    {
+      id: record.id,
+      platform: record.platform,
+      version: value("version", record.version),
+      downloadUrl: value("downloadUrl", record.downloadUrl),
+      fileName: value("fileName", record.fileName),
+      fileType: value("fileType", record.fileType),
+      fileSize: value("fileSize", record.fileSize),
+      releaseDate: value("releaseDate", record.releaseDate),
+      minimumRequirement: value("minimumRequirement", record.minimumRequirement),
+      checksum: value("checksum", record.checksum ?? ""),
+      buttonText: value("buttonText", record.buttonText),
+      availability: value("availability", record.availability),
+      enabled: value("availability", record.availability) === "available",
+    },
+    null,
+    2,
+  );
+  return (
+    <section className="download-management" aria-labelledby="download-management-heading">
+      <h3 id="download-management-heading">Download Management</h3>
+      <p>
+        Large macOS and Windows packages stay on external storage — GitHub Releases, Cloudflare R2, Amazon S3, Dropbox, Google Drive or any
+        SYNCLAB-controlled CDN. Paste the external download URL here; the matching download button activates as soon as the URL is saved
+        into the site configuration and the status is set to AVAILABLE NOW. Never paste private storage credentials or signed secret URLs.
+      </p>
+      <div className="mt-6 flex flex-wrap gap-2">
+        {platformIds.map((id) => {
+          const item = synclabConfig.downloads.find((download) => download.id === id);
+          if (!item) return null;
+          return (
+            <Button key={id} variant={selected === id ? "signal" : "outline"} onClick={() => setSelected(id)}>
+              {item.platform}
+            </Button>
+          );
+        })}
+      </div>
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <label className="field-label config-field">Version<input value={value("version", record.version)} onChange={(event) => update("version", event.target.value)} /></label>
+        <label className="field-label config-field">External download URL<input value={value("downloadUrl", record.downloadUrl)} placeholder="https://…" onChange={(event) => update("downloadUrl", event.target.value)} /></label>
+        <label className="field-label config-field">File name<input value={value("fileName", record.fileName)} onChange={(event) => update("fileName", event.target.value)} /></label>
+        <label className="field-label config-field">File type<input value={value("fileType", record.fileType)} onChange={(event) => update("fileType", event.target.value)} /></label>
+        <label className="field-label config-field">File size<input value={value("fileSize", record.fileSize)} onChange={(event) => update("fileSize", event.target.value)} /></label>
+        <label className="field-label config-field">Release date<input value={value("releaseDate", record.releaseDate)} onChange={(event) => update("releaseDate", event.target.value)} /></label>
+        <label className="field-label config-field">Minimum operating system<input value={value("minimumRequirement", record.minimumRequirement)} onChange={(event) => update("minimumRequirement", event.target.value)} /></label>
+        <label className="field-label config-field">SHA-256 checksum<input value={value("checksum", record.checksum ?? "")} onChange={(event) => update("checksum", event.target.value)} /></label>
+        <label className="field-label config-field">Download button text<input value={value("buttonText", record.buttonText)} onChange={(event) => update("buttonText", event.target.value)} /></label>
+        <label className="field-label config-field">
+          Status
+          <select value={value("availability", record.availability)} onChange={(event) => update("availability", event.target.value)}>
+            <option value="available">AVAILABLE NOW</option>
+            <option value="coming-soon">COMING SOON</option>
+            <option value="in-development">IN DEVELOPMENT</option>
+            <option value="unavailable">UNAVAILABLE / MAINTENANCE</option>
+          </select>
+        </label>
+      </div>
+      <p className="mt-6 text-sm text-muted-foreground">Release configuration for {record.displayName}:</p>
+      <pre className="download-management-snippet">{snippet}</pre>
+    </section>
+  );
+}
+
 function FinalCta() {
   return (
     <section className="section-shell bg-hero-grid" aria-labelledby="final-heading">
@@ -1132,6 +1288,30 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <DemoSection />
             <SupportSection />
             <FinalCta />
+          </>
+        ) : null}
+        {mode === "download" ? (
+          <>
+            <PageHero
+              eyebrow="Downloads"
+              title="SYNCLAB VOCAL FORGE"
+              text="Download the tools you need to create, record, produce and finish your music."
+            />
+            <section className="section-shell bg-background">
+              <UpdateNotice />
+              <DownloadAnnouncement />
+              <div className="product-info-strip">
+                <div><dt>Latest version</dt><dd>{formatValue(synclabConfig.latestVersion, "Pending")}</dd></div>
+                <div><dt>Release date</dt><dd>{formatValue(currentDownloads.find((item) => hasDownload(item))?.releaseDate ?? "")}</dd></div>
+                <div><dt>Available platforms</dt><dd>macOS • Windows • Web</dd></div>
+              </div>
+            </section>
+            <DownloadSection />
+            <VerifyDownloadSection />
+            <ReleaseNotesSection />
+            <InstallHelpSection />
+            <SystemRequirementsSection />
+            <SupportSection />
           </>
         ) : null}
         {mode === "features" ? <><PageHero eyebrow="Features" title="Everything connected." text="A professional connected workflow for vocals, beats, synths, sampling, mixing and finishing." /><FeaturesSection /></> : null}
