@@ -167,7 +167,7 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
 function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/95">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
         <BrandMark />
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
@@ -185,7 +185,7 @@ function SiteHeader() {
         </Button>
       </div>
       {open ? (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-background px-5 py-4 lg:hidden">
+        <div className="fixed inset-0 z-[60] overflow-y-auto bg-background px-5 py-4 lg:hidden">
           <div className="flex items-center justify-between">
             <BrandMark compact />
             <Button variant="ghost" size="icon" aria-label="Close navigation menu" onClick={() => setOpen(false)}>
