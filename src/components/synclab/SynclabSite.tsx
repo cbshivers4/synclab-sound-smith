@@ -1300,11 +1300,11 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <section className="section-shell bg-background">
               <UpdateNotice />
               <DownloadAnnouncement />
-              <div className="product-info-strip">
+              <dl className="product-info-strip">
                 <div><dt>Latest version</dt><dd>{formatValue(synclabConfig.latestVersion, "Pending")}</dd></div>
                 <div><dt>Release date</dt><dd>{formatValue(currentDownloads.find((item) => hasDownload(item))?.releaseDate ?? "")}</dd></div>
                 <div><dt>Available platforms</dt><dd>macOS • Windows • Web</dd></div>
-              </div>
+              </dl>
             </section>
             <DownloadSection />
             <VerifyDownloadSection />
