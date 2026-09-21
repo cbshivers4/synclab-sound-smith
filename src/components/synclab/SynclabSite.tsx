@@ -1,15 +1,12 @@
-import { Link } from "@tanstack/react-router";
+import { Link, type LinkProps } from "@tanstack/react-router";
 import {
   Activity,
   AudioLines,
-  BrainCircuit,
-  Cable,
   ChevronRight,
   Circle,
   Disc3,
   Download,
   Drum,
-  Gauge,
   Headphones,
   KeyboardMusic,
   Menu,
@@ -19,11 +16,8 @@ import {
   Play,
   Search,
   Send,
-  Settings2,
   SlidersHorizontal,
-  Sparkles,
   Square,
-  Wand2,
   X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -35,6 +29,20 @@ import { helpCenterCategories, supportCategories, synclabConfig, type Availabili
 type PageMode = "home" | "features" | "ai" | "studio" | "desktop" | "pricing" | "support" | "help" | "config" | "privacy" | "terms" | "contact";
 
 type StatusTone = "ready" | "soon" | "development" | "desktop";
+
+
+const footerLinks = [
+  { label: "Features", to: "/features" },
+  { label: "AI Tools", to: "/ai-tools" },
+  { label: "Desktop", to: "/desktop" },
+  { label: "Pricing", to: "/pricing" },
+  { label: "Support", to: "/support" },
+  { label: "Help Center", to: "/help-center" },
+  { label: "Privacy", to: "/privacy" },
+  { label: "Terms", to: "/terms" },
+  { label: "Contact", to: "/contact" },
+  { label: "Config", to: "/config" },
+] as const satisfies ReadonlyArray<{ label: string; to: LinkProps["to"] }>;
 
 const navItems = [
   { label: "Features", to: "/features" },
@@ -733,18 +741,7 @@ function Footer() {
           <p className="mt-5 max-w-sm text-sm leading-6 text-muted-foreground">© SYNCLAB Vocal Forge</p>
         </div>
         <nav className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5" aria-label="Footer navigation">
-          {[
-            ["Features", "/features"],
-            ["AI Tools", "/ai-tools"],
-            ["Desktop", "/desktop"],
-            ["Pricing", "/pricing"],
-            ["Support", "/support"],
-            ["Help Center", "/help-center"],
-            ["Privacy", "/privacy"],
-            ["Terms", "/terms"],
-            ["Contact", "/contact"],
-            ["Config", "/config"],
-          ].map(([label, to]) => <Link key={to} to={to} className="footer-link">{label}</Link>)}
+          {footerLinks.map((item) => <Link key={item.to} to={item.to} className="footer-link">{item.label}</Link>)}
         </nav>
       </div>
     </footer>
