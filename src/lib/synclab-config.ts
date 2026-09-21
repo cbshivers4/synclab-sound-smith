@@ -1,3 +1,6 @@
+import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
+import synclabWindowsZip from "@/assets/synclab-win32-x64.zip.asset.json";
+
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
 export type DownloadPlatform = "macOS" | "Windows" | "Web" | "Universal" | "Source/Website Package";
@@ -71,13 +74,13 @@ export const synclabConfig = {
   brandSubline: "VOCAL FORGE",
   tagline: "Create. Record. Produce. Finish.",
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
-  productVersion: "Version pending",
-  latestVersion: "Version pending",
+  productVersion: "Windows preview build (2026-09-21)",
+  latestVersion: "Windows preview build (2026-09-21)",
   brandAssets: {
-    logoDark: null as BrandAsset | null,
-    logoLight: null as BrandAsset | null,
-    appIcon: null as BrandAsset | null,
-    favicon: "",
+    logoDark: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
+    logoLight: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
+    appIcon: { url: synclabLogo.url, alt: "SYNCLAB app icon" } as BrandAsset | null,
+    favicon: "/favicon.png",
   },
   urls: {
     productionDomain: "",
@@ -113,19 +116,20 @@ export const synclabConfig = {
     },
     {
       id: "windows-current",
-      fileName: "",
+      fileName: "SYNCLAB-win32-x64.zip",
       displayName: "SYNCLAB Vocal Forge for Windows",
       platform: "Windows",
-      version: "Version pending",
+      version: "Windows preview build (2026-09-21)",
       fileType: "ZIP PACKAGE",
-      fileSize: "",
-      releaseDate: "",
-      downloadUrl: "",
-      availability: "unavailable",
+      fileSize: "151 MB",
+      releaseDate: "September 21, 2026",
+      downloadUrl: synclabWindowsZip.url,
+      availability: "available",
       checksum: "",
-      description: "Downloadable desktop package for Windows.",
+      description:
+        "Portable Windows desktop package (64-bit). Extract the ZIP and run SYNCLAB.exe — no installer is included.",
       buttonText: "DOWNLOAD ZIP",
-      minimumRequirement: "System requirements will be published with the production release.",
+      minimumRequirement: "Windows 10 or later, 64-bit.",
       containsInstaller: false,
       current: true,
       publicRelease: true,
@@ -169,12 +173,16 @@ export const synclabConfig = {
   ] satisfies DownloadAsset[],
   releaseNotes: [
     {
-      version: "Version pending",
-      releaseDate: "",
-      new: [],
+      version: "Windows preview build (2026-09-21)",
+      releaseDate: "September 21, 2026",
+      new: ["Portable SYNCLAB Vocal Forge desktop package for 64-bit Windows."],
       improved: [],
       fixed: [],
-      knownIssues: ["Production release notes will be published with the official downloadable files."],
+      knownIssues: [
+        "This package is portable: extract the ZIP and run SYNCLAB.exe. No Windows installer is included yet.",
+        "macOS and Web releases are not available yet.",
+        "Full release notes will be published with the production release.",
+      ],
     },
   ] satisfies ReleaseNote[],
   systemRequirements: [
@@ -188,9 +196,9 @@ export const synclabConfig = {
     },
     {
       platform: "Windows",
-      supportedVersion: "System requirements will be published with the production release.",
+      supportedVersion: "Windows 10 or later, 64-bit.",
       ram: "System requirements will be published with the production release.",
-      storage: "System requirements will be published with the production release.",
+      storage: "Approximately 500 MB free space after extracting the ZIP package.",
       audio: "System requirements will be published with the production release.",
       midi: "System requirements will be published with the production release.",
     },
