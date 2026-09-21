@@ -15,8 +15,15 @@ export type DownloadAsset = {
   fileType: string;
   fileSize: string;
   releaseDate: string;
+  /**
+   * Download location. May be an external URL on any storage provider
+   * (GitHub Releases, Cloudflare R2, S3, Dropbox, Google Drive, a SYNCLAB CDN…).
+   * Large application packages are never stored inside this website project.
+   * Leave empty to keep the platform marked COMING SOON.
+   */
   downloadUrl: string;
   availability: DownloadAvailability;
+  /** SHA-256 checksum, shown for download verification when configured. */
   checksum?: string;
   description: string;
   buttonText: string;
@@ -24,6 +31,15 @@ export type DownloadAsset = {
   containsInstaller: boolean;
   current: boolean;
   publicRelease: boolean;
+  /** Optional platform-specific installation steps. */
+  installationSteps?: string[];
+  /** Optional code-signing / notarization information. */
+  signing?: {
+    developerIdentity?: string;
+    signatureInfo?: string;
+    notarizationStatus?: string;
+    codeSigningStatus?: string;
+  };
 };
 
 export type ReleaseNote = {
@@ -38,6 +54,7 @@ export type ReleaseNote = {
 export type SystemRequirement = {
   platform: "macOS" | "Windows" | "Web";
   supportedVersion: string;
+  processor: string;
   ram: string;
   storage: string;
   audio: string;
@@ -76,6 +93,8 @@ export const synclabConfig = {
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
   productVersion: "Windows preview build (2026-09-21)",
   latestVersion: "Windows preview build (2026-09-21)",
+  websiteVersion: "",
+  downloadAnnouncement: "",
   brandAssets: {
     logoDark: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
     logoLight: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
@@ -105,9 +124,9 @@ export const synclabConfig = {
       fileSize: "",
       releaseDate: "",
       downloadUrl: "",
-      availability: "unavailable",
+      availability: "coming-soon",
       checksum: "",
-      description: "Downloadable desktop package for macOS.",
+      description: "Downloadable desktop package for macOS, hosted on SYNCLAB external release storage.",
       buttonText: "DOWNLOAD ZIP",
       minimumRequirement: "System requirements will be published with the production release.",
       containsInstaller: false,
@@ -144,7 +163,7 @@ export const synclabConfig = {
       fileSize: "",
       releaseDate: "",
       downloadUrl: "",
-      availability: "unavailable",
+      availability: "coming-soon",
       description: "Browser-based SYNCLAB Vocal Forge access.",
       buttonText: "OPEN VOCAL FORGE",
       minimumRequirement: "System requirements will be published with the production release.",
@@ -189,6 +208,7 @@ export const synclabConfig = {
     {
       platform: "macOS",
       supportedVersion: "System requirements will be published with the production release.",
+      processor: "System requirements will be published with the production release.",
       ram: "System requirements will be published with the production release.",
       storage: "System requirements will be published with the production release.",
       audio: "System requirements will be published with the production release.",
@@ -197,6 +217,7 @@ export const synclabConfig = {
     {
       platform: "Windows",
       supportedVersion: "Windows 10 or later, 64-bit.",
+      processor: "System requirements will be published with the production release.",
       ram: "System requirements will be published with the production release.",
       storage: "Approximately 500 MB free space after extracting the ZIP package.",
       audio: "System requirements will be published with the production release.",
@@ -205,6 +226,7 @@ export const synclabConfig = {
     {
       platform: "Web",
       supportedVersion: "System requirements will be published with the production release.",
+      processor: "System requirements will be published with the production release.",
       ram: "System requirements will be published with the production release.",
       storage: "System requirements will be published with the production release.",
       audio: "System requirements will be published with the production release.",

@@ -36,16 +36,16 @@ import {
   type DownloadAvailability,
 } from "@/lib/synclab-config";
 
-type PageMode = "home" | "features" | "ai" | "studio" | "desktop" | "pricing" | "support" | "help" | "config" | "privacy" | "terms" | "contact";
+type PageMode = "home" | "download" | "features" | "ai" | "studio" | "desktop" | "pricing" | "support" | "help" | "config" | "privacy" | "terms" | "contact";
 
 type StatusTone = "ready" | "soon" | "development" | "desktop";
 type SiteLink = { label: string; to?: LinkProps["to"]; href?: string };
 
 
 const footerLinks: ReadonlyArray<SiteLink> = [
-  { label: "Download", href: "/#download" },
-  { label: "What's New", href: "/#whats-new" },
-  { label: "System Requirements", href: "/#system-requirements" },
+  { label: "Download", to: "/download" },
+  { label: "What's New", href: "/download#whats-new" },
+  { label: "System Requirements", href: "/download#system-requirements" },
   { label: "Help Center", to: "/help-center" },
   { label: "Support", to: "/support" },
   { label: "Privacy", to: "/privacy" },
@@ -57,7 +57,7 @@ const navItems: ReadonlyArray<SiteLink> = [
   { label: "AI Tools", to: "/ai-tools" },
   { label: "Studio", to: "/studio" },
   { label: "Desktop", to: "/desktop" },
-  { label: "Download", href: "/#download" },
+  { label: "Download", to: "/download" },
   { label: "Support", to: "/support" },
 ] as const;
 
@@ -143,7 +143,7 @@ function downloadStatusLabel(status: DownloadAvailability) {
   if (status === "available") return "AVAILABLE NOW";
   if (status === "in-development") return "IN DEVELOPMENT";
   if (status === "coming-soon") return "COMING SOON";
-  return "DOWNLOAD CURRENTLY UNAVAILABLE";
+  return "COMING SOON";
 }
 
 function formatValue(value: string, fallback = "Not configured") {
@@ -152,6 +152,10 @@ function formatValue(value: string, fallback = "Not configured") {
 
 function hasDownload(download: DownloadAsset) {
   return download.availability === "available" && download.downloadUrl.trim().length > 0;
+}
+
+function isExternalUrl(url: string) {
+  return /^https?:\/\//i.test(url.trim());
 }
 
 function isZip(download: DownloadAsset) {
@@ -616,21 +620,29 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
         <div><dt>File type</dt><dd>{formatValue(download.fileType, "Not configured")}</dd></div>
         <div><dt>File size</dt><dd>{formatValue(download.fileSize)}</dd></div>
         <div><dt>Updated</dt><dd>{formatValue(download.releaseDate)}</dd></div>
+        <div><dt>Minimum OS</dt><dd>{formatValue(download.minimumRequirement, "Not configured")}</dd></div>
       </dl>
       <p className="mt-5 text-sm leading-6 text-muted-foreground">{download.description}</p>
       {ready ? (
         <Button asChild variant="signal" className="mt-7 w-full">
-          <a href={download.downloadUrl} download={download.fileName || undefined}>
-            {download.platform === "Web" ? <ExternalLink /> : <Download />}
-            {download.buttonText}
-          </a>
+          {isExternalUrl(download.downloadUrl) ? (
+            <a href={download.downloadUrl} target="_blank" rel="noreferrer noopener">
+              {download.platform === "Web" ? <ExternalLink /> : <Download />}
+              {download.buttonText}
+            </a>
+          ) : (
+            <a href={download.downloadUrl} download={download.fileName || undefined}>
+              {download.platform === "Web" ? <ExternalLink /> : <Download />}
+              {download.buttonText}
+            </a>
+          )}
         </Button>
       ) : (
         <div className="mt-7 download-unavailable">
           <AlertTriangle className="size-4" />
           <div>
-            <strong>Download currently unavailable</strong>
-            <span>Check back soon or contact SYNCLAB Support.</span>
+            <strong>{download.availability === "in-development" ? "In development" : "Coming soon"}</strong>
+            <span>This platform activates automatically once SYNCLAB configures its download link. Check back soon or contact SYNCLAB Support.</span>
           </div>
         </div>
       )}
@@ -638,14 +650,24 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
       {ready && isZip(download) && download.containsInstaller ? (
         <p className="mt-3 text-xs leading-5 text-muted-foreground">Download the ZIP package, extract it, then run the included installer/application.</p>
       ) : null}
-      {download.checksum ? <p className="mt-3 break-all font-mono text-xs text-muted-foreground">Checksum: {download.checksum}</p> : null}
+      {download.checksum ? (
+        <p className="mt-3 break-all font-mono text-xs text-muted-foreground">SHA-256: {download.checksum}</p>
+      ) : null}
+      {download.platform !== "Source/Website Package" ? (
+        <nav className="download-links" aria-label={`${download.platform} download resources`}>
+          <a href="#install">Installation Instructions</a>
+          <a href="#system-requirements">System Requirements</a>
+          <a href="#whats-new">Release Notes</a>
+          <a href="#previous-versions">Previous Versions</a>
+        </nav>
+      ) : null}
     </article>
   );
 }
 
 function PreviousVersions() {
   return (
-    <section className="previous-versions" aria-labelledby="previous-versions-heading">
+    <section id="previous-versions" className="previous-versions scroll-mt-24" aria-labelledby="previous-versions-heading">
       <h3 id="previous-versions-heading" className="font-display text-2xl font-bold uppercase text-foreground">Previous Versions</h3>
       {previousDownloads.length > 0 ? (
         <div className="mt-5 grid gap-3">
@@ -900,6 +922,7 @@ function ConfigSection() {
           </article>
         ))}
       </div>
+      <DownloadManagementPanel />
       <ReleaseNotesSection />
       <SystemRequirementsSection />
       <DeveloperDownloadSection />
@@ -952,13 +975,15 @@ function ReleaseList({ title, items }: { title: string; items: string[] }) {
 function InstallHelpSection() {
   const installable = currentDownloads.filter((download) => download.platform === "macOS" || download.platform === "Windows");
   return (
-    <section className="section-shell bg-background" aria-labelledby="install-heading">
+    <section id="install" className="section-shell scroll-mt-24 bg-background" aria-labelledby="install-heading">
       <SectionIntro eyebrow="Install SYNCLAB" title="Install SYNCLAB" id="install-heading" text="Platform-specific installation guidance appears only when it matches the configured package type." />
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {installable.map((download) => (
           <article key={`install-${download.id}`} className="install-card">
             <h3>{download.platform}</h3>
-            {hasDownload(download) && isZip(download) ? (
+            {download.installationSteps && download.installationSteps.length > 0 ? (
+              <ol>{download.installationSteps.map((step) => <li key={step}>{step}</li>)}</ol>
+            ) : hasDownload(download) && isZip(download) ? (
               <ol>
                 <li>Download the ZIP.</li>
                 <li>Extract the ZIP.</li>
@@ -985,6 +1010,7 @@ function SystemRequirementsSection() {
             <h3>{requirement.platform}</h3>
             <dl>
               <div><dt>Supported version</dt><dd>{requirement.supportedVersion}</dd></div>
+              <div><dt>Processor</dt><dd>{requirement.processor}</dd></div>
               <div><dt>RAM</dt><dd>{requirement.ram}</dd></div>
               <div><dt>Storage</dt><dd>{requirement.storage}</dd></div>
               <div><dt>Audio</dt><dd>{requirement.audio}</dd></div>
@@ -1010,6 +1036,161 @@ function DeveloperDownloadSection() {
           <DownloadCard key={download.id} download={download} />
         ))}
       </div>
+    </section>
+  );
+}
+
+function UpdateNotice() {
+  const current = synclabConfig.productVersion.trim();
+  const latest = synclabConfig.latestVersion.trim();
+  if (!latest || latest === current) return null;
+  return (
+    <div className="update-notice" role="status">
+      <RefreshCw className="size-5 text-signal" />
+      <div>
+        <strong>A new version of SYNCLAB Vocal Forge is available.</strong>
+        <span>Current version: {formatValue(current, "Pending")} • New version: {latest}</span>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <Button asChild variant="signal"><a href="#download"><Download />Download Update</a></Button>
+          <Button asChild variant="outline"><a href="#whats-new">What's New</a></Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DownloadAnnouncement() {
+  const announcement = synclabConfig.downloadAnnouncement.trim();
+  if (!announcement) return null;
+  return <p className="download-announcement">{announcement}</p>;
+}
+
+function VerifyDownloadSection() {
+  const checksums = currentDownloads.filter((download) => (download.checksum ?? "").trim().length > 0);
+  return (
+    <section className="section-shell border-y border-border bg-panel" aria-labelledby="verify-heading">
+      <SectionIntro
+        eyebrow="Download security"
+        title="Verify your download"
+        id="verify-heading"
+        text="SYNCLAB publishes a SHA-256 checksum for each release package so you can confirm your download is the official file."
+      />
+      <div className="mt-10 grid gap-4 lg:grid-cols-2">
+        <article className="verify-card">
+          <h3>macOS</h3>
+          <p>Open Terminal and run:</p>
+          <code>shasum -a 256 /path/to/SYNCLAB-download-file</code>
+          <p>Compare the result with the SHA-256 value shown on the download card.</p>
+        </article>
+        <article className="verify-card">
+          <h3>Windows</h3>
+          <p>Open PowerShell and run:</p>
+          <code>Get-FileHash .\SYNCLAB-download-file -Algorithm SHA256</code>
+          <p>Compare the result with the SHA-256 value shown on the download card.</p>
+        </article>
+      </div>
+      <div className="mt-6 grid gap-3">
+        {checksums.length > 0 ? (
+          checksums.map((download) => (
+            <p key={`sum-${download.id}`} className="verify-sum">
+              <strong>{download.platform}</strong>
+              <span>{download.checksum}</span>
+            </p>
+          ))
+        ) : (
+          <p className="text-sm text-muted-foreground">Checksums appear here once they are configured for a release package.</p>
+        )}
+        {currentDownloads.some((download) => download.signing) ? (
+          <div className="grid gap-3">
+            {currentDownloads.filter((download) => download.signing).map((download) => (
+              <div key={`sign-${download.id}`} className="verify-sum">
+                <strong>{download.platform} signing</strong>
+                <span>
+                  {[
+                    download.signing?.developerIdentity,
+                    download.signing?.signatureInfo,
+                    download.signing?.notarizationStatus,
+                    download.signing?.codeSigningStatus,
+                  ].filter(Boolean).join(" • ")}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">Signing and notarization details will be published when signed SYNCLAB installers are released.</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function DownloadManagementPanel() {
+  const platformIds = ["macos-current", "windows-current", "web-current"] as const;
+  const [selected, setSelected] = useState<string>(platformIds[0]);
+  const record = synclabConfig.downloads.find((download) => download.id === selected) ?? synclabConfig.downloads[0]!;
+  const [draft, setDraft] = useState<Record<string, string>>({});
+  const value = (field: string, fallback: string) => draft[`${selected}-${field}`] ?? fallback;
+  const update = (field: string, next: string) => setDraft((previous) => ({ ...previous, [`${selected}-${field}`]: next }));
+  const snippet = JSON.stringify(
+    {
+      id: record.id,
+      platform: record.platform,
+      version: value("version", record.version),
+      downloadUrl: value("downloadUrl", record.downloadUrl),
+      fileName: value("fileName", record.fileName),
+      fileType: value("fileType", record.fileType),
+      fileSize: value("fileSize", record.fileSize),
+      releaseDate: value("releaseDate", record.releaseDate),
+      minimumRequirement: value("minimumRequirement", record.minimumRequirement),
+      checksum: value("checksum", record.checksum ?? ""),
+      buttonText: value("buttonText", record.buttonText),
+      availability: value("availability", record.availability),
+      enabled: value("availability", record.availability) === "available",
+    },
+    null,
+    2,
+  );
+  return (
+    <section className="download-management" aria-labelledby="download-management-heading">
+      <h3 id="download-management-heading">Download Management</h3>
+      <p>
+        Large macOS and Windows packages stay on external storage — GitHub Releases, Cloudflare R2, Amazon S3, Dropbox, Google Drive or any
+        SYNCLAB-controlled CDN. Paste the external download URL here; the matching download button activates as soon as the URL is saved
+        into the site configuration and the status is set to AVAILABLE NOW. Never paste private storage credentials or signed secret URLs.
+      </p>
+      <div className="mt-6 flex flex-wrap gap-2">
+        {platformIds.map((id) => {
+          const item = synclabConfig.downloads.find((download) => download.id === id);
+          if (!item) return null;
+          return (
+            <Button key={id} variant={selected === id ? "signal" : "outline"} onClick={() => setSelected(id)}>
+              {item.platform}
+            </Button>
+          );
+        })}
+      </div>
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <label className="field-label config-field">Version<input value={value("version", record.version)} onChange={(event) => update("version", event.target.value)} /></label>
+        <label className="field-label config-field">External download URL<input value={value("downloadUrl", record.downloadUrl)} placeholder="https://…" onChange={(event) => update("downloadUrl", event.target.value)} /></label>
+        <label className="field-label config-field">File name<input value={value("fileName", record.fileName)} onChange={(event) => update("fileName", event.target.value)} /></label>
+        <label className="field-label config-field">File type<input value={value("fileType", record.fileType)} onChange={(event) => update("fileType", event.target.value)} /></label>
+        <label className="field-label config-field">File size<input value={value("fileSize", record.fileSize)} onChange={(event) => update("fileSize", event.target.value)} /></label>
+        <label className="field-label config-field">Release date<input value={value("releaseDate", record.releaseDate)} onChange={(event) => update("releaseDate", event.target.value)} /></label>
+        <label className="field-label config-field">Minimum operating system<input value={value("minimumRequirement", record.minimumRequirement)} onChange={(event) => update("minimumRequirement", event.target.value)} /></label>
+        <label className="field-label config-field">SHA-256 checksum<input value={value("checksum", record.checksum ?? "")} onChange={(event) => update("checksum", event.target.value)} /></label>
+        <label className="field-label config-field">Download button text<input value={value("buttonText", record.buttonText)} onChange={(event) => update("buttonText", event.target.value)} /></label>
+        <label className="field-label config-field">
+          Status
+          <select value={value("availability", record.availability)} onChange={(event) => update("availability", event.target.value)}>
+            <option value="available">AVAILABLE NOW</option>
+            <option value="coming-soon">COMING SOON</option>
+            <option value="in-development">IN DEVELOPMENT</option>
+            <option value="unavailable">UNAVAILABLE / MAINTENANCE</option>
+          </select>
+        </label>
+      </div>
+      <p className="mt-6 text-sm text-muted-foreground">Release configuration for {record.displayName}:</p>
+      <pre className="download-management-snippet">{snippet}</pre>
     </section>
   );
 }
@@ -1107,6 +1288,30 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <DemoSection />
             <SupportSection />
             <FinalCta />
+          </>
+        ) : null}
+        {mode === "download" ? (
+          <>
+            <PageHero
+              eyebrow="Downloads"
+              title="SYNCLAB VOCAL FORGE"
+              text="Download the tools you need to create, record, produce and finish your music."
+            />
+            <section className="section-shell bg-background">
+              <UpdateNotice />
+              <DownloadAnnouncement />
+              <dl className="product-info-strip">
+                <div><dt>Latest version</dt><dd>{formatValue(synclabConfig.latestVersion, "Pending")}</dd></div>
+                <div><dt>Release date</dt><dd>{formatValue(currentDownloads.find((item) => hasDownload(item))?.releaseDate ?? "")}</dd></div>
+                <div><dt>Available platforms</dt><dd>macOS • Windows • Web</dd></div>
+              </dl>
+            </section>
+            <DownloadSection />
+            <VerifyDownloadSection />
+            <ReleaseNotesSection />
+            <InstallHelpSection />
+            <SystemRequirementsSection />
+            <SupportSection />
           </>
         ) : null}
         {mode === "features" ? <><PageHero eyebrow="Features" title="Everything connected." text="A professional connected workflow for vocals, beats, synths, sampling, mixing and finishing." /><FeaturesSection /></> : null}

@@ -1434,3 +1434,31 @@
     animation-iteration-count: 1 !important;
   }
 }
+
+@utility download-links {
+  @apply mt-5 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4 text-xs font-medium text-muted-foreground;
+}
+
+@utility update-notice {
+  @apply flex gap-4 rounded-xl border border-signal/40 bg-signal/5 p-5;
+}
+
+@utility download-announcement {
+  @apply mt-6 rounded-lg border border-border bg-panel p-4 text-sm text-muted-foreground;
+}
+
+@utility verify-card {
+  @apply rounded-xl border border-border bg-background p-6 text-sm leading-6 text-muted-foreground;
+}
+
+@utility verify-sum {
+  @apply flex flex-col gap-1 rounded-lg border border-border bg-background p-4 font-mono text-xs break-all text-muted-foreground;
+}
+
+@utility download-management {
+  @apply mt-12 rounded-xl border border-border bg-panel p-6 lg:p-8;
+}
+
+@utility download-management-snippet {
+  @apply mt-3 overflow-x-auto rounded-lg border border-border bg-background p-4 font-mono text-xs leading-5 text-muted-foreground;
+}
