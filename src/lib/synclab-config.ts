@@ -141,14 +141,14 @@ export const synclabConfig = {
     },
     {
       id: "macos-intel-current",
-      fileName: "SYNCLAB-darwin-x64.zip",
+      fileName: "SYNCLAB-Vocal-Forge-1.0.0-macOS-x64.zip",
       displayName: "SYNCLAB Vocal Forge for macOS (Intel)",
       platform: "macOS",
-      version: "macOS preview build (2026-09-21)",
+      version: "1.0.0",
       fileType: "ZIP PACKAGE",
       fileSize: "",
       releaseDate: "September 21, 2026",
-      downloadUrl: "https://www.dropbox.com/scl/fi/83npuee52d0hkhpp7rcoe/SYNCLAB-darwin-x64.zip?rlkey=0x0o4ju78fle507pozklu43bv&st=b326mihi&dl=1",
+      downloadUrl: "https://www.dropbox.com/scl/fi/gtj5hzd6xzgue7m9ihlrm/SYNCLAB-Vocal-Forge-1.0.0-macOS-x64.zip?rlkey=sa8nxq6mkyws8qtfpg87lklur&st=3mbtow85&dl=1",
       availability: "available",
       checksum: "",
       description:
