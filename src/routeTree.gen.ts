@@ -14,6 +14,7 @@ import { Route as AiToolsRouteImport } from './routes/ai-tools'
 import { Route as ConfigRouteImport } from './routes/config'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DesktopRouteImport } from './routes/desktop'
+import { Route as DownloadRouteImport } from './routes/download'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as HelpCenterRouteImport } from './routes/help-center'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -45,6 +46,11 @@ const ContactRoute = ContactRouteImport.update({
 const DesktopRoute = DesktopRouteImport.update({
   id: '/desktop',
   path: '/desktop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadRoute = DownloadRouteImport.update({
+  id: '/download',
+  path: '/download',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeaturesRoute = FeaturesRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/config': typeof ConfigRoute
   '/contact': typeof ContactRoute
   '/desktop': typeof DesktopRoute
+  '/download': typeof DownloadRoute
   '/features': typeof FeaturesRoute
   '/help-center': typeof HelpCenterRoute
   '/pricing': typeof PricingRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/config': typeof ConfigRoute
   '/contact': typeof ContactRoute
   '/desktop': typeof DesktopRoute
+  '/download': typeof DownloadRoute
   '/features': typeof FeaturesRoute
   '/help-center': typeof HelpCenterRoute
   '/pricing': typeof PricingRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/config': typeof ConfigRoute
   '/contact': typeof ContactRoute
   '/desktop': typeof DesktopRoute
+  '/download': typeof DownloadRoute
   '/features': typeof FeaturesRoute
   '/help-center': typeof HelpCenterRoute
   '/pricing': typeof PricingRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/config'
     | '/contact'
     | '/desktop'
+    | '/download'
     | '/features'
     | '/help-center'
     | '/pricing'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/config'
     | '/contact'
     | '/desktop'
+    | '/download'
     | '/features'
     | '/help-center'
     | '/pricing'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/config'
     | '/contact'
     | '/desktop'
+    | '/download'
     | '/features'
     | '/help-center'
     | '/pricing'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   ConfigRoute: typeof ConfigRoute
   ContactRoute: typeof ContactRoute
   DesktopRoute: typeof DesktopRoute
+  DownloadRoute: typeof DownloadRoute
   FeaturesRoute: typeof FeaturesRoute
   HelpCenterRoute: typeof HelpCenterRoute
   PricingRoute: typeof PricingRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/desktop'
       fullPath: '/desktop'
       preLoaderRoute: typeof DesktopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/download': {
+      id: '/download'
+      path: '/download'
+      fullPath: '/download'
+      preLoaderRoute: typeof DownloadRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features': {
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfigRoute: ConfigRoute,
   ContactRoute: ContactRoute,
   DesktopRoute: DesktopRoute,
+  DownloadRoute: DownloadRoute,
   FeaturesRoute: FeaturesRoute,
   HelpCenterRoute: HelpCenterRoute,
   PricingRoute: PricingRoute,
