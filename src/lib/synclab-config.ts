@@ -192,9 +192,9 @@ export const synclabConfig = {
     },
     {
       platform: "Windows",
-      supportedVersion: "System requirements will be published with the production release.",
+      supportedVersion: "Windows 10 or later, 64-bit.",
       ram: "System requirements will be published with the production release.",
-      storage: "System requirements will be published with the production release.",
+      storage: "Approximately 500 MB free space after extracting the ZIP package.",
       audio: "System requirements will be published with the production release.",
       midi: "System requirements will be published with the production release.",
     },
