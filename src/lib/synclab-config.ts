@@ -104,7 +104,7 @@ export const synclabConfig = {
     productionDomain: "",
     webApp: "",
     macDownload: "https://www.dropbox.com/scl/fi/b7o5tv8f618ed0qzi2hmg/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-2.zip?rlkey=o7fart4kq5c91kckzde01gaup&st=sp2dqbgo&dl=1",
-    windowsDownload: "",
+    windowsDownload: "https://www.dropbox.com/scl/fi/poa17oiwg71d6yr648xct/SYNCLAB-Vocal-Forge-1.0.0-Windows-x64-1.zip?rlkey=2ek335rwl5c17yt09f4njbw9p&st=4r49hcdd&dl=1",
     supportEmail: "",
     helpCenter: "",
     privacy: "",
