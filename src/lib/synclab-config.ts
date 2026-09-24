@@ -114,6 +114,32 @@ export const synclabConfig = {
   },
   downloads: [
     {
+      id: "macos-arm64-current",
+      fileName: "SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-1.zip",
+      displayName: "SYNCLAB Vocal Forge for macOS (Apple Silicon)",
+      platform: "macOS",
+      version: "1.0.0",
+      fileType: "ZIP PACKAGE",
+      fileSize: "",
+      releaseDate: "September 24, 2026",
+      downloadUrl: "https://www.dropbox.com/scl/fi/2blhtxpokj4qc1fbyruf2/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-1.zip?rlkey=3onknd5gygzbrovbf8youhlha&st=9ynubmsl&dl=1",
+      availability: "available",
+      checksum: "",
+      description:
+        "Portable macOS desktop package for Apple Silicon Macs (M1, M2, M3, M4 and later). Extract the ZIP and open the included SYNCLAB app — no installer is included.",
+      installationSteps: [
+        "Download the ZIP and double-click it to extract the SYNCLAB app.",
+        "Because this is an unsigned preview build, macOS may say \"SYNCLAB cannot be opened because the developer cannot be verified.\" Click Cancel — do not move the app to Trash.",
+        "Right-click (or Control-click) the SYNCLAB app and choose Open, then click Open in the dialog. It only needs to be approved once.",
+        "Alternative: open Apple menu → System Settings → Privacy & Security and click \"Open Anyway\" next to the SYNCLAB message.",
+      ],
+      buttonText: "DOWNLOAD ZIP",
+      minimumRequirement: "macOS version will be confirmed with the production release.",
+      containsInstaller: false,
+      current: true,
+      publicRelease: true,
+    },
+    {
       id: "web-current",
       fileName: "",
       displayName: "SYNCLAB Vocal Forge Web",
