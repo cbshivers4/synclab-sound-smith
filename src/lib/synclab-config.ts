@@ -143,6 +143,7 @@ export const synclabConfig = {
       releaseDate: "",
       downloadUrl: "",
       availability: "unavailable",
+      checksum: "",
       description: "Administrative website source/package download, separate from the Vocal Forge application.",
       buttonText: "DOWNLOAD WEBSITE PACKAGE",
       minimumRequirement: "",
