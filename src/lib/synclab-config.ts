@@ -124,6 +124,7 @@ export const synclabConfig = {
       releaseDate: "",
       downloadUrl: "",
       availability: "coming-soon",
+      checksum: "",
       description: "Browser-based SYNCLAB Vocal Forge access.",
       buttonText: "OPEN VOCAL FORGE",
       minimumRequirement: "System requirements will be published with the production release.",
