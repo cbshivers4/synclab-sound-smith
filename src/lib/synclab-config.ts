@@ -103,7 +103,7 @@ export const synclabConfig = {
   urls: {
     productionDomain: "",
     webApp: "",
-    macDownload: "https://www.dropbox.com/scl/fi/2blhtxpokj4qc1fbyruf2/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-1.zip?rlkey=3onknd5gygzbrovbf8youhlha&st=9ynubmsl&dl=1",
+    macDownload: "https://www.dropbox.com/scl/fi/b7o5tv8f618ed0qzi2hmg/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-2.zip?rlkey=o7fart4kq5c91kckzde01gaup&st=sp2dqbgo&dl=1",
     windowsDownload: "",
     supportEmail: "",
     helpCenter: "",
@@ -115,14 +115,14 @@ export const synclabConfig = {
   downloads: [
     {
       id: "macos-arm64-current",
-      fileName: "SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-1.zip",
+      fileName: "SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-2.zip",
       displayName: "SYNCLAB Vocal Forge for macOS (Apple Silicon)",
       platform: "macOS",
       version: "1.0.0",
       fileType: "ZIP PACKAGE",
       fileSize: "",
       releaseDate: "September 24, 2026",
-      downloadUrl: "https://www.dropbox.com/scl/fi/2blhtxpokj4qc1fbyruf2/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-1.zip?rlkey=3onknd5gygzbrovbf8youhlha&st=9ynubmsl&dl=1",
+      downloadUrl: "https://www.dropbox.com/scl/fi/b7o5tv8f618ed0qzi2hmg/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-2.zip?rlkey=o7fart4kq5c91kckzde01gaup&st=sp2dqbgo&dl=1",
       availability: "available",
       checksum: "",
       description:
