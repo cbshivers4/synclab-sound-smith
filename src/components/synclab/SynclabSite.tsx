@@ -328,6 +328,7 @@ function FeaturesSection({ compact = false }: { compact?: boolean }) {
 
 function StudioSection() {
   const [timeline, ...tools] = synclabConfig.productImages;
+  if (!timeline) return null;
   return (
     <section className="section-shell bg-background" aria-labelledby="studio-heading">
       <SectionIntro
