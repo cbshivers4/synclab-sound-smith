@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AiToolsRouteImport } from './routes/ai-tools'
 import { Route as ConfigRouteImport } from './routes/config'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DesktopRouteImport } from './routes/desktop'
@@ -26,11 +25,6 @@ import { Route as TermsRouteImport } from './routes/terms'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AiToolsRoute = AiToolsRouteImport.update({
-  id: '/ai-tools',
-  path: '/ai-tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfigRoute = ConfigRouteImport.update({
@@ -91,7 +85,6 @@ const TermsRoute = TermsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/ai-tools': typeof AiToolsRoute
   '/config': typeof ConfigRoute
   '/contact': typeof ContactRoute
   '/desktop': typeof DesktopRoute
@@ -106,7 +99,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/ai-tools': typeof AiToolsRoute
   '/config': typeof ConfigRoute
   '/contact': typeof ContactRoute
   '/desktop': typeof DesktopRoute
@@ -122,7 +114,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/ai-tools': typeof AiToolsRoute
   '/config': typeof ConfigRoute
   '/contact': typeof ContactRoute
   '/desktop': typeof DesktopRoute
@@ -139,7 +130,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/ai-tools'
     | '/config'
     | '/contact'
     | '/desktop'
@@ -154,7 +144,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/ai-tools'
     | '/config'
     | '/contact'
     | '/desktop'
@@ -169,7 +158,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/ai-tools'
     | '/config'
     | '/contact'
     | '/desktop'
@@ -185,7 +173,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AiToolsRoute: typeof AiToolsRoute
   ConfigRoute: typeof ConfigRoute
   ContactRoute: typeof ContactRoute
   DesktopRoute: typeof DesktopRoute
@@ -206,13 +193,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ai-tools': {
-      id: '/ai-tools'
-      path: '/ai-tools'
-      fullPath: '/ai-tools'
-      preLoaderRoute: typeof AiToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/config': {
@@ -297,7 +277,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AiToolsRoute: AiToolsRoute,
   ConfigRoute: ConfigRoute,
   ContactRoute: ContactRoute,
   DesktopRoute: DesktopRoute,
