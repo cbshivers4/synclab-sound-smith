@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
 const title = "Desktop — SYNCLAB";
-const description = "SYNCLAB desktop downloads for macOS and Windows, with installation help and system requirements.";
+const description = "SYNCLAB desktop downloads for macOS and Windows, with installation help.";
 
 export const Route = createFileRoute("/desktop")({
   head: () => ({
