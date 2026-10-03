@@ -1,7 +1,7 @@
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
-export type DownloadPlatform = "macOS" | "Windows" | "Web" | "Universal" | "Source/Website Package";
+export type DownloadPlatform = "macOS" | "Windows" | "Source/Website Package";
 export type DownloadAvailability = "available" | "coming-soon" | "in-development" | "unavailable";
 
 export type DownloadAsset = {
@@ -50,7 +50,7 @@ export type ReleaseNote = {
 };
 
 export type SystemRequirement = {
-  platform: "macOS" | "Windows" | "Web";
+  platform: "macOS" | "Windows";
   supportedVersion: string;
   processor: string;
   ram: string;
@@ -59,17 +59,6 @@ export type SystemRequirement = {
   midi: string;
   browsers?: string;
   internet?: string;
-};
-
-export type ProductImage = {
-  title: string;
-  description: string;
-  imageUrl: string;
-};
-
-export type BrandAsset = {
-  url: string;
-  alt: string;
 };
 
 export type PricingPlan = {

@@ -4,23 +4,19 @@ import {
   AlertTriangle,
   AudioLines,
   CalendarDays,
-  Circle,
   Disc3,
   Download,
   Drum,
-  ExternalLink,
   Headphones,
   KeyboardMusic,
   Menu,
   Mic2,
   MonitorDown,
   Music2,
-  Play,
   RefreshCw,
   Search,
   Send,
   SlidersHorizontal,
-  Square,
   X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -247,10 +243,10 @@ function SiteHeader() {
 function DownloadButton({ label, fullWidth = false }: { label: string; fullWidth?: boolean }) {
   return (
     <Button asChild variant="signal" size="lg" className={cn(fullWidth && "w-full")}>
-      <a href="#download">
+      <Link to="/download">
         <Download />
         {label}
-      </a>
+      </Link>
     </Button>
   );
 }
@@ -262,16 +258,11 @@ function HeroSection() {
         <div className="relative z-10">
           <div className="hero-brand-lockup">
             <div>
-              <p className="eyebrow">SYNCLAB MUSIC TECHNOLOGY</p>
-              <p className="mt-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-muted-foreground">STUDIO</p>
+              <p className="eyebrow">SYNCLAB STUDIO · DETROIT ELECTRONIC SOUND DESIGN</p>
             </div>
           </div>
-          <h1 className="mt-5 font-display text-6xl font-bold leading-[0.86] tracking-normal text-foreground sm:text-7xl lg:text-8xl">
-            <span className="block">Create.</span>
-            <span className="block">Record.</span>
-            <span className="block">Produce.</span>
-            <span className="headline-finish block">Finish.</span>
-          </h1>
+          <h1 className="mt-5 font-display text-6xl font-bold leading-none tracking-normal text-foreground sm:text-7xl lg:text-8xl">SYNCLAB</h1>
+          <p className="mt-5 font-display text-2xl font-bold uppercase text-signal sm:text-3xl">Create. Record. Produce. Finish.</p>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
              SYNCLAB is an all-in-one music-production workstation for creating, recording, producing and finishing tracks.
           </p>
