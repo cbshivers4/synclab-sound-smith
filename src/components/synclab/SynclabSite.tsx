@@ -479,7 +479,7 @@ function StudioSection() {
         id="studio-heading"
         text="Timeline, performance, sequencing and mixing stay connected in a single production environment."
       />
-      <div className="mt-10 grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
+      <div className="mt-10 grid gap-5">
         <div className="studio-board">
           <div className="studio-tabs" aria-label="Studio areas">
             {['Timeline', 'Piano Roll', 'Mixer', 'Automation'].map((tab) => <span key={tab}>{tab}</span>)}
@@ -523,18 +523,16 @@ function DesktopSection() {
   const platforms = [
     ["macOS", "Downloadable desktop version.", platformAvailability("macOS")],
     ["Windows", "Downloadable desktop version.", platformAvailability("Windows")],
-    ["Web", "Browser-based SYNCLAB access is not configured here.", platformAvailability("Web")],
   ] as const;
-  const architecture = ["Native audio engine", "Native MIDI", "Local project files", "Local sample libraries", "Plugin architecture", "Project recovery", "Autosave", "Low-latency audio", "Local rendering/export"];
   return (
     <section className="section-shell border-y border-border bg-panel" aria-labelledby="desktop-heading">
       <SectionIntro
         eyebrow="Desktop vision"
         title="A real desktop music workstation"
         id="desktop-heading"
-        text="Download SYNCLAB for macOS or Windows. Web access is not configured on this site."
+        text="Download SYNCLAB for macOS or Windows. Choose the package that matches your computer."
       />
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+      <div className="mt-10 grid gap-4 md:grid-cols-2">
         {platforms.map(([name, description, status]) => (
           <article key={name} className="platform-card">
             <MonitorDown className="size-7 text-signal" />
@@ -543,18 +541,6 @@ function DesktopSection() {
             <div className="mt-5"><StatusBadge status={status} /></div>
           </article>
         ))}
-      </div>
-      <div className="mt-8 grid gap-5 lg:grid-cols-[0.7fr_1.3fr]">
-        <div className="availability-panel">
-          <h3 className="font-display text-2xl font-bold text-foreground">Available Now</h3>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">Current platform availability is driven by the centralized SYNCLAB release configuration. ZIP packages are labeled as ZIP packages until a finished installer is configured.</p>
-        </div>
-        <div className="availability-panel">
-          <h3 className="font-display text-2xl font-bold text-foreground">Coming to Desktop</h3>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {architecture.map((item) => <span key={item} className="chip">{item}</span>)}
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -577,7 +563,7 @@ function DownloadSection() {
           </div>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {currentDownloads.map((download) => (
+          {currentDownloads.filter((download) => hasDownload(download)).map((download) => (
             <DownloadCard key={download.id} download={download} />
           ))}
         </div>
