@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const title = "Help Center — SYNCLAB Vocal Forge";
+const title = "Help Center — SYNCLAB";
 const description = "Search SYNCLAB Help Center topics for recording, MIDI, synth, drums, sampling, mixing, export and desktop apps.";
 
 export const Route = createFileRoute("/help-center")({

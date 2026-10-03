@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const pageTitle = "Download SYNCLAB Vocal Forge — macOS, Windows and Web";
+const pageTitle = "Download SYNCLAB — macOS and Windows";
 const pageDescription =
-  "Download SYNCLAB Vocal Forge for macOS, Windows or the Web. Version details, file sizes, checksums, release notes, installation guides and system requirements.";
+  "Download SYNCLAB for macOS and Windows. Find release notes, installation guides and system requirements.";
 
 export const Route = createFileRoute("/download")({
   head: () => ({

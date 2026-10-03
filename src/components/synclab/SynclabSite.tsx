@@ -54,7 +54,6 @@ const footerLinks: ReadonlyArray<SiteLink> = [
 
 const navItems: ReadonlyArray<SiteLink> = [
   { label: "Features", to: "/features" },
-  { label: "AI Tools", to: "/ai-tools" },
   { label: "Studio", to: "/studio" },
   { label: "Desktop", to: "/desktop" },
   { label: "Download", to: "/download" },
@@ -63,67 +62,75 @@ const navItems: ReadonlyArray<SiteLink> = [
 
 const featureCards = [
   {
-    title: "AI Vocal Forge",
-    icon: Mic2,
-    status: synclabConfig.availability.aiVocalForge,
-    description: "Generate and shape vocals while keeping musical decisions in your hands.",
-    items: ["Voice", "Emotion", "Pitch", "Formant", "Speed", "Style", "Pronunciation", "Timing"],
+    title: "Flagship Synth", icon: KeyboardMusic, status: "available" as Availability,
+    description: "Four oscillators, dual filters and FM for electronic sound design.",
+    items: ["4 oscillators", "Dual filters", "FM", "Mod matrix", "67 presets"],
   },
   {
-    title: "Hum-to-Beat",
-    icon: AudioLines,
-    status: synclabConfig.availability.humToBeat,
-    description: "Turn human rhythm ideas into usable beats placed directly on the timeline.",
-    items: ["Humming", "Beatboxing", "Tapping", "Clapping", "Rhythm ideas", "Beat mapping"],
+    title: "Drum Machine", icon: Drum, status: "available" as Availability,
+    description: "Build beats with 24 kits, including 909, 808 and LinnDrum sounds.",
+    items: ["24 kits", "Step sequencer", "909", "808", "LinnDrum"],
   },
   {
-    title: "Hardware-Style Synth",
-    icon: KeyboardMusic,
-    status: "in-development" as Availability,
-    description: "A tactile sound-design environment shaped like serious studio hardware.",
-    items: ["Oscillators", "Filters", "Envelopes", "LFOs", "Modulation", "Arpeggiator", "Step sequencer", "Effects", "Presets"],
+    title: "Pad Sampler", icon: Disc3, status: "available" as Availability,
+    description: "Perform and build patterns with pads, live mic sampling and slices.",
+    items: ["64 pads", "Live mic sampling", "Slice-to-pads", "Patterns"],
   },
   {
-    title: "Drum Machine",
-    icon: Drum,
-    status: "in-development" as Availability,
-    description: "Fast pattern building with performance controls and production-ready sequencing.",
-    items: ["Velocity pads", "Drum kits", "Step sequencing", "Swing", "Probability", "Rolls", "Velocity", "Effects"],
+    title: "Sample Chopper", icon: AudioLines, status: "available" as Availability,
+    description: "Import MP3 or WAV audio, trim it and map chops to keys.",
+    items: ["MP3 / WAV", "Trim", "Chop", "Key mapping"],
   },
   {
-    title: "Powerful Sampler",
-    icon: Disc3,
-    status: "in-development" as Availability,
-    description: "Shape recordings, one-shots, chops and instruments without leaving the project.",
-    items: ["Trim", "Time stretch", "Pitch", "Reverse", "Loop", "ADSR", "Filtering", "Keyboard mapping", "MIDI recording", "Resampling"],
+    title: "Multi-Track Recording", icon: Mic2, status: "available" as Availability,
+    description: "Record takes on separate channels with count-in, loop-bounded takes and monitoring.",
+    items: ["Separate channels", "Count-in", "Loop takes", "Monitoring"],
   },
   {
-    title: "Professional Mixer",
-    icon: SlidersHorizontal,
-    status: "in-development" as Availability,
-    description: "A complete signal-flow view for balancing, routing, automating and finishing tracks.",
-    items: ["Channel strips", "Faders", "Meters", "Pan", "Mute", "Solo", "Buses", "Sends", "Returns", "Effects", "Routing", "Automation", "Mastering"],
+    title: "Live Looper", icon: RefreshCw, status: "available" as Availability,
+    description: "Layer loops with a bar count-in and send them to the timeline.",
+    items: ["Layer loops", "Bar count-in", "Timeline"],
+  },
+  {
+    title: "MIDI Recording", icon: KeyboardMusic, status: "available" as Availability,
+    description: "Play a controller into the piano roll and use hardware knobs with the mixer.",
+    items: ["Piano roll", "Controllers", "Mixer knobs"],
+  },
+  {
+    title: "Pro Mixer", icon: SlidersHorizontal, status: "available" as Availability,
+    description: "Mix with console styles, buses, sends, VCA groups, aux returns and live meters.",
+    items: ["Buses", "Sends", "VCA groups", "Aux returns", "Live meters"],
+  },
+  {
+    title: "VX-16 Vocoder", icon: AudioLines, status: "available" as Availability,
+    description: "Shape a vintage talkbox sound with 8–24 bands and classic presets.",
+    items: ["8–24 bands", "5 presets"],
+  },
+  {
+    title: "Razor Editing", icon: Music2, status: "available" as Availability,
+    description: "Split, razor and fade clips on the timeline in any time signature.",
+    items: ["Split", "Razor", "Fades", "Time signatures"],
+  },
+  {
+    title: "Mastering & Export", icon: Download, status: "available" as Availability,
+    description: "Use master limiters and export WAV or MP3 between your flags.",
+    items: ["Limiters", "WAV", "MP3", "Export flags"],
+  },
+  {
+    title: "Cloud Projects", icon: Disc3, status: "available" as Availability,
+    description: "Keep sessions, samples and exports in your cloud projects.",
+    items: ["Sessions", "Samples", "Exports"],
   },
 ];
-
-const aiTools = [
-  ["AI Vocal Forge", "Create vocals from text and lyrics with editable voice, emotion and timing."],
-  ["Hum-to-Beat", "Convert human rhythm ideas into structured beats."],
-  ["AI Co-Producer", "Assist with basslines, drums, synth melodies, chords, percussion, arrangements, transitions, breakdowns and drops."],
-  ["Stem Separator", "Separate supported material into vocals, drums, bass, guitar, piano, other and instrumental stems."],
-  ["Voice Remover", "Create an instrumental version from supported audio."],
-  ["AI Mastering", "Analyze dynamics, frequency balance, loudness, stereo image and peaks, then suggest mastering adjustments."],
-] as const;
 
 const firstRunActions = [
   "Make a Beat",
   "Record Vocals",
-  "Create AI Vocals",
   "Create a Synth Sound",
   "Create a Drum Pattern",
   "Chop a Sample",
   "Mix a Track",
-  "Master a Track",
+  "Use the Live Looper",
   "Open a Project",
   "Learn SYNCLAB",
 ];
@@ -209,11 +216,11 @@ function LogoAsset({ placement = "header" }: { placement?: "header" | "hero" | "
 
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
-    <Link to="/" className="group inline-flex items-center gap-3 focus-ring rounded-md" aria-label="SYNCLAB Vocal Forge home">
+    <Link to="/" className="group inline-flex items-center gap-3 focus-ring rounded-md" aria-label="SYNCLAB home">
       <LogoAsset />
       <span className="leading-none">
         <span className={cn("block font-display font-bold tracking-normal text-foreground", compact ? "text-lg" : "text-xl")}>SYNCLAB</span>
-        <span className="mt-1 block font-mono text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground">VOCAL FORGE</span>
+        <span className="mt-1 block font-mono text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground">STUDIO</span>
       </span>
     </Link>
   );
@@ -291,7 +298,7 @@ function OpenVocalForgeButton({ fullWidth = false }: { fullWidth?: boolean }) {
     return (
       <Button disabled variant="outline" size="lg" className={cn(fullWidth && "w-full", "sm:w-auto")}>
         <ExternalLink />
-        VOCAL FORGE WEB COMING SOON
+        SYNCLAB WEB COMING SOON
       </Button>
     );
   }
@@ -299,7 +306,7 @@ function OpenVocalForgeButton({ fullWidth = false }: { fullWidth?: boolean }) {
     <Button asChild variant="outline" size="lg" className={cn(fullWidth && "w-full", "sm:w-auto")}>
       <a href={synclabConfig.urls.webApp} target="_blank" rel="noreferrer">
         <ExternalLink />
-        OPEN VOCAL FORGE
+        OPEN SYNCLAB
       </a>
     </Button>
   );
@@ -314,7 +321,7 @@ function HeroSection() {
             <LogoAsset placement="hero" />
             <div>
               <p className="eyebrow">SYNCLAB MUSIC TECHNOLOGY</p>
-              <p className="mt-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-muted-foreground">VOCAL FORGE</p>
+              <p className="mt-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-muted-foreground">STUDIO</p>
             </div>
           </div>
           <h1 className="mt-5 font-display text-6xl font-bold leading-[0.86] tracking-normal text-foreground sm:text-7xl lg:text-8xl">
@@ -324,22 +331,21 @@ function HeroSection() {
             <span className="headline-finish block">Finish.</span>
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
-            SYNCLAB Vocal Forge is a connected music-production workstation built for creators who want powerful production tools without a complicated workflow.
+             SYNCLAB is an all-in-one music-production workstation for creating, recording, producing and finishing tracks.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <DownloadButton label="Download SYNCLAB" fullWidth />
-            <OpenVocalForgeButton fullWidth />
           </div>
           <div className="product-info-strip" aria-label="Product information">
-            <span>SYNCLAB Vocal Forge</span>
+            <span>SYNCLAB</span>
             <span>Latest Version: {formatValue(synclabConfig.latestVersion, "Pending")}</span>
-            <span>Available Platforms: macOS • Windows • Web</span>
+            <span>Available Platforms: macOS • Windows</span>
           </div>
         </div>
         <div className="relative z-10">
           <img
             src={synclabConfig.productImages[0]?.imageUrl}
-            alt="SYNCLAB Vocal Forge studio timeline with drum and synth tracks"
+            alt="SYNCLAB studio timeline with drum and synth tracks"
             className="block w-full border border-border object-contain"
             fetchPriority="high"
           />
@@ -354,17 +360,17 @@ function DawMockup() {
     { name: "DRUM", blocks: ["w-28", "w-36", "w-24", "w-32"], tone: "clip-percussion" },
     { name: "BASS", blocks: ["w-44", "w-28", "w-40"], tone: "clip-bass" },
     { name: "SYNTH", blocks: ["w-24", "w-52", "w-32"], tone: "clip-synth" },
-    { name: "AI VOX", blocks: ["w-36", "w-28", "w-48"], tone: "clip-vocal" },
+    { name: "AUDIO", blocks: ["w-36", "w-28", "w-48"], tone: "clip-vocal" },
   ];
   const meters = ["h-16", "h-24", "h-20", "h-28", "h-14", "h-32"];
   return (
-    <div className="daw-shell" aria-label="SYNCLAB Vocal Forge digital audio workstation preview">
+    <div className="daw-shell" aria-label="SYNCLAB digital audio workstation preview">
       <div className="daw-topbar">
         <div className="flex items-center gap-3">
           <LogoAsset placement="card" />
           <div>
             <p className="font-display text-sm font-bold text-foreground">SYNCLAB</p>
-            <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em] text-muted-foreground">VOCAL FORGE</p>
+             <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em] text-muted-foreground">STUDIO</p>
           </div>
         </div>
         <div className="transport" aria-label="Transport controls">
@@ -437,7 +443,7 @@ function FeaturesSection({ compact = false }: { compact?: boolean }) {
         eyebrow="Production system"
         title="Everything connected."
         id="features-heading"
-        text="Build a track from the first idea to the final master without breaking your creative flow."
+        text="Explore the instruments, recording, editing and mixing tools in SYNCLAB."
       />
       <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {featureCards.map((feature) => {
@@ -463,31 +469,6 @@ function FeaturesSection({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function AIToolsSection() {
-  return (
-    <section className="section-shell border-y border-border bg-panel" aria-labelledby="ai-heading">
-      <SectionIntro
-        eyebrow="Creator-controlled intelligence"
-        title="AI Tools"
-        id="ai-heading"
-        text="SYNCLAB combines traditional music production with AI-assisted creation, designed to help the creator while keeping the creator in control."
-      />
-      <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {aiTools.map(([title, description], index) => (
-          <article key={title} className="ai-card">
-            <div className="flex items-center justify-between gap-4">
-              <span className="number-mark">0{index + 1}</span>
-              <StatusBadge status={index < 2 ? "in-development" : "coming-soon"} />
-            </div>
-            <h3 className="mt-6 font-display text-2xl font-bold text-foreground">{title}</h3>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">{description}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function StudioSection() {
   return (
     <section className="section-shell bg-background" aria-labelledby="studio-heading">
@@ -497,42 +478,7 @@ function StudioSection() {
         id="studio-heading"
         text="Timeline, performance, sequencing and mixing stay connected in a single production environment."
       />
-      <div className="mt-10 grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
-        <div className="studio-board">
-          <div className="studio-tabs" aria-label="Studio areas">
-            {['Timeline', 'Piano Roll', 'Mixer', 'Automation'].map((tab) => <span key={tab}>{tab}</span>)}
-          </div>
-          <div className="studio-composition">
-            <div className="arrangement-view">
-              {['Audio', 'MIDI', 'Automation', 'Markers', 'Song Sections', 'Loop Regions'].map((item, index) => (
-                <div key={item} className="arrangement-row">
-                  <span>{item}</span>
-                  <span className={cn("arrangement-line", index % 2 === 0 ? "w-3/4" : "w-1/2")} />
-                </div>
-              ))}
-            </div>
-            <div className="piano-roll" aria-label="Piano roll preview">
-              {Array.from({ length: 24 }).map((_, index) => (
-                <span key={index} className={cn(index % 5 === 0 ? "note-long" : "note-short", index % 3 === 0 && "note-muted")} />
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="xy-card">
-          <div className="xy-pad" aria-label="XY performance pad">
-            <span className="xy-crosshair" />
-          </div>
-          <h3 className="font-display text-2xl font-bold text-foreground">XY Pad</h3>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Control two parameters simultaneously, automate moves, or map gestures to MIDI.
-          </p>
-          <ul className="mt-5 grid gap-2 text-sm text-muted-foreground">
-            <li>Filter + Reverb</li>
-            <li>Distortion + Delay</li>
-            <li>Dry/Wet + Stereo Width</li>
-          </ul>
-        </div>
-      </div>
+      <img src={synclabConfig.productImages[0]?.imageUrl} alt="SYNCLAB arrangement timeline with drum and synth tracks" className="mt-10 block w-full border border-border object-contain" loading="lazy" />
     </section>
   );
 }
@@ -541,18 +487,16 @@ function DesktopSection() {
   const platforms = [
     ["macOS", "Downloadable desktop version.", platformAvailability("macOS")],
     ["Windows", "Downloadable desktop version.", platformAvailability("Windows")],
-    ["Web", "Browser-based SYNCLAB Vocal Forge.", platformAvailability("Web")],
   ] as const;
-  const architecture = ["Native audio engine", "Native MIDI", "Local project files", "Local sample libraries", "Plugin architecture", "Project recovery", "Autosave", "Low-latency audio", "Local rendering/export"];
   return (
     <section className="section-shell border-y border-border bg-panel" aria-labelledby="desktop-heading">
       <SectionIntro
         eyebrow="Desktop vision"
         title="A real desktop music workstation"
         id="desktop-heading"
-        text="SYNCLAB Vocal Forge is designed to grow beyond the browser into a downloadable desktop music-production environment."
+        text="Download SYNCLAB for macOS or Windows. Choose the package that matches your computer."
       />
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+      <div className="mt-10 grid gap-4 md:grid-cols-2">
         {platforms.map(([name, description, status]) => (
           <article key={name} className="platform-card">
             <MonitorDown className="size-7 text-signal" />
@@ -561,18 +505,6 @@ function DesktopSection() {
             <div className="mt-5"><StatusBadge status={status} /></div>
           </article>
         ))}
-      </div>
-      <div className="mt-8 grid gap-5 lg:grid-cols-[0.7fr_1.3fr]">
-        <div className="availability-panel">
-          <h3 className="font-display text-2xl font-bold text-foreground">Available Now</h3>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">Current platform availability is driven by the centralized SYNCLAB release configuration. ZIP packages are labeled as ZIP packages until a finished installer is configured.</p>
-        </div>
-        <div className="availability-panel">
-          <h3 className="font-display text-2xl font-bold text-foreground">Coming to Desktop</h3>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {architecture.map((item) => <span key={item} className="chip">{item}</span>)}
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -585,17 +517,17 @@ function DownloadSection() {
         <div className="download-heading-row">
           <div>
             <p className="eyebrow">Download</p>
-            <h2 id="download-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-none tracking-normal text-foreground sm:text-6xl">DOWNLOAD SYNCLAB VOCAL FORGE</h2>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">Choose your platform and download the version of SYNCLAB Vocal Forge available for your system.</p>
+            <h2 id="download-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-none tracking-normal text-foreground sm:text-6xl">DOWNLOAD SYNCLAB</h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">Choose your Mac or Windows version of SYNCLAB.</p>
           </div>
           <div className="download-logo-panel">
             <LogoAsset placement="card" />
             <span>SYNCLAB</span>
-            <small>VOCAL FORGE</small>
+            <small>STUDIO</small>
           </div>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {currentDownloads.map((download) => (
+          {currentDownloads.filter((download) => hasDownload(download)).map((download) => (
             <DownloadCard key={download.id} download={download} />
           ))}
         </div>
@@ -699,7 +631,7 @@ function PricingSection() {
   return (
     <section className="section-shell border-y border-border bg-panel" aria-labelledby="pricing-heading">
       <SectionIntro eyebrow="Plans" title="Pricing" id="pricing-heading" text="Choose the SYNCLAB workflow that matches where you are in the production process." />
-      <div className="mt-10 grid gap-4 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
         {synclabConfig.pricing.filter((plan) => plan.visible).map((plan) => (
           <article key={plan.name} className="price-card">
             <div className="flex items-start justify-between gap-4">
@@ -712,7 +644,7 @@ function PricingSection() {
             <ul className="mt-6 grid gap-3 text-sm text-muted-foreground">
               {plan.features.map((feature) => <li key={feature} className="flex gap-2"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-signal" />{feature}</li>)}
             </ul>
-            <Button variant="outline" className="mt-8 w-full">{plan.cta}</Button>
+            <Button asChild variant="outline" className="mt-8 w-full"><a href="https://synclabsapp.com/" target="_blank" rel="noopener noreferrer">{plan.cta}</a></Button>
           </article>
         ))}
       </div>
@@ -736,7 +668,7 @@ function ProductScreen({ image, index }: { image: { title: string; description: 
     <article className={cn("product-screen", index === 0 && "md:col-span-2")}>
       {image.imageUrl ? (
         <a href={image.imageUrl} target="_blank" rel="noopener noreferrer" className="block focus-ring" aria-label={`View full-size ${image.title} screenshot`}>
-          <img src={image.imageUrl} alt={`${image.title} in SYNCLAB Vocal Forge`} className="product-image" loading="lazy" />
+          <img src={image.imageUrl} alt={`${image.title} in SYNCLAB`} className="product-image" loading="lazy" />
         </a>
       ) : (
         <>
@@ -759,17 +691,12 @@ function ProductScreen({ image, index }: { image: { title: string; description: 
 
 function DemoSection() {
   const hasVideo = synclabConfig.urls.youtube.length > 0;
+  if (!hasVideo) return null;
   return (
     <section className="section-shell border-y border-border bg-panel" aria-labelledby="demo-heading">
       <SectionIntro eyebrow="Demo" title="See SYNCLAB in action" id="demo-heading" text="Connect a YouTube, Vimeo or self-hosted product demo when the official walkthrough is ready." />
       <div className="mt-10 demo-frame">
-        {hasVideo ? (
-          <a href={synclabConfig.urls.youtube} className="demo-link">Open product demo</a>
-        ) : (
-          <div className="demo-preview">
-            <DawMockup />
-          </div>
-        )}
+        <a href={synclabConfig.urls.youtube} className="demo-link">Open product demo</a>
       </div>
     </section>
   );
@@ -933,11 +860,6 @@ function ConfigSection() {
       <ReleaseNotesSection />
       <SystemRequirementsSection />
       <DeveloperDownloadSection />
-      <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {Object.entries(synclabConfig.availability).map(([feature, status]) => (
-          <div key={feature} className="config-status"><span>{feature.replace(/([A-Z])/g, " $1")}</span><StatusBadge status={status} /></div>
-        ))}
-      </div>
     </section>
   );
 }
@@ -945,12 +867,12 @@ function ConfigSection() {
 function ReleaseNotesSection() {
   return (
     <section id="whats-new" className="section-shell scroll-mt-24 border-y border-border bg-panel" aria-labelledby="release-heading">
-      <SectionIntro eyebrow="Release notes" title="What's New" id="release-heading" text="Latest SYNCLAB Vocal Forge release information, managed from one configuration source." />
+      <SectionIntro eyebrow="Release notes" title="What's New" id="release-heading" text="Latest SYNCLAB release information." />
       <div className="mt-10 grid gap-4">
         {synclabConfig.releaseNotes.map((release) => (
           <article key={`${release.version}-${release.releaseDate}`} className="release-card">
             <div className="flex flex-col justify-between gap-3 sm:flex-row">
-              <h3 className="font-display text-2xl font-bold text-foreground">SYNCLAB Vocal Forge {formatValue(release.version, "Version pending")}</h3>
+              <h3 className="font-display text-2xl font-bold text-foreground">SYNCLAB {formatValue(release.version, "Version pending")}</h3>
               <span className="release-date"><CalendarDays className="size-4" />{formatValue(release.releaseDate)}</span>
             </div>
             <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -1010,7 +932,7 @@ function InstallHelpSection() {
 function SystemRequirementsSection() {
   return (
     <section id="system-requirements" className="section-shell scroll-mt-24 bg-background" aria-labelledby="requirements-heading">
-      <SectionIntro eyebrow="Compatibility" title="System Requirements" id="requirements-heading" text="Supported operating systems, storage, audio, MIDI and browser requirements are centralized for release updates." />
+      <SectionIntro eyebrow="Compatibility" title="System Requirements" id="requirements-heading" text="Supported operating systems, storage, audio and MIDI requirements are centralized for release updates." />
       <div className="mt-10 grid gap-4 lg:grid-cols-3">
         {synclabConfig.systemRequirements.map((requirement) => (
           <article key={requirement.platform} className="requirements-card">
@@ -1022,8 +944,6 @@ function SystemRequirementsSection() {
               <div><dt>Storage</dt><dd>{requirement.storage}</dd></div>
               <div><dt>Audio</dt><dd>{requirement.audio}</dd></div>
               <div><dt>MIDI</dt><dd>{requirement.midi}</dd></div>
-              {requirement.browsers ? <div><dt>Browsers</dt><dd>{requirement.browsers}</dd></div> : null}
-              {requirement.internet ? <div><dt>Internet</dt><dd>{requirement.internet}</dd></div> : null}
             </dl>
           </article>
         ))}
@@ -1037,7 +957,7 @@ function DeveloperDownloadSection() {
   return (
     <section className="developer-downloads" aria-labelledby="developer-downloads-heading">
       <h3 id="developer-downloads-heading">SYNCLAB Website Package</h3>
-      <p>This administrative/developer download area is separate from SYNCLAB Vocal Forge application downloads.</p>
+      <p>This administrative/developer download area is separate from SYNCLAB application downloads.</p>
       <div className="mt-5 grid gap-3">
         {developerDownloads.map((download) => (
           <DownloadCard key={download.id} download={download} />
@@ -1055,7 +975,7 @@ function UpdateNotice() {
     <div className="update-notice" role="status">
       <RefreshCw className="size-5 text-signal" />
       <div>
-        <strong>A new version of SYNCLAB Vocal Forge is available.</strong>
+        <strong>A new version of SYNCLAB is available.</strong>
         <span>Current version: {formatValue(current, "Pending")} • New version: {latest}</span>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <Button asChild variant="signal"><a href="#download"><Download />Download Update</a></Button>
@@ -1132,7 +1052,7 @@ function VerifyDownloadSection() {
 }
 
 function DownloadManagementPanel() {
-  const platformIds = ["macos-current", "windows-current", "web-current"] as const;
+  const platformIds = ["macos-arm64-current", "macos-x64-current", "windows-current"] as const;
   const [selected, setSelected] = useState<string>(platformIds[0]);
   const record = synclabConfig.downloads.find((download) => download.id === selected) ?? synclabConfig.downloads[0]!;
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -1208,10 +1128,9 @@ function FinalCta() {
       <div className="final-cta">
         <p className="eyebrow">SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.</p>
         <h2 id="final-heading" className="mt-5 font-display text-5xl font-bold uppercase leading-none tracking-normal text-foreground sm:text-7xl">Your ideas deserve a studio.</h2>
-        <p className="mt-5 text-lg text-muted-foreground">Start creating with SYNCLAB Vocal Forge.</p>
+        <p className="mt-5 text-lg text-muted-foreground">Start creating with SYNCLAB.</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <DownloadButton label="Download SYNCLAB" fullWidth />
-          <OpenVocalForgeButton fullWidth />
         </div>
       </div>
     </section>
@@ -1224,7 +1143,7 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_2fr]">
         <div>
           <BrandMark />
-          <p className="mt-5 max-w-sm text-sm leading-6 text-muted-foreground">© SYNCLAB Vocal Forge</p>
+          <p className="mt-5 max-w-sm text-sm leading-6 text-muted-foreground">© SYNCLAB</p>
         </div>
         <nav className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5" aria-label="Footer navigation">
           {footerLinks.map((item) => item.to ? (
@@ -1282,15 +1201,12 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <HeroSection />
             <StatementSection />
             <FeaturesSection compact />
-            <AIToolsSection />
             <StudioSection />
             <DesktopSection />
             <DownloadSection />
             <ReleaseNotesSection />
             <InstallHelpSection />
             <SystemRequirementsSection />
-            <PricingSection />
-            <FirstTimeAssistantSection />
             <ProductScreenshotsSection />
             <DemoSection />
             <SupportSection />
@@ -1301,7 +1217,7 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
           <>
             <PageHero
               eyebrow="Downloads"
-              title="SYNCLAB VOCAL FORGE"
+              title="SYNCLAB"
               text="Download the tools you need to create, record, produce and finish your music."
             />
             <section className="section-shell bg-background">
@@ -1310,7 +1226,7 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
               <dl className="product-info-strip">
                 <div><dt>Latest version</dt><dd>{formatValue(synclabConfig.latestVersion, "Pending")}</dd></div>
                 <div><dt>Release date</dt><dd>{formatValue(currentDownloads.find((item) => hasDownload(item))?.releaseDate ?? "")}</dd></div>
-                <div><dt>Available platforms</dt><dd>macOS • Windows • Web</dd></div>
+                <div><dt>Available platforms</dt><dd>macOS • Windows</dd></div>
               </dl>
             </section>
             <DownloadSection />
@@ -1321,16 +1237,15 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <SupportSection />
           </>
         ) : null}
-        {mode === "features" ? <><PageHero eyebrow="Features" title="Everything connected." text="A professional connected workflow for vocals, beats, synths, sampling, mixing and finishing." /><FeaturesSection /></> : null}
-        {mode === "ai" ? <><PageHero eyebrow="AI Tools" title="Assisted creation. Creator control." text="Traditional music production and AI assistance work together without replacing your decisions." /><AIToolsSection /><FirstTimeAssistantSection /></> : null}
-        {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll, mixer and performance controls stay tied to the same session." /><StudioSection /><ProductScreenshotsSection /></> : null}
+        {mode === "features" || mode === "ai" ? <><PageHero eyebrow="Features" title="Everything connected." text="Explore SYNCLAB's instruments, recording, editing and mixing tools." /><FeaturesSection /></> : null}
+        {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll and mixer stay tied to the same session." /><StudioSection /><ProductScreenshotsSection /></> : null}
         {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="macOS and Windows packages stay accurately labeled by their configured release status." /><DesktopSection /><DownloadSection /><InstallHelpSection /><SystemRequirementsSection /></> : null}
-        {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="Plans for every stage." text="Final pricing is configurable so SYNCLAB can launch with the right plan structure." /><PricingSection /></> : null}
+        {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="SYNCLAB pricing." text="Start with a 7-day trial, then choose monthly or annual access." /><PricingSection /></> : null}
         {mode === "support" ? <><PageHero eyebrow="Support" title="SYNCLAB Support." text="Help, tutorials, problem reporting and product support belong to SYNCLAB." /><SupportSection /></> : null}
         {mode === "help" ? <><PageHero eyebrow="Help Center" title="How can we help?" text="Search SYNCLAB guides by downloads, installation, recording, MIDI, instruments, mixing, exporting and platform topics." /><section className="section-shell bg-background"><HelpCenterPanel /><DownloadErrorHelp /></section></> : null}
         {mode === "config" ? <><PageHero eyebrow="Configuration" title="SYNCLAB launch settings." text="Centralized fields keep downloads, support, pricing, video, version and availability honest." /><ConfigSection /></> : null}
-        {mode === "privacy" ? <LegalPlaceholder title="Privacy" text="The official SYNCLAB Vocal Forge privacy policy can be connected here when the policy URL is ready." /> : null}
-        {mode === "terms" ? <LegalPlaceholder title="Terms" text="The official SYNCLAB Vocal Forge terms can be connected here when the terms URL is ready." /> : null}
+        {mode === "privacy" ? <LegalPlaceholder title="Privacy" text="The official SYNCLAB privacy policy can be connected here when the policy URL is ready." /> : null}
+        {mode === "terms" ? <LegalPlaceholder title="Terms" text="The official SYNCLAB terms can be connected here when the terms URL is ready." /> : null}
         {mode === "contact" ? <><PageHero eyebrow="Contact" title="Contact SYNCLAB." text="Reach SYNCLAB Support through the product support request flow." /><SupportSection /></> : null}
       </main>
       <Footer />

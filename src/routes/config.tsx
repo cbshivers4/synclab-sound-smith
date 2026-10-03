@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const title = "Launch Settings — SYNCLAB Vocal Forge";
-const description = "Configure SYNCLAB Vocal Forge download links, web app URL, support routing, pricing, trial length and feature availability.";
+const title = "Launch Settings — SYNCLAB";
+const description = "Configure SYNCLAB download links, support routing, pricing and release information.";
 
 export const Route = createFileRoute("/config")({
   head: () => ({

@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const title = "AI Tools — SYNCLAB Vocal Forge";
-const description = "AI-assisted music creation tools for vocals, beats, co-production, stem separation, voice removal and mastering.";
+const title = "Features — SYNCLAB Studio";
+const description = "Explore SYNCLAB studio instruments, drum sequencing, recording, mixing and export.";
 
 export const Route = createFileRoute("/ai-tools")({
   head: () => ({
