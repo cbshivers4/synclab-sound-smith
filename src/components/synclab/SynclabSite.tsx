@@ -41,7 +41,6 @@ type SiteLink = { label: string; to?: LinkProps["to"]; href?: string };
 const footerLinks: ReadonlyArray<SiteLink> = [
   { label: "Download", to: "/download" },
   { label: "What's New", href: "/download#whats-new" },
-  { label: "System Requirements", href: "/download#system-requirements" },
   { label: "Help Center", to: "/help-center" },
   { label: "Support", to: "/support" },
   { label: "Privacy", to: "/privacy" },
@@ -473,7 +472,6 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
       {download.platform !== "Source/Website Package" ? (
         <nav className="download-links" aria-label={`${download.platform} download resources`}>
           <a href="#install">Installation Instructions</a>
-          <a href="#system-requirements">System Requirements</a>
           <a href="#whats-new">Release Notes</a>
           <a href="#previous-versions">Previous Versions</a>
         </nav>
@@ -641,7 +639,7 @@ function ConfigSection() {
   ];
   return (
     <section className="section-shell bg-background" aria-labelledby="config-heading">
-      <SectionIntro eyebrow="Admin configuration" title="Launch settings" id="config-heading" text="Product version, platform files, ZIP details, release notes, system requirements and availability are centralized for future SYNCLAB releases." />
+      <SectionIntro eyebrow="Admin configuration" title="Launch settings" id="config-heading" text="Product version, platform files, ZIP details, release notes and availability are centralized for future SYNCLAB releases." />
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {fields.map(([label, value]) => (
           <label key={label} className="field-label config-field">{label}<input readOnly value={value || "Not configured"} /></label>
@@ -668,7 +666,6 @@ function ConfigSection() {
       </div>
       <DownloadManagementPanel />
       <ReleaseNotesSection />
-      <SystemRequirementsSection />
       <DeveloperDownloadSection />
     </section>
   );
@@ -739,28 +736,6 @@ function InstallHelpSection() {
   );
 }
 
-function SystemRequirementsSection() {
-  return (
-    <section id="system-requirements" className="section-shell scroll-mt-24 bg-background" aria-labelledby="requirements-heading">
-      <SectionIntro eyebrow="Compatibility" title="System Requirements" id="requirements-heading" text="Supported operating systems, storage, audio and MIDI requirements are centralized for release updates." />
-      <div className="mt-10 grid gap-4 lg:grid-cols-3">
-        {synclabConfig.systemRequirements.map((requirement) => (
-          <article key={requirement.platform} className="requirements-card">
-            <h3>{requirement.platform}</h3>
-            <dl>
-              <div><dt>Supported version</dt><dd>{requirement.supportedVersion}</dd></div>
-              <div><dt>Processor</dt><dd>{requirement.processor}</dd></div>
-              <div><dt>RAM</dt><dd>{requirement.ram}</dd></div>
-              <div><dt>Storage</dt><dd>{requirement.storage}</dd></div>
-              <div><dt>Audio</dt><dd>{requirement.audio}</dd></div>
-              <div><dt>MIDI</dt><dd>{requirement.midi}</dd></div>
-            </dl>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 function DeveloperDownloadSection() {
   if (developerDownloads.length === 0) return null;
@@ -862,7 +837,7 @@ function VerifyDownloadSection() {
 }
 
 function DownloadManagementPanel() {
-  const platformIds = ["macos-arm64-current", "macos-x64-current", "windows-current"] as const;
+  const platformIds = ["macos-arm64-current", "windows-current"] as const;
   const [selected, setSelected] = useState<string>(platformIds[0]);
   const record = synclabConfig.downloads.find((download) => download.id === selected) ?? synclabConfig.downloads[0]!;
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -1016,7 +991,6 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <DownloadSection />
             <ReleaseNotesSection />
             <InstallHelpSection />
-            <SystemRequirementsSection />
             <SupportSection />
             <FinalCta />
           </>
@@ -1041,13 +1015,12 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <VerifyDownloadSection />
             <ReleaseNotesSection />
             <InstallHelpSection />
-            <SystemRequirementsSection />
             <SupportSection />
           </>
         ) : null}
         {mode === "features" || mode === "ai" ? <><PageHero eyebrow="Features" title="Everything connected." text="Explore SYNCLAB's instruments, recording, editing and mixing tools." /><FeaturesSection /></> : null}
         {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll and mixer stay tied to the same session." /><StudioSection /></> : null}
-        {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="macOS and Windows packages stay accurately labeled by their configured release status." /><DesktopSection /><DownloadSection /><InstallHelpSection /><SystemRequirementsSection /></> : null}
+        {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="macOS and Windows packages stay accurately labeled by their configured release status." /><DesktopSection /><DownloadSection /><InstallHelpSection /></> : null}
         {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="SYNCLAB pricing." text="Start with a 7-day trial, then choose monthly or annual access." /><PricingSection /></> : null}
         {mode === "support" ? <><PageHero eyebrow="Support" title="SYNCLAB Support." text="Help, tutorials, problem reporting and product support belong to SYNCLAB." /><SupportSection /></> : null}
         {mode === "help" ? <><PageHero eyebrow="Help Center" title="How can we help?" text="Search SYNCLAB guides by downloads, installation, recording, MIDI, instruments, mixing, exporting and platform topics." /><section className="section-shell bg-background"><HelpCenterPanel /><DownloadErrorHelp /></section></> : null}
