@@ -1,13 +1,7 @@
-import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
-import timelineScreenshot from "@/assets/synclab-timeline.webp.asset.json";
-import drumMachineScreenshot from "@/assets/synclab-drum-machine.webp.asset.json";
-import liveLooperScreenshot from "@/assets/synclab-live-looper.webp.asset.json";
-import synthScreenshot from "@/assets/synclab-synth.webp.asset.json";
-import mixerScreenshot from "@/assets/synclab-mixer.webp.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
-export type DownloadPlatform = "macOS" | "Windows" | "Web" | "Universal" | "Source/Website Package";
+export type DownloadPlatform = "macOS" | "Windows" | "Source/Website Package";
 export type DownloadAvailability = "available" | "coming-soon" | "in-development" | "unavailable";
 
 export type DownloadAsset = {
@@ -56,7 +50,7 @@ export type ReleaseNote = {
 };
 
 export type SystemRequirement = {
-  platform: "macOS" | "Windows" | "Web";
+  platform: "macOS" | "Windows";
   supportedVersion: string;
   processor: string;
   ram: string;
@@ -65,17 +59,6 @@ export type SystemRequirement = {
   midi: string;
   browsers?: string;
   internet?: string;
-};
-
-export type ProductImage = {
-  title: string;
-  description: string;
-  imageUrl: string;
-};
-
-export type BrandAsset = {
-  url: string;
-  alt: string;
 };
 
 export type PricingPlan = {
@@ -99,17 +82,8 @@ export const synclabConfig = {
   latestVersion: "Preview builds (2026-09-21)",
   websiteVersion: "",
   downloadAnnouncement: "",
-  brandAssets: {
-    logoDark: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
-    logoLight: { url: synclabLogo.url, alt: "SYNCLAB logo" } as BrandAsset | null,
-    appIcon: { url: synclabLogo.url, alt: "SYNCLAB app icon" } as BrandAsset | null,
-    favicon: "/favicon.png",
-  },
   urls: {
     productionDomain: "",
-    webApp: "",
-    macDownload: "https://www.dropbox.com/scl/fi/b7o5tv8f618ed0qzi2hmg/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-2.zip?rlkey=o7fart4kq5c91kckzde01gaup&st=sp2dqbgo&dl=1",
-    windowsDownload: "https://www.dropbox.com/scl/fi/poa17oiwg71d6yr648xct/SYNCLAB-Vocal-Forge-1.0.0-Windows-x64-1.zip?rlkey=2ek335rwl5c17yt09f4njbw9p&st=4r49hcdd&dl=1",
     supportEmail: "",
     helpCenter: "",
     privacy: "",
@@ -247,13 +221,6 @@ export const synclabConfig = {
       midi: "System requirements will be published with the production release.",
     },
   ] satisfies SystemRequirement[],
-  productImages: [
-    { title: "Studio Timeline", description: "The main arrangement timeline with drum and synth tracks.", imageUrl: timelineScreenshot.url },
-    { title: "Drum Machine", description: "The step sequencer and drum pattern workspace.", imageUrl: drumMachineScreenshot.url },
-    { title: "Live Looper", description: "Four live recording loops with timing and input controls.", imageUrl: liveLooperScreenshot.url },
-    { title: "Synthesizer", description: "The instrument editor with oscillators and sound-shaping controls.", imageUrl: synthScreenshot.url },
-    { title: "Mixer", description: "Drum, synth and master channel strips in the mixer.", imageUrl: mixerScreenshot.url },
-  ] satisfies ProductImage[],
   availability: {},
   pricing: [
     {
