@@ -335,7 +335,6 @@ function HeroSection() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <DownloadButton label="Download SYNCLAB" fullWidth />
-            <OpenVocalForgeButton fullWidth />
           </div>
           <div className="product-info-strip" aria-label="Product information">
             <span>SYNCLAB</span>
@@ -499,20 +498,6 @@ function StudioSection() {
               ))}
             </div>
           </div>
-        </div>
-        <div className="xy-card">
-          <div className="xy-pad" aria-label="XY performance pad">
-            <span className="xy-crosshair" />
-          </div>
-          <h3 className="font-display text-2xl font-bold text-foreground">XY Pad</h3>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Control two parameters simultaneously, automate moves, or map gestures to MIDI.
-          </p>
-          <ul className="mt-5 grid gap-2 text-sm text-muted-foreground">
-            <li>Filter + Reverb</li>
-            <li>Distortion + Delay</li>
-            <li>Dry/Wet + Stereo Width</li>
-          </ul>
         </div>
       </div>
     </section>
@@ -1179,7 +1164,6 @@ function FinalCta() {
         <p className="mt-5 text-lg text-muted-foreground">Start creating with SYNCLAB.</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <DownloadButton label="Download SYNCLAB" fullWidth />
-          <OpenVocalForgeButton fullWidth />
         </div>
       </div>
     </section>
@@ -1256,7 +1240,6 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <ReleaseNotesSection />
             <InstallHelpSection />
             <SystemRequirementsSection />
-            <PricingSection />
             <ProductScreenshotsSection />
             <DemoSection />
             <SupportSection />
@@ -1288,7 +1271,7 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
           </>
         ) : null}
         {mode === "features" || mode === "ai" ? <><PageHero eyebrow="Features" title="Everything connected." text="Explore SYNCLAB's instruments, recording, editing and mixing tools." /><FeaturesSection /></> : null}
-        {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll, mixer and performance controls stay tied to the same session." /><StudioSection /><ProductScreenshotsSection /></> : null}
+        {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll and mixer stay tied to the same session." /><StudioSection /><ProductScreenshotsSection /></> : null}
         {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="macOS and Windows packages stay accurately labeled by their configured release status." /><DesktopSection /><DownloadSection /><InstallHelpSection /><SystemRequirementsSection /></> : null}
         {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="Plans for every stage." text="Final pricing is configurable so SYNCLAB can launch with the right plan structure." /><PricingSection /></> : null}
         {mode === "support" ? <><PageHero eyebrow="Support" title="SYNCLAB Support." text="Help, tutorials, problem reporting and product support belong to SYNCLAB." /><SupportSection /></> : null}
