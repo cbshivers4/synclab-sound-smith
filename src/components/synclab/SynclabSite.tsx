@@ -327,6 +327,7 @@ function FeaturesSection({ compact = false }: { compact?: boolean }) {
 }
 
 function StudioSection() {
+  const [timeline, ...tools] = synclabConfig.productImages;
   return (
     <section className="section-shell bg-background" aria-labelledby="studio-heading">
       <SectionIntro
@@ -335,6 +336,34 @@ function StudioSection() {
         id="studio-heading"
         text="Timeline, performance, sequencing and mixing stay connected in a single production environment."
       />
+      <div className="mt-10">
+        <a href={timeline.imageUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${timeline.title} full size`} className="group block focus-ring">
+          <figure>
+            <div className="overflow-hidden rounded-sm border border-border bg-card">
+              <img src={timeline.imageUrl} alt={timeline.description} className="block aspect-video w-full object-contain transition-transform duration-300 group-hover:scale-[1.01]" loading="lazy" width="1920" height="1080" />
+            </div>
+            <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <span className="font-display text-lg font-bold text-foreground">{timeline.title}</span>
+              <span className="text-sm text-muted-foreground">{timeline.description}</span>
+            </figcaption>
+          </figure>
+        </a>
+        <div className="mt-8 grid gap-x-6 gap-y-9 md:grid-cols-2">
+          {tools.map((image) => (
+            <a key={image.title} href={image.imageUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${image.title} full size`} className="group block focus-ring">
+              <figure>
+                <div className="overflow-hidden rounded-sm border border-border bg-card">
+                  <img src={image.imageUrl} alt={image.description} className="block aspect-video w-full object-contain transition-transform duration-300 group-hover:scale-[1.01]" loading="lazy" width="1920" height="1080" />
+                </div>
+                <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <span className="font-display text-lg font-bold text-foreground">{image.title}</span>
+                  <span className="text-sm text-muted-foreground">{image.description}</span>
+                </figcaption>
+              </figure>
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,4 +1,9 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
+import timelineImage from "@/assets/synclab-timeline.webp.asset.json";
+import drumsImage from "@/assets/synclab-drum-machine.webp.asset.json";
+import looperImage from "@/assets/synclab-live-looper.webp.asset.json";
+import synthImage from "@/assets/synclab-synth.webp.asset.json";
+import mixerImage from "@/assets/synclab-mixer.webp.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
@@ -80,6 +85,13 @@ export const synclabConfig = {
   brandAssets: {
     logo: synclabLogo.url,
   },
+  productImages: [
+    { title: "Studio Timeline", description: "Arrange drum and synth tracks on the SYNCLAB timeline.", imageUrl: timelineImage.url },
+    { title: "Drum Machine", description: "Build beats with the step sequencer.", imageUrl: drumsImage.url },
+    { title: "Live Looper", description: "Record and layer loops in the studio.", imageUrl: looperImage.url },
+    { title: "Flagship Synth", description: "Shape sounds with oscillator controls.", imageUrl: synthImage.url },
+    { title: "Pro Mixer", description: "Balance tracks in the mixer.", imageUrl: mixerImage.url },
+  ],
   tagline: "Create. Record. Produce. Finish.",
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
   productVersion: "Preview builds (2026-09-21)",
