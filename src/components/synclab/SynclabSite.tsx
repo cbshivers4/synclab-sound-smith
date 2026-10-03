@@ -123,18 +123,6 @@ const featureCards = [
   },
 ];
 
-const firstRunActions = [
-  "Make a Beat",
-  "Record Vocals",
-  "Create a Synth Sound",
-  "Create a Drum Pattern",
-  "Chop a Sample",
-  "Mix a Track",
-  "Use the Live Looper",
-  "Open a Project",
-  "Learn SYNCLAB",
-];
-
 const currentDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => download.current && download.publicRelease);
 const previousDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => !download.current && download.publicRelease && download.downloadUrl);
 const developerDownloads: DownloadAsset[] = synclabConfig.downloads.filter((download) => !download.publicRelease);
@@ -189,35 +177,9 @@ function StatusBadge({ status }: { status: Availability }) {
   return <span className={cn("status-badge", `status-${tone}`)}>{statusLabel(status)}</span>;
 }
 
-const logoPlacementClass = {
-  header: "synclab-logo-header",
-  hero: "synclab-logo-hero",
-  card: "synclab-logo-card",
-} as const;
-
-function LogoAsset({ placement = "header" }: { placement?: "header" | "hero" | "card" }) {
-  const logo = synclabConfig.brandAssets.logoDark ?? synclabConfig.brandAssets.logoLight;
-  if (logo) {
-    return (
-      <img
-        src={logo.url}
-        alt={logo.alt}
-        loading="lazy"
-        className={cn("synclab-logo-img", logoPlacementClass[placement])}
-      />
-    );
-  }
-  return (
-    <span className={cn("brand-emblem", placement === "hero" && "brand-emblem-hero")} aria-hidden="true">
-      <span />
-    </span>
-  );
-}
-
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <Link to="/" className="group inline-flex items-center gap-3 focus-ring rounded-md" aria-label="SYNCLAB home">
-      <LogoAsset />
       <span className="leading-none">
         <span className={cn("block font-display font-bold tracking-normal text-foreground", compact ? "text-lg" : "text-xl")}>SYNCLAB</span>
         <span className="mt-1 block font-mono text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground">STUDIO</span>
@@ -293,32 +255,12 @@ function DownloadButton({ label, fullWidth = false }: { label: string; fullWidth
   );
 }
 
-function OpenVocalForgeButton({ fullWidth = false }: { fullWidth?: boolean }) {
-  if (!synclabConfig.urls.webApp) {
-    return (
-      <Button disabled variant="outline" size="lg" className={cn(fullWidth && "w-full", "sm:w-auto")}>
-        <ExternalLink />
-        SYNCLAB WEB COMING SOON
-      </Button>
-    );
-  }
-  return (
-    <Button asChild variant="outline" size="lg" className={cn(fullWidth && "w-full", "sm:w-auto")}>
-      <a href={synclabConfig.urls.webApp} target="_blank" rel="noreferrer">
-        <ExternalLink />
-        OPEN SYNCLAB
-      </a>
-    </Button>
-  );
-}
-
 function HeroSection() {
   return (
     <section className="relative overflow-hidden border-b border-border bg-hero-grid">
-      <div className="mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl items-center gap-10 px-5 py-14 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:py-20">
+      <div className="mx-auto flex min-h-[70vh] max-w-7xl items-center px-5 py-14 lg:px-8 lg:py-20">
         <div className="relative z-10">
           <div className="hero-brand-lockup">
-            <LogoAsset placement="hero" />
             <div>
               <p className="eyebrow">SYNCLAB MUSIC TECHNOLOGY</p>
               <p className="mt-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-muted-foreground">STUDIO</p>
@@ -342,85 +284,8 @@ function HeroSection() {
             <span>Available Platforms: macOS • Windows</span>
           </div>
         </div>
-        <div className="relative z-10">
-          <img
-            src={synclabConfig.productImages[0]?.imageUrl}
-            alt="SYNCLAB studio timeline with drum and synth tracks"
-            className="block w-full border border-border object-contain"
-            fetchPriority="high"
-          />
-        </div>
       </div>
     </section>
-  );
-}
-
-function DawMockup() {
-  const tracks = [
-    { name: "DRUM", blocks: ["w-28", "w-36", "w-24", "w-32"], tone: "clip-percussion" },
-    { name: "BASS", blocks: ["w-44", "w-28", "w-40"], tone: "clip-bass" },
-    { name: "SYNTH", blocks: ["w-24", "w-52", "w-32"], tone: "clip-synth" },
-    { name: "AUDIO", blocks: ["w-36", "w-28", "w-48"], tone: "clip-vocal" },
-  ];
-  const meters = ["h-16", "h-24", "h-20", "h-28", "h-14", "h-32"];
-  return (
-    <div className="daw-shell" aria-label="SYNCLAB digital audio workstation preview">
-      <div className="daw-topbar">
-        <div className="flex items-center gap-3">
-          <LogoAsset placement="card" />
-          <div>
-            <p className="font-display text-sm font-bold text-foreground">SYNCLAB</p>
-             <p className="font-mono text-[0.58rem] uppercase tracking-[0.22em] text-muted-foreground">STUDIO</p>
-          </div>
-        </div>
-        <div className="transport" aria-label="Transport controls">
-          <span className="transport-button"><Play /></span>
-          <span className="transport-button"><Square /></span>
-          <span className="transport-record"><Circle /></span>
-        </div>
-        <div className="hidden gap-2 sm:flex">
-          <span className="readout">128 BPM</span>
-          <span className="readout">D MIN</span>
-        </div>
-      </div>
-      <div className="daw-grid">
-        <div className="timeline-panel">
-          <div className="timeline-ruler">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <span key={index}>{index + 1}</span>
-            ))}
-          </div>
-          <div className="track-stack">
-            {tracks.map((track, trackIndex) => (
-              <div className="track-row" key={track.name}>
-                <div className="track-label">
-                  <span>{track.name}</span>
-                  <span className="tiny-meter" />
-                </div>
-                <div className="clip-lane">
-                  {track.blocks.map((block, blockIndex) => (
-                    <span key={`${track.name}-${blockIndex}`} className={cn("clip", track.tone, block, blockIndex % 2 === 0 && "clip-alt")} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="mixer-panel" aria-label="Mixer preview">
-          {meters.map((height, index) => (
-            <div className="mixer-strip" key={index}>
-              <span className="knob" />
-              <span className="meter"><span className={height} /></span>
-              <span className="fader" />
-            </div>
-          ))}
-          <div className="master-strip">
-            <span>MASTER</span>
-            <span className="master-meter" />
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -478,7 +343,6 @@ function StudioSection() {
         id="studio-heading"
         text="Timeline, performance, sequencing and mixing stay connected in a single production environment."
       />
-      <img src={synclabConfig.productImages[0]?.imageUrl} alt="SYNCLAB arrangement timeline with drum and synth tracks" className="mt-10 block w-full border border-border object-contain" loading="lazy" />
     </section>
   );
 }
@@ -520,11 +384,6 @@ function DownloadSection() {
             <h2 id="download-heading" className="mt-4 font-display text-5xl font-bold uppercase leading-none tracking-normal text-foreground sm:text-6xl">DOWNLOAD SYNCLAB</h2>
             <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">Choose your Mac or Windows version of SYNCLAB.</p>
           </div>
-          <div className="download-logo-panel">
-            <LogoAsset placement="card" />
-            <span>SYNCLAB</span>
-            <small>STUDIO</small>
-          </div>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {currentDownloads.filter((download) => hasDownload(download)).map((download) => (
@@ -546,7 +405,6 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
           <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-signal">{download.platform}</p>
           <h3 className="mt-3 font-display text-2xl font-bold text-foreground">{download.displayName}</h3>
         </div>
-        <LogoAsset placement="card" />
       </div>
       <div className="mt-5 flex flex-wrap gap-2">
         <span className={cn("download-status", ready ? "download-status-ready" : "download-status-muted")}>{downloadStatusLabel(download.availability)}</span>
@@ -564,12 +422,12 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
         <Button asChild variant="signal" className="mt-7 w-full">
           {isExternalUrl(download.downloadUrl) ? (
             <a href={download.downloadUrl} target="_blank" rel="noreferrer noopener">
-              {download.platform === "Web" ? <ExternalLink /> : <Download />}
+              <Download />
               {download.buttonText}
             </a>
           ) : (
             <a href={download.downloadUrl} download={download.fileName || undefined}>
-              {download.platform === "Web" ? <ExternalLink /> : <Download />}
+              <Download />
               {download.buttonText}
             </a>
           )}
@@ -647,72 +505,6 @@ function PricingSection() {
             <Button asChild variant="outline" className="mt-8 w-full"><a href="https://synclabsapp.com/" target="_blank" rel="noopener noreferrer">{plan.cta}</a></Button>
           </article>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function ProductScreenshotsSection() {
-  return (
-    <section className="section-shell bg-background" aria-labelledby="screenshots-heading">
-      <SectionIntro eyebrow="Product previews" title="Inside SYNCLAB" id="screenshots-heading" text="Explore the studio timeline, drum machine, live looper, synthesizer and mixer." />
-      <div className="mt-10 grid gap-4 md:grid-cols-2">
-        {synclabConfig.productImages.map((image, index) => <ProductScreen key={image.title} image={image} index={index} />)}
-      </div>
-    </section>
-  );
-}
-
-function ProductScreen({ image, index }: { image: { title: string; description: string; imageUrl: string }; index: number }) {
-  return (
-    <article className={cn("product-screen", index === 0 && "md:col-span-2")}>
-      {image.imageUrl ? (
-        <a href={image.imageUrl} target="_blank" rel="noopener noreferrer" className="block focus-ring" aria-label={`View full-size ${image.title} screenshot`}>
-          <img src={image.imageUrl} alt={`${image.title} in SYNCLAB`} className="product-image" loading="lazy" />
-        </a>
-      ) : (
-        <>
-          <div className="screen-header"><span>SYNCLAB</span><span>{image.title}</span></div>
-          <div className="screen-body">
-            <div className="screen-sidebar">{Array.from({ length: 5 }).map((_, item) => <span key={item} />)}</div>
-            <div className="screen-workspace">
-              {Array.from({ length: 8 }).map((_, item) => (
-                <span key={item} className={cn("screen-block", (item + index) % 3 === 0 && "screen-block-accent", item % 2 === 0 ? "w-3/4" : "w-1/2")} />
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-      <h3 className="mt-5 font-display text-lg font-bold text-foreground">{image.title}</h3>
-      <p className="mt-2 text-sm leading-6 text-muted-foreground">{image.description}</p>
-    </article>
-  );
-}
-
-function DemoSection() {
-  const hasVideo = synclabConfig.urls.youtube.length > 0;
-  if (!hasVideo) return null;
-  return (
-    <section className="section-shell border-y border-border bg-panel" aria-labelledby="demo-heading">
-      <SectionIntro eyebrow="Demo" title="See SYNCLAB in action" id="demo-heading" text="Connect a YouTube, Vimeo or self-hosted product demo when the official walkthrough is ready." />
-      <div className="mt-10 demo-frame">
-        <a href={synclabConfig.urls.youtube} className="demo-link">Open product demo</a>
-      </div>
-    </section>
-  );
-}
-
-function FirstTimeAssistantSection() {
-  return (
-    <section className="section-shell bg-background" aria-labelledby="assistant-heading">
-      <div className="assistant-panel">
-        <div>
-          <p className="eyebrow">First-time flow</p>
-          <h2 id="assistant-heading" className="mt-4 font-display text-4xl font-bold uppercase tracking-normal text-foreground">What do you want to do?</h2>
-        </div>
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {firstRunActions.map((action) => <Button key={action} variant="outline" className="justify-start">{action}</Button>)}
-        </div>
       </div>
     </section>
   );
@@ -800,7 +592,6 @@ function SupportForm() {
         <Field label="Operating system" name="os" />
         <Field label="Device" name="device" />
         <Field label="Audio interface" name="audio-interface" />
-        <Field label="Plugin information" name="plugins" />
         <label className="field-label lg:col-span-2">Steps to reproduce<textarea name="steps" rows={4} /></label>
         <label className="field-label lg:col-span-2">Optional screenshot<input name="screenshot" type="file" accept="image/*" /></label>
       </div>
@@ -817,9 +608,6 @@ function Field({ label, name, type = "text" }: { label: string; name: string; ty
 function ConfigSection() {
   const fields = [
     ["Production domain", synclabConfig.urls.productionDomain],
-    ["Web app URL", synclabConfig.urls.webApp],
-    ["macOS legacy download URL", synclabConfig.urls.macDownload],
-    ["Windows legacy download URL", synclabConfig.urls.windowsDownload],
     ["Support email", synclabConfig.urls.supportEmail],
     ["Help Center URL", synclabConfig.urls.helpCenter],
     ["Privacy URL", synclabConfig.urls.privacy],
@@ -831,7 +619,7 @@ function ConfigSection() {
   ];
   return (
     <section className="section-shell bg-background" aria-labelledby="config-heading">
-      <SectionIntro eyebrow="Admin configuration" title="Launch settings" id="config-heading" text="Product version, platform files, web URL, ZIP details, release notes, system requirements and availability are centralized for future SYNCLAB releases." />
+      <SectionIntro eyebrow="Admin configuration" title="Launch settings" id="config-heading" text="Product version, platform files, ZIP details, release notes, system requirements and availability are centralized for future SYNCLAB releases." />
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {fields.map(([label, value]) => (
           <label key={label} className="field-label config-field">{label}<input readOnly value={value || "Not configured"} /></label>
@@ -1207,8 +995,6 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
             <ReleaseNotesSection />
             <InstallHelpSection />
             <SystemRequirementsSection />
-            <ProductScreenshotsSection />
-            <DemoSection />
             <SupportSection />
             <FinalCta />
           </>
@@ -1238,7 +1024,7 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
           </>
         ) : null}
         {mode === "features" || mode === "ai" ? <><PageHero eyebrow="Features" title="Everything connected." text="Explore SYNCLAB's instruments, recording, editing and mixing tools." /><FeaturesSection /></> : null}
-        {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll and mixer stay tied to the same session." /><StudioSection /><ProductScreenshotsSection /></> : null}
+        {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll and mixer stay tied to the same session." /><StudioSection /></> : null}
         {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="macOS and Windows packages stay accurately labeled by their configured release status." /><DesktopSection /><DownloadSection /><InstallHelpSection /><SystemRequirementsSection /></> : null}
         {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="SYNCLAB pricing." text="Start with a 7-day trial, then choose monthly or annual access." /><PricingSection /></> : null}
         {mode === "support" ? <><PageHero eyebrow="Support" title="SYNCLAB Support." text="Help, tutorials, problem reporting and product support belong to SYNCLAB." /><SupportSection /></> : null}
