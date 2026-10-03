@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const title = "Pricing — SYNCLAB Vocal Forge";
-const description = "SYNCLAB Vocal Forge pricing plans for free, creator and professional studio workflows.";
+const title = "Pricing — SYNCLAB";
+const description = "SYNCLAB pricing information for the SYNCLAB music-production studio.";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({

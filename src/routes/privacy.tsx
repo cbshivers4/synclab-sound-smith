@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const title = "Privacy — SYNCLAB Vocal Forge";
-const description = "Privacy information for SYNCLAB Vocal Forge.";
+const title = "Privacy — SYNCLAB";
+const description = "Privacy information for SYNCLAB.";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({

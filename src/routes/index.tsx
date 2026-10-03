@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const pageTitle = "SYNCLAB Vocal Forge — Create. Record. Produce. Finish.";
+const pageTitle = "SYNCLAB — Create. Record. Produce. Finish.";
 const pageDescription =
-  "SYNCLAB Vocal Forge is a connected music-production workstation for recording, producing, AI vocals, beats, synthesis, sampling, mixing and mastering.";
+  "SYNCLAB is a connected music-production workstation for recording, producing, drum sequencing, synthesis, sampling, mixing and exporting.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,16 +24,10 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          name: "SYNCLAB Vocal Forge",
+          name: "SYNCLAB",
           applicationCategory: "MultimediaApplication",
-          operatingSystem: "macOS, Windows, Web",
+          operatingSystem: "macOS, Windows",
           description: pageDescription,
-          offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "USD",
-            availability: "https://schema.org/PreOrder",
-          },
         }),
       },
     ],

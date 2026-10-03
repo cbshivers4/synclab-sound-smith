@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
-const title = "Desktop — SYNCLAB Vocal Forge";
-const description = "SYNCLAB Vocal Forge desktop plans for macOS, Windows, native audio, MIDI, project recovery and local rendering.";
+const title = "Desktop — SYNCLAB";
+const description = "SYNCLAB desktop downloads for macOS and Windows, with installation help and system requirements.";
 
 export const Route = createFileRoute("/desktop")({
   head: () => ({
