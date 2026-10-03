@@ -1,4 +1,9 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
+import timelineScreenshot from "@/assets/synclab-timeline.webp.asset.json";
+import drumMachineScreenshot from "@/assets/synclab-drum-machine.webp.asset.json";
+import liveLooperScreenshot from "@/assets/synclab-live-looper.webp.asset.json";
+import synthScreenshot from "@/assets/synclab-synth.webp.asset.json";
+import mixerScreenshot from "@/assets/synclab-mixer.webp.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
@@ -274,14 +279,11 @@ export const synclabConfig = {
     },
   ] satisfies SystemRequirement[],
   productImages: [
-    { title: "Main DAW", description: "The primary timeline, mixer and production workspace.", imageUrl: "" },
-    { title: "AI Vocal Forge", description: "Vocal creation and shaping tools for guided production.", imageUrl: "" },
-    { title: "Drum Machine", description: "Pattern creation, velocity control and beat programming.", imageUrl: "" },
-    { title: "Synth", description: "Sound design controls for SYNCLAB instruments.", imageUrl: "" },
-    { title: "Sampler", description: "Sample editing, mapping and resampling workflows.", imageUrl: "" },
-    { title: "Mixer", description: "Channel strips, routing, effects and mastering controls.", imageUrl: "" },
-    { title: "Hum-to-Beat", description: "Rhythm capture from humming, tapping and beatboxing ideas.", imageUrl: "" },
-    { title: "AI Co-Producer", description: "Arrangement and production assistance inside the SYNCLAB workflow.", imageUrl: "" },
+    { title: "Studio Timeline", description: "The main arrangement timeline with drum and synth tracks.", imageUrl: timelineScreenshot.url },
+    { title: "Drum Machine", description: "The step sequencer and drum pattern workspace.", imageUrl: drumMachineScreenshot.url },
+    { title: "Live Looper", description: "Four live recording loops with timing and input controls.", imageUrl: liveLooperScreenshot.url },
+    { title: "Synthesizer", description: "The instrument editor with oscillators and sound-shaping controls.", imageUrl: synthScreenshot.url },
+    { title: "Mixer", description: "Drum, synth and master channel strips in the mixer.", imageUrl: mixerScreenshot.url },
   ] satisfies ProductImage[],
   availability: {
     web: "in-development" as Availability,

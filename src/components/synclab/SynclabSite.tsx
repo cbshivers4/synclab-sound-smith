@@ -337,7 +337,12 @@ function HeroSection() {
           </div>
         </div>
         <div className="relative z-10">
-          <DawMockup />
+          <img
+            src={synclabConfig.productImages[0]?.imageUrl}
+            alt="SYNCLAB Vocal Forge studio timeline with drum and synth tracks"
+            className="block w-full border border-border object-contain"
+            fetchPriority="high"
+          />
         </div>
       </div>
     </section>
@@ -718,8 +723,8 @@ function PricingSection() {
 function ProductScreenshotsSection() {
   return (
     <section className="section-shell bg-background" aria-labelledby="screenshots-heading">
-      <SectionIntro eyebrow="Product previews" title="SYNCLAB product gallery" id="screenshots-heading" text="Official SYNCLAB screenshots can replace the interface previews from the centralized product image configuration." />
-      <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <SectionIntro eyebrow="Product previews" title="Inside SYNCLAB" id="screenshots-heading" text="Explore the studio timeline, drum machine, live looper, synthesizer and mixer." />
+      <div className="mt-10 grid gap-4 md:grid-cols-2">
         {synclabConfig.productImages.map((image, index) => <ProductScreen key={image.title} image={image} index={index} />)}
       </div>
     </section>
@@ -728,9 +733,11 @@ function ProductScreenshotsSection() {
 
 function ProductScreen({ image, index }: { image: { title: string; description: string; imageUrl: string }; index: number }) {
   return (
-    <article className="product-screen">
+    <article className={cn("product-screen", index === 0 && "md:col-span-2")}>
       {image.imageUrl ? (
-        <img src={image.imageUrl} alt={`${image.title} in SYNCLAB Vocal Forge`} className="product-image" />
+        <a href={image.imageUrl} target="_blank" rel="noopener noreferrer" className="block focus-ring" aria-label={`View full-size ${image.title} screenshot`}>
+          <img src={image.imageUrl} alt={`${image.title} in SYNCLAB Vocal Forge`} className="product-image" loading="lazy" />
+        </a>
       ) : (
         <>
           <div className="screen-header"><span>SYNCLAB</span><span>{image.title}</span></div>
