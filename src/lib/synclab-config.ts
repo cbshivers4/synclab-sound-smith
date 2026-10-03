@@ -196,6 +196,7 @@ export const synclabConfig = {
       new: [
         "Portable SYNCLAB desktop package for 64-bit Windows.",
         "Portable SYNCLAB desktop package for macOS Apple Silicon (arm64).",
+        "Portable SYNCLAB desktop package for macOS Intel (x64).",
       ],
       improved: [],
       fixed: [],
