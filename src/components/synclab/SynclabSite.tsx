@@ -886,11 +886,6 @@ function ConfigSection() {
       <ReleaseNotesSection />
       <SystemRequirementsSection />
       <DeveloperDownloadSection />
-      <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {Object.entries(synclabConfig.availability).map(([feature, status]) => (
-          <div key={feature} className="config-status"><span>{feature.replace(/([A-Z])/g, " $1")}</span><StatusBadge status={status} /></div>
-        ))}
-      </div>
     </section>
   );
 }
@@ -1085,7 +1080,7 @@ function VerifyDownloadSection() {
 }
 
 function DownloadManagementPanel() {
-  const platformIds = ["macos-current", "windows-current", "web-current"] as const;
+  const platformIds = ["macos-arm64-current", "macos-x64-current", "windows-current"] as const;
   const [selected, setSelected] = useState<string>(platformIds[0]);
   const record = synclabConfig.downloads.find((download) => download.id === selected) ?? synclabConfig.downloads[0]!;
   const [draft, setDraft] = useState<Record<string, string>>({});
