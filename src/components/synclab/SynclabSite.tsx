@@ -958,7 +958,7 @@ function InstallHelpSection() {
 function SystemRequirementsSection() {
   return (
     <section id="system-requirements" className="section-shell scroll-mt-24 bg-background" aria-labelledby="requirements-heading">
-      <SectionIntro eyebrow="Compatibility" title="System Requirements" id="requirements-heading" text="Supported operating systems, storage, audio, MIDI and browser requirements are centralized for release updates." />
+      <SectionIntro eyebrow="Compatibility" title="System Requirements" id="requirements-heading" text="Supported operating systems, storage, audio and MIDI requirements are centralized for release updates." />
       <div className="mt-10 grid gap-4 lg:grid-cols-3">
         {synclabConfig.systemRequirements.map((requirement) => (
           <article key={requirement.platform} className="requirements-card">
@@ -970,8 +970,6 @@ function SystemRequirementsSection() {
               <div><dt>Storage</dt><dd>{requirement.storage}</dd></div>
               <div><dt>Audio</dt><dd>{requirement.audio}</dd></div>
               <div><dt>MIDI</dt><dd>{requirement.midi}</dd></div>
-              {requirement.browsers ? <div><dt>Browsers</dt><dd>{requirement.browsers}</dd></div> : null}
-              {requirement.internet ? <div><dt>Internet</dt><dd>{requirement.internet}</dd></div> : null}
             </dl>
           </article>
         ))}
