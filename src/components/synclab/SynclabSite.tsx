@@ -837,7 +837,7 @@ function VerifyDownloadSection() {
 }
 
 function DownloadManagementPanel() {
-  const platformIds = ["macos-arm64-current", "windows-current"] as const;
+  const platformIds = ["macos-arm64-current", "macos-x64-current", "windows-current"] as const;
   const [selected, setSelected] = useState<string>(platformIds[0]);
   const record = synclabConfig.downloads.find((download) => download.id === selected) ?? synclabConfig.downloads[0]!;
   const [draft, setDraft] = useState<Record<string, string>>({});
