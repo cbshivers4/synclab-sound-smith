@@ -716,7 +716,7 @@ function InstallHelpSection() {
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {installable.map((download) => (
           <article key={`install-${download.id}`} className="install-card">
-            <h3>{download.platform}</h3>
+            <h3>{download.displayName.replace(/^SYNCLAB for /, "")}</h3>
             {download.installationSteps && download.installationSteps.length > 0 ? (
               <ol>{download.installationSteps.map((step) => <li key={step}>{step}</li>)}</ol>
             ) : hasDownload(download) && isZip(download) ? (
