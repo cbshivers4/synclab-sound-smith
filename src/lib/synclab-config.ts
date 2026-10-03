@@ -223,7 +223,6 @@ export const helpCenterCategories = [
   "Extracting a ZIP package",
   "Updating SYNCLAB",
   "Previous versions",
-  "System requirements",
   "Troubleshooting downloads",
   "Missing files",
   "Installation problems",
