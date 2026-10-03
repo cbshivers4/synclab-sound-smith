@@ -478,28 +478,7 @@ function StudioSection() {
         id="studio-heading"
         text="Timeline, performance, sequencing and mixing stay connected in a single production environment."
       />
-      <div className="mt-10 grid gap-5">
-        <div className="studio-board">
-          <div className="studio-tabs" aria-label="Studio areas">
-            {['Timeline', 'Piano Roll', 'Mixer', 'Automation'].map((tab) => <span key={tab}>{tab}</span>)}
-          </div>
-          <div className="studio-composition">
-            <div className="arrangement-view">
-              {['Audio', 'MIDI', 'Automation', 'Markers', 'Song Sections', 'Loop Regions'].map((item, index) => (
-                <div key={item} className="arrangement-row">
-                  <span>{item}</span>
-                  <span className={cn("arrangement-line", index % 2 === 0 ? "w-3/4" : "w-1/2")} />
-                </div>
-              ))}
-            </div>
-            <div className="piano-roll" aria-label="Piano roll preview">
-              {Array.from({ length: 24 }).map((_, index) => (
-                <span key={index} className={cn(index % 5 === 0 ? "note-long" : "note-short", index % 3 === 0 && "note-muted")} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <img src={synclabConfig.productImages[0]?.imageUrl} alt="SYNCLAB arrangement timeline with drum and synth tracks" className="mt-10 block w-full border border-border object-contain" loading="lazy" />
     </section>
   );
 }
@@ -712,17 +691,12 @@ function ProductScreen({ image, index }: { image: { title: string; description: 
 
 function DemoSection() {
   const hasVideo = synclabConfig.urls.youtube.length > 0;
+  if (!hasVideo) return null;
   return (
     <section className="section-shell border-y border-border bg-panel" aria-labelledby="demo-heading">
       <SectionIntro eyebrow="Demo" title="See SYNCLAB in action" id="demo-heading" text="Connect a YouTube, Vimeo or self-hosted product demo when the official walkthrough is ready." />
       <div className="mt-10 demo-frame">
-        {hasVideo ? (
-          <a href={synclabConfig.urls.youtube} className="demo-link">Open product demo</a>
-        ) : (
-          <div className="demo-preview">
-            <DawMockup />
-          </div>
-        )}
+        <a href={synclabConfig.urls.youtube} className="demo-link">Open product demo</a>
       </div>
     </section>
   );
