@@ -4,7 +4,7 @@ import { SynclabSite } from "@/components/synclab/SynclabSite";
 
 const pageTitle = "Download SYNCLAB — macOS and Windows";
 const pageDescription =
-  "Download SYNCLAB for macOS and Windows. Find release notes, installation guides and system requirements.";
+  "Download SYNCLAB for macOS and Windows. Find release notes and installation guides.";
 
 export const Route = createFileRoute("/download")({
   head: () => ({

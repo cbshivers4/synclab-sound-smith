@@ -55,17 +55,6 @@ export type ReleaseNote = {
   knownIssues: string[];
 };
 
-export type SystemRequirement = {
-  platform: "macOS" | "Windows";
-  supportedVersion: string;
-  processor: string;
-  ram: string;
-  storage: string;
-  audio: string;
-  midi: string;
-  browsers?: string;
-  internet?: string;
-};
 
 export type PricingPlan = {
   name: string;
@@ -135,32 +124,6 @@ export const synclabConfig = {
       publicRelease: true,
     },
     {
-      id: "macos-x64-current",
-      fileName: "SYNCLAB-Vocal-Forge-1.0.0-macOS-x64-2.zip",
-      displayName: "SYNCLAB for macOS (Intel)",
-      platform: "macOS",
-      version: "1.0.0",
-      fileType: "ZIP PACKAGE",
-      fileSize: "",
-      releaseDate: "September 24, 2026",
-      downloadUrl: "https://www.dropbox.com/scl/fi/dr1a5fp9bc0t8xq8u3bz8/SYNCLAB-Vocal-Forge-1.0.0-macOS-x64-2.zip?rlkey=yxilw4c75cwwb830125sp5eo7&st=tfnk3fsv&dl=1",
-      availability: "available",
-      checksum: "",
-      description:
-        "Portable macOS desktop package for Intel-based Macs. Extract the ZIP and open the included SYNCLAB app — no installer is included.",
-      installationSteps: [
-        "Download the ZIP and double-click it to extract the SYNCLAB app.",
-        "Because this is an unsigned preview build, macOS may say \"SYNCLAB cannot be opened because the developer cannot be verified.\" Click Cancel — do not move the app to Trash.",
-        "Right-click (or Control-click) the SYNCLAB app and choose Open, then click Open in the dialog. It only needs to be approved once.",
-        "Alternative: open Apple menu → System Settings → Privacy & Security and click \"Open Anyway\" next to the SYNCLAB message.",
-      ],
-      buttonText: "DOWNLOAD ZIP",
-      minimumRequirement: "macOS version will be confirmed with the production release.",
-      containsInstaller: false,
-      current: true,
-      publicRelease: true,
-    },
-    {
       id: "windows-current",
       fileName: "SYNCLAB-Vocal-Forge-1.0.0-Windows-x64-1.zip",
       displayName: "SYNCLAB for Windows",
@@ -207,7 +170,6 @@ export const synclabConfig = {
       new: [
         "Portable SYNCLAB desktop package for 64-bit Windows.",
         "Portable SYNCLAB desktop package for macOS Apple Silicon (arm64).",
-        "Portable SYNCLAB desktop package for macOS Intel (x64).",
       ],
       improved: [],
       fixed: [],
@@ -217,26 +179,6 @@ export const synclabConfig = {
       ],
     },
   ] satisfies ReleaseNote[],
-  systemRequirements: [
-    {
-      platform: "macOS",
-      supportedVersion: "System requirements will be published with the production release.",
-      processor: "System requirements will be published with the production release.",
-      ram: "System requirements will be published with the production release.",
-      storage: "System requirements will be published with the production release.",
-      audio: "System requirements will be published with the production release.",
-      midi: "System requirements will be published with the production release.",
-    },
-    {
-      platform: "Windows",
-      supportedVersion: "Windows 10 or later, 64-bit.",
-      processor: "System requirements will be published with the production release.",
-      ram: "System requirements will be published with the production release.",
-      storage: "Approximately 500 MB free space after extracting the ZIP package.",
-      audio: "System requirements will be published with the production release.",
-      midi: "System requirements will be published with the production release.",
-    },
-  ] satisfies SystemRequirement[],
   availability: {},
   pricing: [
     {
