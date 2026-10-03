@@ -1,3 +1,4 @@
+import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
@@ -76,6 +77,9 @@ export const synclabConfig = {
   productName: "SYNCLAB",
   brandName: "SYNCLAB",
   brandSubline: "STUDIO",
+  brandAssets: {
+    logo: synclabLogo.url,
+  },
   tagline: "Create. Record. Produce. Finish.",
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
   productVersion: "Preview builds (2026-09-21)",

@@ -176,6 +176,7 @@ function StatusBadge({ status }: { status: Availability }) {
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <Link to="/" className="group inline-flex items-center gap-3 focus-ring rounded-md" aria-label="SYNCLAB home">
+      <img src={synclabConfig.brandAssets.logo} alt="" className="h-11 w-11 shrink-0 object-contain" />
       <span className="leading-none">
         <span className={cn("block font-display font-bold tracking-normal text-foreground", compact ? "text-lg" : "text-xl")}>SYNCLAB</span>
         <span className="mt-1 block font-mono text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground">STUDIO</span>
@@ -261,7 +262,7 @@ function HeroSection() {
               <p className="eyebrow">SYNCLAB STUDIO · DETROIT ELECTRONIC SOUND DESIGN</p>
             </div>
           </div>
-          <h1 className="mt-5 font-display text-6xl font-bold leading-none tracking-normal text-foreground sm:text-7xl lg:text-8xl">SYNCLAB</h1>
+          <h1 className="mt-5"><img src={synclabConfig.brandAssets.logo} alt="SYNCLAB" className="h-auto w-52 max-w-full sm:w-60" /></h1>
           <p className="mt-5 font-display text-2xl font-bold uppercase text-signal sm:text-3xl">Create. Record. Produce. Finish.</p>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
              SYNCLAB is an all-in-one music-production workstation for creating, recording, producing and finishing tracks.
