@@ -652,7 +652,7 @@ function PricingSection() {
   return (
     <section className="section-shell border-y border-border bg-panel" aria-labelledby="pricing-heading">
       <SectionIntro eyebrow="Plans" title="Pricing" id="pricing-heading" text="Choose the SYNCLAB workflow that matches where you are in the production process." />
-      <div className="mt-10 grid gap-4 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
         {synclabConfig.pricing.filter((plan) => plan.visible).map((plan) => (
           <article key={plan.name} className="price-card">
             <div className="flex items-start justify-between gap-4">
@@ -665,7 +665,7 @@ function PricingSection() {
             <ul className="mt-6 grid gap-3 text-sm text-muted-foreground">
               {plan.features.map((feature) => <li key={feature} className="flex gap-2"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-signal" />{feature}</li>)}
             </ul>
-            <Button variant="outline" className="mt-8 w-full">{plan.cta}</Button>
+            <Button asChild variant="outline" className="mt-8 w-full"><a href="https://synclabsapp.com/" target="_blank" rel="noopener noreferrer">{plan.cta}</a></Button>
           </article>
         ))}
       </div>
@@ -1273,7 +1273,7 @@ export function SynclabSite({ mode = "home" }: { mode?: PageMode }) {
         {mode === "features" || mode === "ai" ? <><PageHero eyebrow="Features" title="Everything connected." text="Explore SYNCLAB's instruments, recording, editing and mixing tools." /><FeaturesSection /></> : null}
         {mode === "studio" ? <><PageHero eyebrow="Studio" title="One screen. One project. One connected studio." text="Timeline, piano roll and mixer stay tied to the same session." /><StudioSection /><ProductScreenshotsSection /></> : null}
         {mode === "desktop" ? <><PageHero eyebrow="Desktop" title="A real desktop music workstation." text="macOS and Windows packages stay accurately labeled by their configured release status." /><DesktopSection /><DownloadSection /><InstallHelpSection /><SystemRequirementsSection /></> : null}
-        {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="Plans for every stage." text="Final pricing is configurable so SYNCLAB can launch with the right plan structure." /><PricingSection /></> : null}
+        {mode === "pricing" ? <><PageHero eyebrow="Pricing" title="SYNCLAB pricing." text="Start with a 7-day trial, then choose monthly or annual access." /><PricingSection /></> : null}
         {mode === "support" ? <><PageHero eyebrow="Support" title="SYNCLAB Support." text="Help, tutorials, problem reporting and product support belong to SYNCLAB." /><SupportSection /></> : null}
         {mode === "help" ? <><PageHero eyebrow="Help Center" title="How can we help?" text="Search SYNCLAB guides by downloads, installation, recording, MIDI, instruments, mixing, exporting and platform topics." /><section className="section-shell bg-background"><HelpCenterPanel /><DownloadErrorHelp /></section></> : null}
         {mode === "config" ? <><PageHero eyebrow="Configuration" title="SYNCLAB launch settings." text="Centralized fields keep downloads, support, pricing, video, version and availability honest." /><ConfigSection /></> : null}
