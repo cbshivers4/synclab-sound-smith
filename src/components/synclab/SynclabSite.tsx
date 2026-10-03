@@ -423,7 +423,7 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
     <article className="download-card">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-signal">{download.platform}</p>
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-signal">{download.displayName.replace(/^SYNCLAB for /, "")}</p>
           <h3 className="mt-3 font-display text-2xl font-bold text-foreground">{download.displayName}</h3>
         </div>
       </div>
