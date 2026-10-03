@@ -1000,11 +1000,11 @@
 
 @utility product-image {
   display: block;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   width: 100%;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  object-fit: cover;
+  object-fit: contain;
   background: var(--background);
 }
 
