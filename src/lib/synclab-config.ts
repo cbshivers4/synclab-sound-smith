@@ -1,8 +1,13 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
-import timelineImage from "@/assets/synclab-timeline.webp.asset.json";
-import drumsImage from "@/assets/synclab-drum-machine.webp.asset.json";
+import mainViewImage from "@/assets/synclab-main-view.webp.asset.json";
+import studioViewImage from "@/assets/synclab-studio-view-1.webp.asset.json";
+import liveViewImage from "@/assets/synclab-live-view.webp.asset.json";
+import drums1Image from "@/assets/synclab-drum-machine-1.webp.asset.json";
+import drums2Image from "@/assets/synclab-drum-machine-2.webp.asset.json";
+import acidBassImage from "@/assets/synclab-acid-bass.webp.asset.json";
+import modularImage from "@/assets/synclab-modular-tech-synth.webp.asset.json";
 import looperImage from "@/assets/synclab-live-looper.webp.asset.json";
-import synthImage from "@/assets/synclab-synth.webp.asset.json";
+import reelImage from "@/assets/synclab-reel-to-reel-recorder.webp.asset.json";
 import mixerImage from "@/assets/synclab-mixer.webp.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
@@ -75,11 +80,16 @@ export const synclabConfig = {
     logo: synclabLogo.url,
   },
   productImages: [
-    { title: "Studio Timeline", description: "Arrange drum and synth tracks on the SYNCLAB timeline.", imageUrl: timelineImage.url },
-    { title: "Drum Machine", description: "Build beats with the step sequencer.", imageUrl: drumsImage.url },
-    { title: "Live Looper", description: "Record and layer loops in the studio.", imageUrl: looperImage.url },
-    { title: "Flagship Synth", description: "Shape sounds with oscillator controls.", imageUrl: synthImage.url },
-    { title: "Pro Mixer", description: "Balance tracks in the mixer.", imageUrl: mixerImage.url },
+    { title: "Main View", description: "The SYNCLAB studio workspace.", imageUrl: mainViewImage.url },
+    { title: "Studio View", description: "Arrange tracks on the studio timeline.", imageUrl: studioViewImage.url },
+    { title: "Live View", description: "Perform and trigger parts live.", imageUrl: liveViewImage.url },
+    { title: "Drum Machine", description: "Build beats with the step sequencer.", imageUrl: drums1Image.url },
+    { title: "Drum Machine Kits", description: "Shape drum sounds and patterns.", imageUrl: drums2Image.url },
+    { title: "Acid Bass", description: "Program squelchy bass lines.", imageUrl: acidBassImage.url },
+    { title: "Modular Tech Synth", description: "Patch and shape synth sounds.", imageUrl: modularImage.url },
+    { title: "Live Looper", description: "Record and layer loops.", imageUrl: looperImage.url },
+    { title: "Reel-to-Reel Recorder", description: "Capture takes with tape-style recording.", imageUrl: reelImage.url },
+    { title: "Mixer", description: "Balance tracks in the mixer.", imageUrl: mixerImage.url },
   ],
   tagline: "Create. Record. Produce. Finish.",
   philosophy: "SIMPLE ENOUGH TO START. POWERFUL ENOUGH TO FINISH.",
