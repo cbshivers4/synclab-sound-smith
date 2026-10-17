@@ -87,7 +87,7 @@ export const synclabConfig = {
     { title: "Live View", description: "Perform and trigger parts live.", imageUrl: liveViewImage.url },
     { title: "Drum Machine", description: "Build beats with the step sequencer.", imageUrl: drums1Image.url },
     { title: "Drum Machine Kits", description: "Shape drum sounds and patterns.", imageUrl: drums2Image.url },
-    { title: "Sync 4 Synth", description: "Four-oscillator flagship sound design.", imageUrl: sync4Image.url },
+    { title: "Sync 4 Synth", description: "Design rich sounds with the Sync 4 engine.", imageUrl: sync4Image.url },
     { title: "Acid Bass", description: "Program squelchy bass lines.", imageUrl: acidBassImage.url },
     { title: "Modular Tech Synth", description: "Patch and shape synth sounds.", imageUrl: modularImage.url },
     { title: "Poly Synth", description: "Play lush polyphonic chords.", imageUrl: polySynthImage.url },
