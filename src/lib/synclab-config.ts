@@ -6,6 +6,8 @@ import drums1Image from "@/assets/synclab-drum-machine-1.webp.asset.json";
 import drums2Image from "@/assets/synclab-drum-machine-2.webp.asset.json";
 import acidBassImage from "@/assets/synclab-acid-bass.webp.asset.json";
 import modularImage from "@/assets/synclab-modular-tech-synth.webp.asset.json";
+import polySynthImage from "@/assets/synclab-poly-synth.webp.asset.json";
+import sync4Image from "@/assets/synclab-sync-4-synth.webp.asset.json";
 import looperImage from "@/assets/synclab-live-looper.webp.asset.json";
 import reelImage from "@/assets/synclab-reel-to-reel-recorder.webp.asset.json";
 import mixerImage from "@/assets/synclab-mixer.webp.asset.json";
@@ -85,8 +87,10 @@ export const synclabConfig = {
     { title: "Live View", description: "Perform and trigger parts live.", imageUrl: liveViewImage.url },
     { title: "Drum Machine", description: "Build beats with the step sequencer.", imageUrl: drums1Image.url },
     { title: "Drum Machine Kits", description: "Shape drum sounds and patterns.", imageUrl: drums2Image.url },
+    { title: "Sync 4 Synth", description: "Four-oscillator flagship sound design.", imageUrl: sync4Image.url },
     { title: "Acid Bass", description: "Program squelchy bass lines.", imageUrl: acidBassImage.url },
     { title: "Modular Tech Synth", description: "Patch and shape synth sounds.", imageUrl: modularImage.url },
+    { title: "Poly Synth", description: "Play lush polyphonic chords.", imageUrl: polySynthImage.url },
     { title: "Live Looper", description: "Record and layer loops.", imageUrl: looperImage.url },
     { title: "Reel-to-Reel Recorder", description: "Capture takes with tape-style recording.", imageUrl: reelImage.url },
     { title: "Mixer", description: "Balance tracks in the mixer.", imageUrl: mixerImage.url },
