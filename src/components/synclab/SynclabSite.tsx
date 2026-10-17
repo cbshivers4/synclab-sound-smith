@@ -57,9 +57,9 @@ const navItems: ReadonlyArray<SiteLink> = [
 
 const featureCards = [
   {
-    title: "Flagship Synth", icon: KeyboardMusic, status: "available" as Availability,
-    description: "Four oscillators, dual filters and FM for electronic sound design.",
-    items: ["4 oscillators", "Dual filters", "FM", "Mod matrix", "67 presets"],
+    title: "4 Synths", icon: KeyboardMusic, status: "available" as Availability,
+    description: "Four built-in synthesizers: Sync 4 Synth, Acid Bass, Poly Synth and Modular Tech Synth.",
+    items: ["Sync 4 Synth", "Acid Bass", "Poly Synth", "Modular Tech Synth"],
   },
   {
     title: "Drum Machine", icon: Drum, status: "available" as Availability,

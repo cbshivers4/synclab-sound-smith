@@ -226,7 +226,7 @@ export const synclabConfig = {
       cta: "Visit SYNCLAB",
       trialStatus: "7-day free trial",
       visible: true,
-      features: ["Flagship synth", "Drum machine", "Multi-track recording", "Pro mixer", "WAV / MP3 export"],
+      features: ["4 synths: Sync 4, Acid Bass, Poly, Modular Tech", "Drum machine", "Multi-track recording", "Pro mixer", "WAV / MP3 export"],
     },
   ] satisfies PricingPlan[],
 };
