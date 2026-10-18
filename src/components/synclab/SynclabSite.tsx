@@ -22,6 +22,7 @@ import {
 import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { DownloadEmailGate } from "./DownloadEmailGate";
 import { cn } from "@/lib/utils";
 import {
   helpCenterCategories,
@@ -440,19 +441,7 @@ function DownloadCard({ download }: { download: DownloadAsset }) {
       </dl>
       <p className="mt-5 text-sm leading-6 text-muted-foreground">{download.description}</p>
       {ready ? (
-        <Button asChild variant="signal" className="mt-7 w-full">
-          {isExternalUrl(download.downloadUrl) ? (
-            <a href={download.downloadUrl} target="_blank" rel="noreferrer noopener">
-              <Download />
-              {download.buttonText}
-            </a>
-          ) : (
-            <a href={download.downloadUrl} download={download.fileName || undefined}>
-              <Download />
-              {download.buttonText}
-            </a>
-          )}
-        </Button>
+        <DownloadEmailGate downloadId={download.id} downloadName={download.displayName} label={download.buttonText} />
       ) : (
         <div className="mt-7 download-unavailable">
           <AlertTriangle className="size-4" />
@@ -492,9 +481,7 @@ function PreviousVersions() {
                 <strong>{download.displayName} {download.version}</strong>
                 <span>{download.platform} • {download.fileType} • {download.fileSize}</span>
               </div>
-              <Button asChild variant="outline">
-                <a href={download.downloadUrl} download={download.fileName || undefined}>Download</a>
-              </Button>
+              <DownloadEmailGate downloadId={download.id} downloadName={download.displayName} label="Download" variant="outline" />
             </div>
           ))}
         </div>
