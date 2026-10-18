@@ -1,5 +1,6 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
 import mainViewImage from "@/assets/synclab-main-view.jpg.asset.json";
+import timelineToolsImage from "@/assets/synclab-timeline-simple-mode.webp.asset.json";
 import studioViewImage from "@/assets/synclab-studio-view-1-2.webp.asset.json";
 import liveViewImage from "@/assets/synclab-live-view.jpg.asset.json";
 import drums1Image from "@/assets/synclab-drum-machine-1.jpg.asset.json";
@@ -85,6 +86,7 @@ export const synclabConfig = {
   },
   productImages: [
     { title: "Main View", description: "The SYNCLAB studio workspace.", imageUrl: mainViewImage.url },
+    { title: "Timeline", description: "Browse the SYNCLAB tools and arrange takes on the timeline.", imageUrl: timelineToolsImage.url },
     { title: "Studio View", description: "Arrange tracks on the studio timeline.", imageUrl: studioViewImage.url },
     { title: "Live View", description: "Perform and trigger parts live.", imageUrl: liveViewImage.url },
     { title: "Drum Machine", description: "Build beats with the step sequencer.", imageUrl: drums1Image.url },
