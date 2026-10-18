@@ -113,14 +113,14 @@ export const synclabConfig = {
   downloads: [
     {
       id: "macos-arm64-current",
-      fileName: "SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-2.zip",
+      fileName: "SYNCLAB-1.0.0-macOS-arm64.zip",
       displayName: "SYNCLAB for macOS (Apple Silicon)",
       platform: "macOS",
       version: "1.0.0",
       fileType: "ZIP PACKAGE",
       fileSize: "",
       releaseDate: "September 24, 2026",
-      downloadUrl: "https://www.dropbox.com/scl/fi/b7o5tv8f618ed0qzi2hmg/SYNCLAB-Vocal-Forge-1.0.0-macOS-arm64-2.zip?rlkey=o7fart4kq5c91kckzde01gaup&st=sp2dqbgo&dl=1",
+      downloadUrl: "https://www.dropbox.com/scl/fi/2fyaryesu3x95fthycu3h/SYNCLAB-1.0.0-macOS-arm64.zip?rlkey=ca5hf0baquzxp6v2i9mjzt0of&st=zfql1ak6&dl=1",
       availability: "available",
       checksum: "",
       description:
@@ -139,14 +139,14 @@ export const synclabConfig = {
     },
     {
       id: "macos-x64-current",
-      fileName: "SYNCLAB-Vocal-Forge-1.0.0-macOS-x64-2.zip",
+      fileName: "SYNCLAB-1.0.0-macOS-x64.zip",
       displayName: "SYNCLAB for macOS (Intel)",
       platform: "macOS",
       version: "1.0.0",
       fileType: "ZIP PACKAGE",
       fileSize: "",
       releaseDate: "September 24, 2026",
-      downloadUrl: "https://www.dropbox.com/scl/fi/dr1a5fp9bc0t8xq8u3bz8/SYNCLAB-Vocal-Forge-1.0.0-macOS-x64-2.zip?rlkey=yxilw4c75cwwb830125sp5eo7&st=tfnk3fsv&dl=1",
+      downloadUrl: "https://www.dropbox.com/scl/fi/i8jzemxif126m0no50d96/SYNCLAB-1.0.0-macOS-x64.zip?rlkey=lpayeqhks5nqeo9vkd0rdv9dh&st=cd6q5ab2&dl=1",
       availability: "available",
       checksum: "",
       description:
@@ -165,14 +165,14 @@ export const synclabConfig = {
     },
     {
       id: "windows-current",
-      fileName: "SYNCLAB-Vocal-Forge-1.0.0-Windows-x64-1.zip",
+      fileName: "SYNCLAB-1.0.0-Windows-x64.zip",
       displayName: "SYNCLAB for Windows",
       platform: "Windows",
       version: "1.0.0",
       fileType: "ZIP PACKAGE",
       fileSize: "",
       releaseDate: "September 24, 2026",
-      downloadUrl: "https://www.dropbox.com/scl/fi/poa17oiwg71d6yr648xct/SYNCLAB-Vocal-Forge-1.0.0-Windows-x64-1.zip?rlkey=2ek335rwl5c17yt09f4njbw9p&st=4r49hcdd&dl=1",
+      downloadUrl: "https://www.dropbox.com/scl/fi/dp034slhrmdfl385v8msu/SYNCLAB-1.0.0-Windows-x64.zip?rlkey=ywyf3q62g4h0m0n3op0o16gni&st=nuh1lpup&dl=1",
       availability: "available",
       checksum: "",
       description:
