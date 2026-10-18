@@ -20,7 +20,7 @@ describe("software download email requirement", () => {
     let template = "";
     let emailedUrl = "";
     const result = await processDownloadRequest({ ...request, downloadId }, async (name, email, options) => {
-      template = name; recipient = email; emailedUrl = String(options.templateData?.downloadUrl);
+      template = name; recipient = email; emailedUrl = String(options.templateData?.['downloadUrl']);
       expect(options.idempotencyKey).toBe(`download-thank-you-${downloadId}-${request.requestId}`);
       return { sent: true };
     });

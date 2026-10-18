@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 import { SynclabSite } from "@/components/synclab/SynclabSite";
 
@@ -6,6 +6,7 @@ const title = "Launch Settings — SYNCLAB";
 const description = "Configure SYNCLAB download links, support routing, pricing and release information.";
 
 export const Route = createFileRoute("/config")({
+  beforeLoad: () => { throw redirect({ to: "/download" }); },
   head: () => ({
     meta: [
       { title },
