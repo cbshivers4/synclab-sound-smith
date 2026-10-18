@@ -1,13 +1,14 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
 import mainViewImage from "@/assets/synclab-main-view.jpg.asset.json";
-import studioViewImage from "@/assets/synclab-studio-view-1.webp.asset.json";
+import studioViewImage from "@/assets/synclab-studio-view-1-2.webp.asset.json";
 import liveViewImage from "@/assets/synclab-live-view.jpg.asset.json";
 import drums1Image from "@/assets/synclab-drum-machine-1.jpg.asset.json";
 import drums2Image from "@/assets/synclab-drum-machine-2.jpg.asset.json";
-import acidBassImage from "@/assets/synclab-acid-bass.webp.asset.json";
+import acidBassImage from "@/assets/synclab-acid-bass-2.webp.asset.json";
 import modularImage from "@/assets/synclab-modular-tech-synth.jpg.asset.json";
 import polySynthImage from "@/assets/synclab-poly-synth.webp.asset.json";
-import sync4Image from "@/assets/synclab-sync-4-synth.webp.asset.json";
+import sync4Image from "@/assets/synclab-sync-4-synth-2.webp.asset.json";
+import videoSamplerImage from "@/assets/synclab-video-sampler.webp.asset.json";
 import looperImage from "@/assets/synclab-live-looper.jpg.asset.json";
 import reelImage from "@/assets/synclab-reel-to-reel-recorder.jpg.asset.json";
 import padSamplerImage from "@/assets/synclab-pad-sampler.jpg.asset.json";
@@ -89,7 +90,8 @@ export const synclabConfig = {
     { title: "Drum Machine", description: "Build beats with the step sequencer.", imageUrl: drums1Image.url },
     { title: "Drum Machine Kits", description: "Shape drum sounds and patterns.", imageUrl: drums2Image.url },
     { title: "Sync 4 Synth", description: "Design rich sounds with the Sync 4 engine.", imageUrl: sync4Image.url },
-    { title: "Acid Bass", description: "Program squelchy bass lines.", imageUrl: acidBassImage.url },
+    { title: "Video Sampler", description: "Chop and slice samples from video audio.", imageUrl: videoSamplerImage.url },
+    { title: "Acid Bass", description: "Program squelchy bass lines with the TD-3 style editor.", imageUrl: acidBassImage.url },
     { title: "Modular Tech Synth", description: "Patch and shape synth sounds.", imageUrl: modularImage.url },
     { title: "Poly Synth", description: "Play lush polyphonic chords.", imageUrl: polySynthImage.url },
     { title: "Live Looper", description: "Record and layer loops.", imageUrl: looperImage.url },
