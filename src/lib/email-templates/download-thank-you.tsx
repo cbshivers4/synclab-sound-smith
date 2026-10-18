@@ -24,11 +24,11 @@ function DownloadThankYou({ downloadName = "SYNCLAB", version = "1.0.0", downloa
 
 const body = { backgroundColor: "#ffffff", fontFamily: "Arial, sans-serif" };
 const container = { padding: "40px 24px", maxWidth: "560px" };
-const brand = { color: "#101827", fontSize: "22px", fontWeight: "700" };
-const heading = { color: "#101827", fontSize: "26px", lineHeight: "34px" };
+const brand = { color: "#161b22", fontSize: "22px", fontWeight: "700" };
+const heading = { color: "#161b22", fontSize: "26px", lineHeight: "34px" };
 const text = { color: "#465268", fontSize: "16px", lineHeight: "26px" };
-const button = { backgroundColor: "#eaae31", color: "#101827", padding: "16px 24px", borderRadius: "4px", fontWeight: "700" };
-const link = { color: "#101827", textDecoration: "underline" };
+const button = { backgroundColor: "#58cbb7", color: "#161b22", padding: "16px 24px", borderRadius: "4px", fontWeight: "700" };
+const link = { color: "#161b22", textDecoration: "underline" };
 
 export const template = {
   component: DownloadThankYou,
