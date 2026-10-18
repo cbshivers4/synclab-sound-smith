@@ -1,16 +1,17 @@
 import synclabLogo from "@/assets/synclab-logo.jpg.asset.json";
-import mainViewImage from "@/assets/synclab-main-view.webp.asset.json";
+import mainViewImage from "@/assets/synclab-main-view.jpg.asset.json";
 import studioViewImage from "@/assets/synclab-studio-view-1.webp.asset.json";
-import liveViewImage from "@/assets/synclab-live-view.webp.asset.json";
-import drums1Image from "@/assets/synclab-drum-machine-1.webp.asset.json";
-import drums2Image from "@/assets/synclab-drum-machine-2.webp.asset.json";
+import liveViewImage from "@/assets/synclab-live-view.jpg.asset.json";
+import drums1Image from "@/assets/synclab-drum-machine-1.jpg.asset.json";
+import drums2Image from "@/assets/synclab-drum-machine-2.jpg.asset.json";
 import acidBassImage from "@/assets/synclab-acid-bass.webp.asset.json";
-import modularImage from "@/assets/synclab-modular-tech-synth.webp.asset.json";
+import modularImage from "@/assets/synclab-modular-tech-synth.jpg.asset.json";
 import polySynthImage from "@/assets/synclab-poly-synth.webp.asset.json";
 import sync4Image from "@/assets/synclab-sync-4-synth.webp.asset.json";
-import looperImage from "@/assets/synclab-live-looper.webp.asset.json";
-import reelImage from "@/assets/synclab-reel-to-reel-recorder.webp.asset.json";
-import mixerImage from "@/assets/synclab-mixer.webp.asset.json";
+import looperImage from "@/assets/synclab-live-looper.jpg.asset.json";
+import reelImage from "@/assets/synclab-reel-to-reel-recorder.jpg.asset.json";
+import padSamplerImage from "@/assets/synclab-pad-sampler.jpg.asset.json";
+import mixerImage from "@/assets/synclab-mixer.jpg.asset.json";
 
 export type Availability = "available" | "coming-soon" | "in-development" | "desktop-version";
 
