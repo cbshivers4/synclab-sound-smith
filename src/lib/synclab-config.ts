@@ -94,6 +94,7 @@ export const synclabConfig = {
     { title: "Poly Synth", description: "Play lush polyphonic chords.", imageUrl: polySynthImage.url },
     { title: "Live Looper", description: "Record and layer loops.", imageUrl: looperImage.url },
     { title: "Reel-to-Reel Recorder", description: "Capture takes with tape-style recording.", imageUrl: reelImage.url },
+    { title: "Pad Sampler", description: "Trigger and record samples across the pad grid.", imageUrl: padSamplerImage.url },
     { title: "Mixer", description: "Balance tracks in the mixer.", imageUrl: mixerImage.url },
   ],
   tagline: "Create. Record. Produce. Finish.",
