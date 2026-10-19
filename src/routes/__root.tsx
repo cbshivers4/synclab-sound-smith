@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { legacySiteRedirect } from "../lib/site-host";
 
 function NotFoundComponent() {
   return (
@@ -118,6 +119,17 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Retired addresses must not keep the old name in the visitor's address bar.
+  useEffect(() => {
+    const target = legacySiteRedirect(
+      window.location.hostname,
+      window.location.pathname,
+      window.location.search,
+      window.location.hash
+    );
+    if (target) window.location.replace(target);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
